@@ -3,6 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:luxair/widgets/headers.dart';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class HomeScreenBK extends StatefulWidget {
   @override
   _HomeScreenStateBK createState() => _HomeScreenStateBK();
@@ -32,6 +35,11 @@ class _HomeScreenStateBK extends State<HomeScreenBK> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
+
+
     return Scaffold(
       body: SingleChildScrollView(
         controller: controller,
@@ -39,8 +47,8 @@ class _HomeScreenStateBK extends State<HomeScreenBK> {
           children: <Widget>[
             MyHeader(
               image: "assets/icons/Drcorona.svg",
-              textTop: "All you need",
-              textBottom: "is stay at home.",
+              textTop: "${localizeLangModel!.allYouNeed}",
+              textBottom: "${localizeLangModel.isStayAtHome}",
               offset: offset,
             ),
             Container(

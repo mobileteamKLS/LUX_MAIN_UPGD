@@ -225,7 +225,7 @@ class CustomConfirmDialog extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(true); // To close the dialog
                     },
-                    child: Text("Yes"),
+                    child: Text("${buttonText}"),
                   ),
                   SizedBox(width: 24.0),
                   ElevatedButton(

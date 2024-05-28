@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 import 'headerclipper.dart';
 
 class QRViewExample extends StatefulWidget {
@@ -32,6 +34,9 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     return Scaffold(
       //appBar:
       
@@ -71,7 +76,7 @@ class _QRViewExampleState extends State<QRViewExample> {
           HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText:  "Scan QR Code"),
+                headerText:  "${localizeLangModel!.scan} QR ${localizeLangModel.code}"),
  SizedBox(height:  30),
           Container(
               height: MediaQuery.of(context).size.height - 300,
@@ -82,7 +87,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                   padding: const EdgeInsets.only(top: 18.0),
                   child: Container(
                       height: 30,
-                      child: Text('Data: ${result!.code}',
+                      child: Text('${localizeLangModel.data}: ${result!.code}',
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 16,
@@ -95,7 +100,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                   padding: const EdgeInsets.only(top: 18.0),
                   child: Container(
                       height: 30,
-                      child: Text('Scan a code',
+                      child: Text('${localizeLangModel.scan} a ${localizeLangModel.code}',
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 16,
@@ -122,7 +127,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                     height: 50,
                     child: Center(
                       child: Text(
-                        "Done",
+                        "${localizeLangModel.done}",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

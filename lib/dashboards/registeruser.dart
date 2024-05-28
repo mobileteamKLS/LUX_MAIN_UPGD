@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class RegisterUser extends StatefulWidget {
   const RegisterUser({Key? key}) : super(key: key);
@@ -30,6 +32,10 @@ class _RegisterUserState extends State<RegisterUser> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
       var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
 
@@ -41,7 +47,7 @@ class _RegisterUserState extends State<RegisterUser> {
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "Register User"),
+                headerText: "${localizeLangModel!.registerUser}"),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -60,7 +66,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                 width: MediaQuery.of(context).size.width / 4,
                                 // hard coding child width
                                 child: Text(
-                                  "Username",
+                                  "${localizeLangModel!.username}",
                                   style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -96,7 +102,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                     keyboardType: TextInputType.text,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: "Enter preferred Username",
+                                      hintText: "${localizeLangModel.enterPreferredUsername}",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       counterText: "",
                                       contentPadding: EdgeInsets.symmetric(
@@ -125,7 +131,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                 width: MediaQuery.of(context).size.width / 4,
                                 // hard coding child width
                                 child: Text(
-                                  "First Name",
+                                  "${localizeLangModel.firstname}",
                                   style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -161,7 +167,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                     keyboardType: TextInputType.text,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: "Enter your first name",
+                                      hintText: "${localizeLangModel.userFirstName}",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       counterText: "",
                                       contentPadding: EdgeInsets.symmetric(
@@ -190,7 +196,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                 width: MediaQuery.of(context).size.width / 4,
                                 // hard coding child width
                                 child: Text(
-                                  "Last Name",
+                                  "${localizeLangModel.lastname}",
                                   style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -226,7 +232,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                     keyboardType: TextInputType.text,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: "Enter your last name",
+                                      hintText: "${localizeLangModel.userLastName}",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       counterText: "",
                                       contentPadding: EdgeInsets.symmetric(
@@ -255,7 +261,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                 width: MediaQuery.of(context).size.width / 4,
                                 // hard coding child width
                                 child: Text(
-                                  "Email ID",
+                                  "${localizeLangModel.mailID}",
                                   style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -291,7 +297,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                     keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: "Enter your email id",
+                                      hintText: "${localizeLangModel.emailValidation}",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       counterText: "",
                                       contentPadding: EdgeInsets.symmetric(
@@ -365,14 +371,14 @@ class _RegisterUserState extends State<RegisterUser> {
                                         CustomDialog(
                                       title: txtUserName.text,
                                       description:
-                                          "New user register request for " +
+                                          "${localizeLangModel.newUserRegisterRequestFor} " +
                                               txtFirstName.text +
                                               " " +
                                               txtLastName.text +
-                                              " has been sent successfully. \n You will receive email for login details on " +
+                                              " ${localizeLangModel.hasBeenSentSuccessfully}. \n ${localizeLangModel.receiveEmailMsg} " +
                                               txtEmail.text.toString(),
 
-                                      buttonText: "Okay",
+                                      buttonText: "${localizeLangModel.ok}",
                                       imagepath: 'assets/images/successchk.gif',
                                       isMobile: useMobileLayout,
                                     ),
@@ -388,12 +394,12 @@ class _RegisterUserState extends State<RegisterUser> {
                                     builder: (BuildContext context) =>
                                         customAlertMessageDialog(
                                             title: errMsgText == ""
-                                                ? "Error Occured"
-                                                : "Register User Failed",
+                                                ? "${localizeLangModel.errorOccured}"
+                                                : "${localizeLangModel.registerUserFailed}",
                                             description: errMsgText == ""
-                                                ? "Error occured while sending new user registration request, Please try again after some time"
+                                                ? "${localizeLangModel.errorOccuredNewUserRegister}"
                                                 : errMsgText,
-                                            buttonText: "Okay",
+                                            buttonText: "${localizeLangModel.ok}",
                                             imagepath: 'assets/images/warn.gif',
                                             isMobile: useMobileLayout),
                                   );
@@ -423,7 +429,7 @@ class _RegisterUserState extends State<RegisterUser> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Register',
+                                  '${localizeLangModel.register}',
                                   style: TextStyle(
                                       fontSize: useMobileLayout
                                               ? MediaQuery.of(context)

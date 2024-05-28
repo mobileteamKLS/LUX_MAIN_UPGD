@@ -28,7 +28,7 @@ dependencies:
   toggle_switch: ^1.4.0
   font_awesome_flutter: ^9.2.0
 #  qr_code_scanner: ^0.6.1
-  intl: ^0.17.0
+  intl: ^0.18.1
   cupertino_icons: ^1.0.2
   animated_text_kit: ^4.2.1
   easy_signature_pad: ^1.0.6
@@ -42,7 +42,7 @@ dependencies:
   vertical_barchart: ^2.0.0+2
   barcode_widget: ^2.0.1
   timelines: ^0.1.0
-  charts_flutter: 0.11.0
+  #charts_flutter: ^0.11.0
   animate_do: ^2.0.0
   percent_indicator: 4.0.0
   flutter_typeahead: ^3.1.2
@@ -51,6 +51,8 @@ dependencies:
   shared_preferences: ^2.0.5
   geolocator: ^8.0.5
   qr_code_scanner: ^1.0.1
+  flutter_localizations:
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -79,6 +81,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/lang_file/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -13,6 +13,9 @@ import '../constants.dart';
 import '../global.dart';
 import 'dart:math' as math;
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 // ignore: must_be_immutable
 class TruckYardCheckInDetails extends StatefulWidget {
   bool isExport = false;
@@ -29,7 +32,6 @@ class TruckYardCheckInDetails extends StatefulWidget {
 
 class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
   bool useMobileLayout = false, isLoading = false, isDisable = false;
-
   TextEditingController txtVTNO = new TextEditingController();
 
   @override
@@ -40,6 +42,10 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
   }
 
   checkLocation() async {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
      print("getting locaation");
     try {
       var abc = await determinePosition();
@@ -48,9 +54,9 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
         showDialog(
           context: context,
           builder: (BuildContext context) => customAlertMessageDialog(
-              title: "Location Disabled",
+              title: "${localizeLangModel!.location} ${localizeLangModel.disabled}",
               description: abc.toString(),
-              buttonText: "Okay",
+              buttonText: "${localizeLangModel!.ok}",
               imagepath: 'assets/images/warn.gif',
               isMobile: useMobileLayout),
         );
@@ -61,9 +67,9 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
         showDialog(
           context: context,
           builder: (BuildContext context) => customAlertMessageDialog(
-              title: "Location Access Denied",
+              title: "${localizeLangModel!.location} ${localizeLangModel.access} ${localizeLangModel.denied}",
               description: abc.toString(),
-              buttonText: "Okay",
+              buttonText: "${localizeLangModel!.ok}",
               imagepath: 'assets/images/warn.gif',
               isMobile: useMobileLayout),
         );
@@ -126,6 +132,11 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel?  localizeLangModel = localizations!.localizeLangModel;
+
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -137,7 +148,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
           HeaderClipperWave(
               color1: Color(0xFF3383CD),
               color2: Color(0xFF11249F),
-              headerText: "Yard Check-in VT Details"),
+              headerText: "${localizeLangModel!.yardCheckInVTDetails}"),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -158,7 +169,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                               : MediaQuery.of(context).size.width / 7,
                           // hard coding child width
                           child: Text(
-                            "VT No.",
+                            "${localizeLangModel!.vTno}",
                             style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -189,7 +200,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Enter Vehicle No.",
+                                hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicleNo}",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
@@ -225,7 +236,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                         ),
                         SizedBox(height: useMobileLayout ? 10 : 20),
                         Text(
-                          "Vehicle Details",
+                          "${localizeLangModel.vehicleDetails}",
                           style: useMobileLayout
                               ? mobileHeaderFontStyle
                               : TextStyle(
@@ -261,7 +272,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                                                 height: 40,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('Vehicle No.',
+                                                  child: Text('${localizeLangModel.vehicleNo}',
                                                       style:
                                                           mobileYellowTextFontStyleBold),
                                                 ),
@@ -276,7 +287,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                                                 height: 40,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('Driver Name',
+                                                  child: Text('${localizeLangModel.driverName}',
                                                       style:
                                                           mobileYellowTextFontStyleBold),
                                                 ),
@@ -346,7 +357,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                      'Slot/ Dock Details',
+                                                      '${localizeLangModel.slot}/ ${localizeLangModel.dockDetails}',
                                                       style:
                                                           mobileYellowTextFontStyleBold),
                                                 ),
@@ -408,7 +419,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                                                 height: 50,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('Vehicle No.',
+                                                  child: Text('${localizeLangModel.vehicleNo}',
                                                       style:
                                                           iPadYellowTextFontStyleBold),
                                                 ),
@@ -424,7 +435,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                                                 height: 50,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('Driver Name',
+                                                  child: Text('${localizeLangModel.driverName}',
                                                       style:
                                                           iPadYellowTextFontStyleBold),
                                                 ),
@@ -491,7 +502,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                      'Slot/ Dock Details',
+                                                      '${localizeLangModel.slot}/ ${localizeLangModel.dockDetails}',
                                                       style:
                                                           iPadYellowTextFontStyleBold),
                                                 ),
@@ -562,10 +573,10 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                                   builder: (BuildContext context) =>
                                       CustomDialog(
                                     title: widget.selectedVtDetails.VTNo,
-                                    description: "Yard Check-in for VT# " +
+                                    description: "${localizeLangModel.yardCheckInForVT} " +
                                         widget.selectedVtDetails.VTNo +
-                                        " has been completed successfully",
-                                    buttonText: "Okay",
+                                        " ${localizeLangModel.hasBeenCompletedSuccessfully}",
+                                    buttonText: "${localizeLangModel.ok}",
                                     imagepath: 'assets/images/successchk.gif',
                                     isMobile: useMobileLayout,
                                   ),
@@ -584,10 +595,10 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       customAlertMessageDialog(
-                                          title: "Error Occured",
+                                          title: "${localizeLangModel.errorOccured}",
                                           description:
-                                              "Error occured while performing Yard Check-in, Please try again after some time",
-                                          buttonText: "Okay",
+                                              "${localizeLangModel.errorOccuredWhilePerformingYardCheckIn}, ${localizeLangModel.tryAfterSometimeValidation}",
+                                          buttonText: "${localizeLangModel.ok}",
                                           imagepath: 'assets/images/warn.gif',
                                           isMobile: useMobileLayout),
                                 );
@@ -633,7 +644,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'Submit',
+                                    '${localizeLangModel.submit}',
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.normal,

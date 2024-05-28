@@ -7,6 +7,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:luxair/dashboards/login.dart';
 import 'package:luxair/datastructure/userdetails.dart';
@@ -25,6 +26,9 @@ import 'package:luxair/otherpages/warehouseacclist.dart';
 import 'package:luxair/widgets/customdialogue.dart';
 import 'package:luxair/widgets/headers.dart';
 import '../constants.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+import '../main.dart';
 import 'homescreen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -40,13 +44,43 @@ class _DashboardsState extends State<Dashboards> {
   bool useMobileLayout = false;
   late Timer _timer;
 
+  String _selectedLanguage = 'en';
+  Locale _locale = Locale('en');
+
   @override
   void initState() {
     printDate = DateFormat('dd-MMM-yyyy hh:mm').format(DateTime.now());
     // Timer.periodic(Duration(seconds:1), (Timer t)=>getCurrentDateTime());
     _timer = new Timer.periodic(
         Duration(seconds: 1), (Timer timer) => getCurrentDateTime());
+    _loadSavedLanguage();
     super.initState();
+  }
+
+  Future<void> _loadSavedLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? languageCode = prefs.getString('language_code');
+    if (languageCode != null) {
+      setState(() {
+        _selectedLanguage = languageCode;
+        _locale = Locale(languageCode);
+      });
+    }
+  }
+
+  void _onLanguageChanged(String languageCode) async {
+    Locale locale = Locale(languageCode);
+    setState(() {
+      _selectedLanguage = languageCode;
+      _locale = locale;
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language_code', languageCode);
+
+    // Refresh the app with the new locale
+    MyApp? myApp = context.findAncestorWidgetOfExactType<MyApp>();
+    myApp?.locale = locale;
+    runApp(MyApp(locale: locale));
   }
 
   @override
@@ -65,6 +99,10 @@ class _DashboardsState extends State<Dashboards> {
   Widget build(BuildContext context) {
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Scaffold(
         body: Container(
       height: MediaQuery.of(context).size.height,
@@ -117,7 +155,8 @@ class _DashboardsState extends State<Dashboards> {
                       ],
                     ),
                   ),
-                  height: MediaQuery.of(context).size.height / 3.2, //180,
+                  height: MediaQuery.of(context).size.height / 3.2,
+                  //180,
                   alignment: Alignment.center,
 
                   child: DefaultTextStyle(
@@ -152,7 +191,8 @@ class _DashboardsState extends State<Dashboards> {
                                           borderRadius:
                                               BorderRadius.circular(5),
                                           child: Image.asset(
-                                              "assets/images/kls.jpg",//YVR.png", //WFS_logo.png",
+                                              "assets/images/kls.jpg",
+                                              //YVR.png", //WFS_logo.png",
                                               fit: kIsWeb
                                                   ? BoxFit.fill
                                                   : useMobileLayout
@@ -180,7 +220,8 @@ class _DashboardsState extends State<Dashboards> {
                                             borderRadius:
                                                 BorderRadius.circular(5),
                                             child: Image.asset(
-                                                "assets/images/kls.jpg", //YVR.png", //WFS_logo.png",
+                                                "assets/images/kls.jpg",
+                                                //YVR.png", //WFS_logo.png",
                                                 fit: kIsWeb
                                                     ? BoxFit.fill
                                                     : useMobileLayout
@@ -222,14 +263,17 @@ class _DashboardsState extends State<Dashboards> {
                                             DefaultTextStyle(
                                               style: TextStyle(
                                                   fontSize:
-                                                    MediaQuery.of(context).size.width/24,
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          24,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white),
                                               child: AnimatedTextKit(
                                                 animatedTexts: [
-                                                 
                                                   TyperAnimatedText(
-                                                      'Bonjour !!'), TyperAnimatedText(
+                                                      'Bonjour !!'),
+                                                  TyperAnimatedText(
                                                       'Welcome !!'),
                                                   // TyperAnimatedText('Bienvenida !!'),
                                                   // TyperAnimatedText('ਸੁਆਗਤ ਹੈ !!'),
@@ -242,48 +286,148 @@ class _DashboardsState extends State<Dashboards> {
                                                 ],
                                               ),
                                             ),
-                                          useMobileLayout
-                                              ? SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2.7,
-                                                  child: Text(
-                                                    loggedinUser.UserId,
-                                                    style: TextStyle(
-                                                        fontSize: useMobileLayout
-                                                            ? MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width /
-                                                                20
-                                                            : 28,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.white),
-                                                  ),
-                                                )
-                                              : Text(
-                                                  "Welcome " +
-                                                      loggedinUser.UserId,
-                                                  style: TextStyle(
-                                                      fontSize: useMobileLayout
-                                                          ? MediaQuery.of(
-                                                                      context)
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              useMobileLayout
+                                                  ? SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
                                                                   .size
                                                                   .width /
-                                                              20
-                                                          : 28,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
+                                                              2.7,
+                                                      child: Text(
+                                                        loggedinUser.UserId,
+                                                        style: TextStyle(
+                                                            fontSize: useMobileLayout
+                                                                ? MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width /
+                                                                    20
+                                                                : 28,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    )
+                                                  : Text(
+                                                      "${localizeLangModel!.welcome} " +
+                                                          loggedinUser.UserId,
+                                                      style: TextStyle(
+                                                          fontSize: useMobileLayout
+                                                              ? MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width /
+                                                                  20
+                                                              : 28,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white),
+                                                    ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 2.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    border: Border.all(
+                                                      color: Colors.white,
+                                                      width: 1.2,
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 10.0),
+                                                    child:
+                                                        DropdownButtonHideUnderline(
+                                                      child: DropdownButton<
+                                                          String>(
+                                                        focusColor:
+                                                            Colors.white,
+                                                        iconEnabledColor:
+                                                            Colors.white,
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                        value:
+                                                            _selectedLanguage,
+                                                        dropdownColor:
+                                                            Colors.white,
+                                                        onChanged: (newValue) {
+                                                          _onLanguageChanged(
+                                                              newValue!);
+                                                        },
+                                                        selectedItemBuilder:
+                                                            (BuildContext
+                                                                context) {
+                                                          return [
+                                                            'en',
+                                                            'es'
+                                                          ].map<Widget>(
+                                                              (String value) {
+                                                            return Center(
+                                                              child: Text(
+                                                                value == 'en'
+                                                                    ? 'English'
+                                                                    : 'Spanish',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500), // Change this to your desired color
+                                                              ),
+                                                            );
+                                                          }).toList();
+                                                        },
+                                                        items: [
+                                                          DropdownMenuItem(
+                                                            value: 'en',
+                                                            child: Text(
+                                                                'English',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black)),
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            value: 'es',
+                                                            child: Text(
+                                                                'Spanish',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black)),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
+                                              ),
+                                            ],
+                                          ),
                                           if (!useMobileLayout)
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   top: 5.0),
                                               child: Text(
-                                                printDate, //"28 June 2022 23:40 ",
+                                                printDate,
+                                                //"28 June 2022 23:40 ",
                                                 style: TextStyle(
                                                   fontSize: useMobileLayout
                                                       ? MediaQuery.of(context)
@@ -313,42 +457,35 @@ class _DashboardsState extends State<Dashboards> {
                                                           .height /
                                                       18
                                                   : 50,
-                                              child: DropdownButtonHideUnderline(
+                                              child:
+                                                  DropdownButtonHideUnderline(
                                                 child: Container(
-                                                  constraints:
-                                                  BoxConstraints(
-                                                      minHeight:
-                                                      50),
-                                                  decoration:
-                                                  BoxDecoration(
+                                                  constraints: BoxConstraints(
+                                                      minHeight: 50),
+                                                  decoration: BoxDecoration(
                                                     border: Border.all(
-                                                        color: Colors
-                                                            .grey,
+                                                        color: Colors.grey,
                                                         width: 0.2),
-                                                    borderRadius: BorderRadius
-                                                        .all(Radius
-                                                        .circular(
-                                                        5)),
-                                                    color: Colors
-                                                        .white,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(5)),
+                                                    color: Colors.white,
                                                   ),
-                                                  padding: EdgeInsets
-                                                      .symmetric(
-                                                      horizontal:
-                                                      10),
-                                                  child:
-                                                  DropdownButton(
-                                                    value:
-                                                    selectedTerminalID,
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                                  child: DropdownButton(
+                                                    value: selectedTerminalID,
                                                     items: terminalsList
                                                         .map((terminal) {
                                                       return DropdownMenuItem(
                                                         child: Text(
-                                                            terminal.custodianName
+                                                            terminal
+                                                                .custodianName
                                                                 .toUpperCase(),
                                                             style: useMobileLayout
                                                                 ? mobileTextFontStyle
-                                                                : iPadYellowTextFontStyleBold), //label of item
+                                                                : iPadYellowTextFontStyleBold),
+                                                        //label of item
                                                         value: terminal
                                                             .custudian, //value of item
                                                       );
@@ -358,8 +495,8 @@ class _DashboardsState extends State<Dashboards> {
                                                         selectedTerminal =
                                                             value.toString();
                                                         selectedTerminalID =
-                                                            int.parse(
-                                                                value.toString());
+                                                            int.parse(value
+                                                                .toString());
                                                       });
                                                     },
                                                     // items: [
@@ -417,10 +554,11 @@ class _DashboardsState extends State<Dashboards> {
                                                           context) =>
                                                       CustomConfirmDialog(
                                                           title:
-                                                              "Logout Confirm ?",
+                                                              "${localizeLangModel!.logoutConfirm}",
                                                           description:
-                                                              "Are you sure you want to logout ?",
-                                                          buttonText: "Yes",
+                                                              "${localizeLangModel.logoutConfirmMsg}",
+                                                          buttonText:
+                                                              "${localizeLangModel.yes}",
                                                           imagepath:
                                                               'assets/images/question.gif',
                                                           isMobile:
@@ -477,10 +615,11 @@ class _DashboardsState extends State<Dashboards> {
                                                             context) =>
                                                         CustomConfirmDialog(
                                                             title:
-                                                                "Logout Confirm ?",
+                                                                "${localizeLangModel!.logoutConfirm}",
                                                             description:
-                                                                "Are you sure you want to logout ?",
-                                                            buttonText: "Yes",
+                                                                "${localizeLangModel.logoutConfirmMsg}",
+                                                            buttonText:
+                                                                "${localizeLangModel.yes}",
                                                             imagepath:
                                                                 'assets/images/question.gif',
                                                             isMobile:
@@ -547,10 +686,11 @@ class _DashboardsState extends State<Dashboards> {
                                                             context) =>
                                                         CustomConfirmDialog(
                                                             title:
-                                                                "Logout Confirm ?",
+                                                                "${localizeLangModel!.logoutConfirm}",
                                                             description:
-                                                                "Are you sure you want to logout ?",
-                                                            buttonText: "Yes",
+                                                                "${localizeLangModel.logoutConfirmMsg}",
+                                                            buttonText:
+                                                                "${localizeLangModel.yes}",
                                                             imagepath:
                                                                 'assets/images/question.gif',
                                                             isMobile:
@@ -614,10 +754,12 @@ class _DashboardsState extends State<Dashboards> {
                                               context: context,
                                               builder: (BuildContext context) =>
                                                   CustomConfirmDialog(
-                                                      title: "Logout Confirm ?",
+                                                      title:
+                                                          "${localizeLangModel!.logoutConfirm}",
                                                       description:
-                                                          "Are you sure you want to logout ?",
-                                                      buttonText: "Yes",
+                                                          "${localizeLangModel.logoutConfirmMsg}",
+                                                      buttonText:
+                                                          "${localizeLangModel.yes}",
                                                       imagepath:
                                                           'assets/images/question.gif',
                                                       isMobile:
@@ -695,8 +837,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFff9472),
                       Color(0xFFf2709c),
                       Icons.local_shipping,
-                      "Dock",
-                      "In",
+                      "",
+                      "${localizeLangModel!.dockIn}",
                       DockIn(),
                       useMobileLayout),
                 if (isGHA)
@@ -704,8 +846,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFa8c0ff),
                       Color(0xFF4364F7),
                       Icons.maps_home_work,
-                      "W/H",
-                      "Acceptance",
+                      "",
+                      "${localizeLangModel!.whAccept}",
                       WarehouseAcceptanceList(),
                       useMobileLayout),
                 if (isGHA)
@@ -713,7 +855,7 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFa8c0ff),
                       Color(0xFF4364F7),
                       Icons.receipt_long,
-                      "Record",
+                      "${localizeLangModel!.record}",
                       "POD",
                       RecordPodList(),
                       useMobileLayout),
@@ -722,8 +864,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFff9472),
                       Color(0xFFf2709c),
                       Icons.local_shipping,
-                      "Dock",
-                      "Out",
+                      "",
+                      "${localizeLangModel!.dockOut}",
                       DockOut(),
                       useMobileLayout),
                 if (isGHA)
@@ -731,8 +873,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFa8c0ff),
                       Color(0xFF4364F7),
                       Icons.live_tv,
-                      "View Live",
-                      "Dock Status",
+                      "${localizeLangModel!.viewLive}",
+                      "${localizeLangModel.dockStatus}",
                       LiveDockStatus(),
                       useMobileLayout),
                 if (isTrucker || isTruckerFF)
@@ -740,8 +882,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFff9472),
                       Color(0xFFf2709c),
                       Icons.check_circle_outline,
-                      "Yard",
-                      "Check-in",
+                      "${localizeLangModel!.yard}",
+                      "${localizeLangModel!.checkIn}",
                       TruckYardCheckInList(),
                       useMobileLayout),
                 if (isTrucker || isTruckerFF)
@@ -749,8 +891,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFa8c0ff),
                       Color(0xFF4364F7),
                       Icons.local_activity_outlined,
-                      "Vehicle Token",
-                      "List",
+                      "${localizeLangModel!.vehicleToken}",
+                      "${localizeLangModel.list}",
                       VehicleTokenList(),
                       useMobileLayout),
 
@@ -759,8 +901,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFa8c0ff),
                       Color(0xFF4364F7),
                       Icons.history_outlined,
-                      "Vehicle",
-                      "Movement Tracking",
+                      "${localizeLangModel!.vehicle}",
+                      "${localizeLangModel.movementTracking}",
                       VehicleMovementTrackingList(),
                       useMobileLayout),
 
@@ -769,8 +911,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFff9472),
                       Color(0xFFf2709c),
                       Icons.book_online_outlined,
-                      "Book",
-                      "Slot",
+                      "${localizeLangModel!.booked}",
+                      "${localizeLangModel!.slot}",
                       SlotsList(),
                       useMobileLayout),
 
@@ -779,8 +921,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFa8c0ff),
                       Color(0xFF4364F7),
                       Icons.fact_check_outlined,
-                      "View",
-                      "Booked Slots",
+                      "${localizeLangModel!.view}",
+                      "${localizeLangModel.bookedSlots}",
                       BookedSlotsList(),
                       useMobileLayout),
 
@@ -789,8 +931,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFff9472),
                       Color(0xFFf2709c),
                       Icons.local_shipping,
-                      "Cargo",
-                      "Pick-up",
+                      "${localizeLangModel!.cargo}",
+                      "${localizeLangModel.pickUp}",
                       CArgoPickUp(),
                       useMobileLayout),
 
@@ -799,8 +941,8 @@ class _DashboardsState extends State<Dashboards> {
                       Color(0xFFff9472),
                       Color(0xFFf2709c),
                       Icons.local_shipping,
-                      "Cargo",
-                      "Drop",
+                      "${localizeLangModel!.cargo}",
+                      "${localizeLangModel.drop}",
                       CargoDrop(),
                       useMobileLayout),
                 // DashboardBlocks(
@@ -816,7 +958,7 @@ class _DashboardsState extends State<Dashboards> {
                     Color(0xFF0052D4),
                     Icons.reviews_outlined,
                     "",
-                    "Feedback",
+                    "${localizeLangModel!.feedback}",
                     AppFeedback(),
                     useMobileLayout),
                 // Padding(
@@ -1036,7 +1178,8 @@ class DashboardBlocks extends StatelessWidget {
                         // height: MediaQuery.of(context).size.height / 4.2,
                         // width: MediaQuery.of(context).size.width / 3, //180,
                         height: 250,
-                        width: 250, //180,
+                        width: 250,
+                        //180,
                         decoration: BoxDecoration(
                           //borderRadius: BorderRadius.circular(10),
                           borderRadius: BorderRadius.only(
@@ -1121,7 +1264,8 @@ class DashboardBlocks extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           height: MediaQuery.of(context).size.width / 4,
-                          width: MediaQuery.of(context).size.width / 4, //180,
+                          width: MediaQuery.of(context).size.width / 4,
+                          //180,
                           decoration: BoxDecoration(
                             //borderRadius: BorderRadius.circular(10),
                             borderRadius: BorderRadius.only(
@@ -1209,7 +1353,8 @@ class DashboardBlocks extends StatelessWidget {
                                 bottomLeft: Radius.circular(10),
                                 bottomRight: Radius.circular(10),
                               ),
-                            ), //
+                            ),
+                            //
                             padding: const EdgeInsets.all(0.0),
                           ),
                           child: Container(
@@ -1217,8 +1362,8 @@ class DashboardBlocks extends StatelessWidget {
                             // height: MediaQuery.of(context).size.height / 4.2,
                             // width: MediaQuery.of(context).size.width / 3, //180,
                             height: MediaQuery.of(context).size.height / 5,
-                            width:
-                                MediaQuery.of(context).size.width / 2.5, //180,
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            //180,
                             decoration: BoxDecoration(
                               //borderRadius: BorderRadius.circular(10),
                               borderRadius: BorderRadius.only(
@@ -1263,7 +1408,8 @@ class DashboardBlocks extends StatelessWidget {
                                           ? MediaQuery.of(context).size.width /
                                               20
                                           : MediaQuery.of(context).size.width /
-                                              25, //30, MediaQuery.of(context).size.width / 25, //30,
+                                              25,
+                                      //30, MediaQuery.of(context).size.width / 25, //30,
                                       fontWeight: FontWeight.normal,
                                       color: Colors.white),
                                 ),

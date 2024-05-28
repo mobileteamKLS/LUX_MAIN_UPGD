@@ -15,6 +15,8 @@ import 'package:luxair/widgets/speech_recognition.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class DockIn extends StatefulWidget {
   DockIn({Key? key}) : super(key: key);
@@ -271,6 +273,10 @@ class _DockInState extends State<DockIn> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -368,7 +374,7 @@ class _DockInState extends State<DockIn> {
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "Dock-In List"),
+                headerText: "${localizeLangModel!.dockIn} ${localizeLangModel.list}"),
             useMobileLayout
                 ? Expanded(
                     flex: 0,
@@ -385,15 +391,15 @@ class _DockInState extends State<DockIn> {
                               children: [
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width / 4,
-                                  child: Text("Mode",
+                                  child: Text("${localizeLangModel.mode}",
                                       style: mobileHeaderFontStyle),
                                 ),
                                 AdvancedSwitch(
                                   activeColor: Color(0xFF11249F),
                                   inactiveColor: Color(0xFF11249F),
-                                  activeChild: Text('Import',
+                                  activeChild: Text('${localizeLangModel.imports}',
                                       style: mobileTextFontStyleWhite),
-                                  inactiveChild: Text('Export',
+                                  inactiveChild: Text('${localizeLangModel.exports}',
                                       style: mobileTextFontStyleWhite),
                                   width:
                                       MediaQuery.of(context).size.width / 2.5,
@@ -406,7 +412,7 @@ class _DockInState extends State<DockIn> {
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("Search VT No.",
+                                child: Text("${localizeLangModel.search} ${localizeLangModel.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(
@@ -433,7 +439,7 @@ class _DockInState extends State<DockIn> {
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Search VT No.",
+                                          hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -529,7 +535,7 @@ class _DockInState extends State<DockIn> {
                                                   .size
                                                   .width /
                                               2.45,
-                                          child: Text(" Mode",
+                                          child: Text(" ${localizeLangModel.mode}",
                                               style: iPadGroupHeaderFontStyle),
                                         ),
                                         Padding(
@@ -552,7 +558,7 @@ class _DockInState extends State<DockIn> {
                                                 iPadModelabelFontStyle,
                                                 iPadModelabelFontStyle
                                               ],
-                                              labels: ['Exports ', ' Imports'],
+                                              labels: ['${localizeLangModel.exports}', ' ${localizeLangModel.imports}'],
                                               icons: [
                                                 Icons.north,
                                                 Icons.south,
@@ -610,7 +616,7 @@ class _DockInState extends State<DockIn> {
                                                   .size
                                                   .width /
                                               3.11,
-                                          child: Text(" Search VT No.",
+                                          child: Text("${localizeLangModel.search} ${localizeLangModel.vTno}",
                                               style: iPadGroupHeaderFontStyle),
                                         ),
                                         Padding(
@@ -646,7 +652,7 @@ class _DockInState extends State<DockIn> {
                                                         .characters,
                                                 decoration: InputDecoration(
                                                   border: InputBorder.none,
-                                                  hintText: "Search VT No.",
+                                                  hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                                   hintStyle: TextStyle(
                                                       color: Colors.grey),
                                                   contentPadding:

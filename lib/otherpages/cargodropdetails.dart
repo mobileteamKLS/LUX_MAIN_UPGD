@@ -5,6 +5,9 @@ import 'package:luxair/widgets/customdialogue.dart';
 import '../constants.dart';
 import 'package:luxair/widgets/headerclipper.dart';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class CargoDropDetails extends StatefulWidget {
    bool isExport = false;
   //final VehicleToken selectedVtDetails;
@@ -34,6 +37,10 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
   
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     return Scaffold(
@@ -44,7 +51,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
           HeaderClipperWave(
               color1: Color(0xFF3383CD),
               color2: Color(0xFF11249F),
-              headerText: "Cargo Drop Details"),
+              headerText: "${localizeLangModel!.cargo} ${localizeLangModel.drop} ${localizeLangModel.details}"),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -65,7 +72,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                               : MediaQuery.of(context).size.width / 7,
                           // hard coding child width
                           child: Text(
-                            "VT No.",
+                            "${localizeLangModel.vTno}",
                             style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -95,7 +102,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Enter Vehicle No.",
+                                hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicleNo}",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
@@ -131,7 +138,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                         ),
                         SizedBox(height: useMobileLayout ? 10 : 20),
                         Text(
-                          "Vehicle Details",
+                          "${localizeLangModel.vehicleDetails}",
                           style: useMobileLayout
                               ? mobileHeaderFontStyle
                               : TextStyle(
@@ -185,7 +192,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Vehicle No.',
+                                                                '${localizeLangModel.vehicleNo}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -203,7 +210,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Driver Name',
+                                                                '${localizeLangModel.driverName}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -250,7 +257,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                               .yellow.shade100,
                                                           child: Center(
                                                             child: Text(
-                                                                "DRIVERNAME",
+                                                                "${localizeLangModel.driverName}",
                                                                 style:
                                                                     mobileDetailsYellowBold),
                                                           ),
@@ -283,7 +290,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Slot/ Dock Details',
+                                                                '${localizeLangModel.slot}/ ${localizeLangModel.dockDetails}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -312,7 +319,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                               .yellow.shade100,
                                                           child: Center(
                                                             child: Text(
-                                                                "SLOTTIME",
+                                                                "${localizeLangModel.slotTime}",
                                                                 style:
                                                                     mobileDetailsYellowBold),
                                                           ),
@@ -357,7 +364,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'Vehicle No.',
+                                                    '${localizeLangModel.vehicleNo}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -377,7 +384,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'Driver Name',
+                                                    '${localizeLangModel.driverName}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -397,7 +404,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'Slot/ Dock Details',
+                                                    '${localizeLangModel.slot}/ ${localizeLangModel.dockDetails}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -494,7 +501,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'AWB No.',
+                                                    '${localizeLangModel.aWBNum}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -514,7 +521,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'HAWB No.',
+                                                    '${localizeLangModel.hAWBNo}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -631,7 +638,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'CRN',
+                                                    '${localizeLangModel.cRN}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -779,10 +786,10 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                             context: context,
                             builder: (BuildContext context) => CustomDialog(
                               title: txtVTNO.text,
-                              description: "Cargo Drop for VT# " +
+                              description: "${localizeLangModel.cargo} ${localizeLangModel.drop} ${localizeLangModel.For} VT# " +
                                   txtVTNO.text +
-                                  " has been completed successfully",
-                              buttonText: "Okay",
+                                  " ${localizeLangModel.hasBeenSentSuccessfully}",
+                              buttonText: "${localizeLangModel.ok}",
                               imagepath: 'assets/images/successchk.gif',
                                             isMobile: useMobileLayout,
                             ),
@@ -814,7 +821,7 @@ class _CargoDropDetailsState extends State<CargoDropDetails> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Submit',
+                                '${localizeLangModel.submit}',
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.normal,

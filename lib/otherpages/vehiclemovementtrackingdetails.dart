@@ -7,6 +7,8 @@ import 'package:luxair/widgets/timeline.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class VehicleMovementTrackingDetails extends StatefulWidget {
   bool isExport = false;
@@ -39,6 +41,10 @@ class _VehicleMovementTrackingDetailsState
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -138,7 +144,7 @@ class _VehicleMovementTrackingDetailsState
                     Padding(
                       padding: const EdgeInsets.only(left: 3.0),
                       child: Text(
-                        "Vehicle Details",
+                        "${localizeLangModel!.vehicleDetails}",
                         style: useMobileLayout
                             ? mobileHeaderFontStyle
                             : TextStyle(
@@ -171,7 +177,7 @@ class _VehicleMovementTrackingDetailsState
                                                     .size
                                                     .width /
                                                 3,
-                                            child: Text('Vehicle No.',
+                                            child: Text('${localizeLangModel!.vehicleNo}',
                                                 style: mobileHeaderFontStyle),
                                           ),
                                           SizedBox(
@@ -195,7 +201,7 @@ class _VehicleMovementTrackingDetailsState
                                                     .size
                                                     .width /
                                                 3,
-                                            child: Text('Driver Name',
+                                            child: Text('${localizeLangModel!.driverName}',
                                                 style: mobileHeaderFontStyle),
                                           ),
                                           SizedBox(
@@ -219,7 +225,7 @@ class _VehicleMovementTrackingDetailsState
                                                     .size
                                                     .width /
                                                 3,
-                                            child: Text('Mobile No.',
+                                            child: Text('${localizeLangModel!.contactNo}',
                                                 style: mobileHeaderFontStyle),
                                           ),
                                           SizedBox(
@@ -262,7 +268,7 @@ class _VehicleMovementTrackingDetailsState
                                                 height: 50,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('Vehicle No.',
+                                                  child: Text('${localizeLangModel!.vehicleNo}',
                                                       style:
                                                           iPadYellowTextFontStyleBold),
                                                 ),
@@ -278,7 +284,7 @@ class _VehicleMovementTrackingDetailsState
                                                 height: 50,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('Driver Name',
+                                                  child: Text('${localizeLangModel!.driverName}',
                                                       style:
                                                           iPadYellowTextFontStyleBold),
                                                 ),
@@ -294,7 +300,7 @@ class _VehicleMovementTrackingDetailsState
                                                 height: 50,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('Mobile No.',
+                                                  child: Text('${localizeLangModel!.contactNo}',
                                                       style:
                                                           iPadYellowTextFontStyleBold),
                                                 ),
@@ -373,7 +379,7 @@ class _VehicleMovementTrackingDetailsState
                     Padding(
                       padding: const EdgeInsets.only(left: 3.0),
                       child: Text(
-                        "Tracking Details",
+                        "${localizeLangModel.tracking} ${localizeLangModel.details}",
                         style: useMobileLayout
                             ? mobileHeaderFontStyle
                             : TextStyle(
@@ -449,7 +455,7 @@ class _VehicleMovementTrackingDetailsState
                     Padding(
                       padding: const EdgeInsets.only(left: 3.0),
                       child: Text(
-                        "Shipment Details",
+                        "${localizeLangModel!.shipmentDetails}",
                         style: useMobileLayout
                             ? mobileHeaderFontStyle
                             : TextStyle(
@@ -498,7 +504,7 @@ class _VehicleMovementTrackingDetailsState
                                                                   .size
                                                                   .width /
                                                               2.2,
-                                                          child: Text('AWB No.',
+                                                          child: Text('${localizeLangModel!.aWBNum}',
                                                               style:
                                                                   mobileHeaderFontStyle),
                                                         ),
@@ -508,7 +514,7 @@ class _VehicleMovementTrackingDetailsState
                                                                   .size
                                                                   .width /
                                                               3,
-                                                          child: Text('Status',
+                                                          child: Text('${localizeLangModel.sUBStatus}',
                                                               style:
                                                                   mobileHeaderFontStyle),
                                                         ),
@@ -567,7 +573,7 @@ class _VehicleMovementTrackingDetailsState
                                                                 .width /
                                                             4,
                                                         child: Text(
-                                                            'Rejection Reason',
+                                                            '${localizeLangModel!.rejection} ${localizeLangModel.reason}',
                                                             style:
                                                                 mobileHeaderFontStyle),
                                                       ),
@@ -810,7 +816,7 @@ class _VehicleMovementTrackingDetailsState
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'AWB No.',
+                                                                '${localizeLangModel!.aWBNum}',
                                                                 style:
                                                                     iPadYellowTextFontStyleBold),
                                                           ),
@@ -829,7 +835,7 @@ class _VehicleMovementTrackingDetailsState
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Status',
+                                                                '${localizeLangModel.sUBStatus}',
                                                                 style:
                                                                     iPadYellowTextFontStyleBold),
                                                           ),
@@ -848,7 +854,7 @@ class _VehicleMovementTrackingDetailsState
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Rejection Reason',
+                                                                '${localizeLangModel.rejection} ${localizeLangModel.reason}',
                                                                 style:
                                                                     iPadYellowTextFontStyleBold),
                                                           ),

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:luxair/widgets/preview_page.dart';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 import 'headerclipper.dart';
 
 class CameraPage extends StatefulWidget {
@@ -77,6 +79,10 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Scaffold(
         //appBar: AppBar(title: const Text('Camera Page')),
 

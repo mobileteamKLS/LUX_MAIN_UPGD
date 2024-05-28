@@ -16,6 +16,8 @@ import 'package:luxair/widgets/headerclipper.dart';
 import 'package:luxair/widgets/headers.dart';
 
 import '../constants.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class WarehouseAcceptanceDetails extends StatefulWidget {
   final String vtNumber, awbNumber, prefix;
@@ -67,6 +69,10 @@ class _WarehouseAcceptanceDetailsState
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -78,7 +84,7 @@ class _WarehouseAcceptanceDetailsState
           HeaderClipperWave(
               color1: Color(0xFF3383CD),
               color2: Color(0xFF11249F),
-              headerText: "W/H Acceptance Details"),
+              headerText: "${localizeLangModel!.warehouseAccpt} ${localizeLangModel.details}"),
 
           // ClipPath(
           //   clipper: MyClippers1(),
@@ -151,7 +157,7 @@ class _WarehouseAcceptanceDetailsState
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 10),
-                              Text("AWB Details", style: mobileHeaderFontStyle),
+                              Text("${localizeLangModel.aWBNum} ${localizeLangModel.details}", style: mobileHeaderFontStyle),
                               SizedBox(height: 5),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 1.01,
@@ -176,7 +182,7 @@ class _WarehouseAcceptanceDetailsState
                                                 height: 30,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('AWB No.',
+                                                  child: Text('${localizeLangModel.aWBNum}',
                                                       style:
                                                           mobileYellowTextFontStyleBold),
                                                 ),
@@ -191,7 +197,7 @@ class _WarehouseAcceptanceDetailsState
                                                 height: 30,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('VT No.',
+                                                  child: Text('${localizeLangModel.vTno}',
                                                       style:
                                                           mobileYellowTextFontStyleBold),
                                                 ),
@@ -284,7 +290,7 @@ class _WarehouseAcceptanceDetailsState
                                                 height: 30,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('Commodity',
+                                                  child: Text('${localizeLangModel.commodity}',
                                                       style:
                                                           mobileYellowTextFontStyleBold),
                                                 ),
@@ -299,7 +305,7 @@ class _WarehouseAcceptanceDetailsState
                                                 height: 30,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('AWB Destination',
+                                                  child: Text('${localizeLangModel.aWBDest}',
                                                       style:
                                                           mobileYellowTextFontStyleBold),
                                                 ),
@@ -371,7 +377,7 @@ class _WarehouseAcceptanceDetailsState
                                                 color: Colors.yellow.shade300,
                                                 child: Align(
                                                   alignment: Alignment.center,
-                                                  child: Text('Actual \n NOP',
+                                                  child: Text('${localizeLangModel.actualNop}',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -389,26 +395,7 @@ class _WarehouseAcceptanceDetailsState
                                                 color: Colors.yellow.shade300,
                                                 child: Align(
                                                   alignment: Alignment.center,
-                                                  child: Text('Received \n NOP',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          mobileYellowTextFontStyleBold),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  4.5,
-                                              child: Container(
-                                                height: 60,
-                                                color: Colors.yellow.shade300,
-                                                child: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                      'Actual \n Weight',
+                                                  child: Text('${localizeLangModel.rcvdNOp}',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -427,7 +414,26 @@ class _WarehouseAcceptanceDetailsState
                                                 child: Align(
                                                   alignment: Alignment.center,
                                                   child: Text(
-                                                      'Received \n Weight',
+                                                      '${localizeLangModel.actualGrWt}',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          mobileYellowTextFontStyleBold),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  4.5,
+                                              child: Container(
+                                                height: 60,
+                                                color: Colors.yellow.shade300,
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                      '${localizeLangModel.rcvdGrWt}',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -564,7 +570,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   .width /
                                                               2.2,
                                                           child: Text(
-                                                              "Received Pkgs",
+                                                              "${localizeLangModel.received} ${localizeLangModel.packages}",
                                                               style:
                                                                   mobileHeaderFontStyle),
                                                         ),
@@ -621,7 +627,7 @@ class _WarehouseAcceptanceDetailsState
                                                                     InputBorder
                                                                         .none,
                                                                 hintText:
-                                                                    "Enter Received Pkgs.",
+                                                                    "${localizeLangModel.pleaseEnter} ${localizeLangModel.received} ${localizeLangModel.packages}",
                                                                 hintStyle: TextStyle(
                                                                     color: isValidRcvdPkgs
                                                                         ? Colors
@@ -656,7 +662,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   .width /
                                                               2.2,
                                                           child: Text(
-                                                              "Received GR. WT.",
+                                                              "${localizeLangModel.received} ${localizeLangModel.grWt}",
                                                               style:
                                                                   mobileHeaderFontStyle),
                                                         ),
@@ -729,7 +735,7 @@ class _WarehouseAcceptanceDetailsState
                                                                     InputBorder
                                                                         .none,
                                                                 hintText:
-                                                                    "Enter Received GR. WT.",
+                                                                    "${localizeLangModel.pleaseEnter} ${localizeLangModel.received} ${localizeLangModel.grWt}",
                                                                 hintStyle: TextStyle(
                                                                     color: isValidRcvdPkgs
                                                                         ? Colors
@@ -772,7 +778,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   .size
                                                                   .width /
                                                               3.2,
-                                                      child: Text("Driver Name",
+                                                      child: Text("${localizeLangModel.driverName}",
                                                           style:
                                                               mobileHeaderFontStyle),
                                                     ),
@@ -805,7 +811,7 @@ class _WarehouseAcceptanceDetailsState
                                                           border:
                                                               InputBorder.none,
                                                           hintText:
-                                                              "Enter Driver Name",
+                                                              "${localizeLangModel.pleaseEnter} ${localizeLangModel.driverName}",
                                                           hintStyle: TextStyle(
                                                               color:
                                                                   Colors.grey),
@@ -846,7 +852,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   .width /
                                                               3.2,
                                                       child: Text(
-                                                          "Acceptance Reason",
+                                                          "${localizeLangModel.accReason}",
                                                           style:
                                                               mobileHeaderFontStyle),
                                                     ),
@@ -945,11 +951,11 @@ class _WarehouseAcceptanceDetailsState
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text("Signature",
+                                                          Text("${localizeLangModel.signature}",
                                                               style:
                                                                   mobileHeaderFontStyle),
                                                           SizedBox(height: 10),
-                                                          Text("OR",
+                                                          Text("${localizeLangModel.oR}",
                                                               style:
                                                                   mobileHeaderFontStyle),
                                                           SizedBox(height: 10),
@@ -1182,7 +1188,7 @@ class _WarehouseAcceptanceDetailsState
                                                   5.2,
                                               //  width: MediaQuery.of(context).size.width, //180,
                                               child: AlertDialog(
-                                                title: Text('Rejection Details',
+                                                title: Text('${localizeLangModel.rejected} ${localizeLangModel.details}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -1204,7 +1210,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   .width /
                                                               2.5,
                                                       child: Text(
-                                                        "Rejection Reason",
+                                                        "${localizeLangModel.rejected} ${localizeLangModel.reason}",
                                                         style: TextStyle(
                                                           fontSize: 18,
                                                           fontWeight:
@@ -1287,7 +1293,7 @@ class _WarehouseAcceptanceDetailsState
 
                                                     SizedBox(height: 10),
 
-                                                    Text("Damage Type (Opt.)",
+                                                    Text("${localizeLangModel.damageType}${localizeLangModel.opt}",
                                                         style:
                                                             mobileHeaderFontStyle),
                                                     Container(
@@ -1372,7 +1378,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   .width /
                                                               3.2,
                                                       child: Text(
-                                                          "Damaged Pkgs",
+                                                          "${localizeLangModel.damagepkgs}",
                                                           style:
                                                               mobileHeaderFontStyle),
                                                     ),
@@ -1415,7 +1421,7 @@ class _WarehouseAcceptanceDetailsState
                                                           border:
                                                               InputBorder.none,
                                                           hintText:
-                                                              "Enter Damaged Pkgs",
+                                                              "${localizeLangModel.pleaseEnter} ${localizeLangModel.damagepkgs}",
                                                           hintStyle: TextStyle(
                                                               color:
                                                                   isValidDmgPkgs
@@ -1447,7 +1453,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   .width /
                                                               2.5,
                                                       child: Text(
-                                                        "Rejection Remark",
+                                                        "${localizeLangModel.rejected} ${localizeLangModel.remarks}",
                                                         style: TextStyle(
                                                           fontSize: 18,
                                                           fontWeight:
@@ -1485,7 +1491,7 @@ class _WarehouseAcceptanceDetailsState
                                                           border:
                                                               InputBorder.none,
                                                           hintText:
-                                                              "Enter Rejection Remarks",
+                                                              "${localizeLangModel.pleaseEnter} ${localizeLangModel.rejected} ${localizeLangModel.remarks}",
                                                           hintStyle: TextStyle(
                                                               color:
                                                                   Colors.grey),
@@ -1516,7 +1522,7 @@ class _WarehouseAcceptanceDetailsState
                                                       Navigator.of(context)
                                                           .pop(returnVal);
                                                     },
-                                                    child: Text('Cancel'),
+                                                    child: Text('${localizeLangModel.cancel}'),
                                                   ),
                                                   ElevatedButton(
                                                     //textColor: Colors.black,
@@ -1533,9 +1539,9 @@ class _WarehouseAcceptanceDetailsState
                                                           0) {
                                                         showAlertDialog(
                                                             context,
-                                                            "OK",
-                                                            "Alert",
-                                                            "Select Rejection Reason");
+                                                            "${localizeLangModel.ok}",
+                                                            "${localizeLangModel.alert}",
+                                                            "${localizeLangModel.select} ${localizeLangModel.rejected} ${localizeLangModel.reason}");
                                                         return;
                                                       } else {
                                                         if (rejectionReasonSelected ==
@@ -1545,9 +1551,9 @@ class _WarehouseAcceptanceDetailsState
                                                               "") {
                                                             showAlertDialog(
                                                                 context,
-                                                                "OK",
-                                                                "Alert",
-                                                                "Enter damaged pieces quantity");
+                                                                "${localizeLangModel.ok}",
+                                                                "${localizeLangModel.alert}",
+                                                                "${localizeLangModel.pleaseEnter} ${localizeLangModel.damagedPieces} ${localizeLangModel.quantity}");
                                                             return;
                                                           } else {
                                                             if (int.parse(
@@ -1561,9 +1567,9 @@ class _WarehouseAcceptanceDetailsState
                                                               setState(() {
                                                                 showAlertDialog(
                                                                     context,
-                                                                    "OK",
-                                                                    "Alert",
-                                                                    "Damaged Pieces quantity must be less than or equal to Actual Packages");
+                                                                    "${localizeLangModel.ok}",
+                                                                    "${localizeLangModel.alert}",
+                                                                    "${localizeLangModel.damagedPieces} ${localizeLangModel.quantity} ${localizeLangModel.mustBeLessThanOrEqualTo} ${localizeLangModel.actual} ${localizeLangModel.packages}");
 
                                                                 // isValidDmgPkgs =
                                                                 //     false;
@@ -1576,9 +1582,9 @@ class _WarehouseAcceptanceDetailsState
                                                                   "") {
                                                                 showAlertDialog(
                                                                     context,
-                                                                    "OK",
-                                                                    "Alert",
-                                                                    "Rejection Remark cannot be empty");
+                                                                    "${localizeLangModel.ok}",
+                                                                    "${localizeLangModel.alert}",
+                                                                    "${localizeLangModel.rejection} ${localizeLangModel.remarks} ${localizeLangModel.cannotBeEmpty}");
                                                               } else {
                                                                 List<String>
                                                                     returnVal =
@@ -1614,7 +1620,7 @@ class _WarehouseAcceptanceDetailsState
                                                         }
                                                       }
                                                     },
-                                                    child: Text('Okay'),
+                                                    child: Text('${localizeLangModel.ok}'),
                                                   ),
                                                 ],
                                               ),
@@ -1632,10 +1638,10 @@ class _WarehouseAcceptanceDetailsState
                                                 CustomDialog(
                                               title: widget.vtNumber,
                                               description:
-                                                    "Warehouse Acceptance for AWB# " + widget.prefix + "-"+ widget.awbNumber + " in VT# " +                                            
+                                                    "${localizeLangModel.whAccept} ${localizeLangModel.For} for AWB# " + widget.prefix + "-"+ widget.awbNumber + " in VT# " +
                                                   widget.vtNumber +
-                                                      " has been rejected successfully",
-                                              buttonText: "Okay",
+                                                      "${localizeLangModel.hasBeenRejectedSuccessfully}",
+                                              buttonText: "${localizeLangModel.ok}",
                                               imagepath:
                                                   'assets/images/successlines.gif',
                                               isMobile: useMobileLayout,
@@ -1659,13 +1665,13 @@ class _WarehouseAcceptanceDetailsState
                                             builder: (BuildContext context) =>
                                                 customAlertMessageDialog(
                                                     title: errMsgText == ""
-                                                        ? "Error Occured"
-                                                        : "Rejection Failed",
+                                                        ? "${localizeLangModel.errorOccured}"
+                                                        : "${localizeLangModel.rejected} ${localizeLangModel.failed}",
                                                     description: errMsgText ==
                                                             ""
-                                                        ? "Error occured while performing Rejection Activity , Please try again after some time"
+                                                        ? "${localizeLangModel.errorOccured} ${localizeLangModel.whiles} ${localizeLangModel.performing} ${localizeLangModel.rejection} Activity , ${localizeLangModel.tryAfterSometimeValidation}"
                                                         : errMsgText,
-                                                    buttonText: "Okay",
+                                                    buttonText: "${localizeLangModel.ok}",
                                                     imagepath:
                                                         'assets/images/warn.gif',
                                                     isMobile: useMobileLayout),
@@ -1694,7 +1700,7 @@ class _WarehouseAcceptanceDetailsState
                                             top: 8.0, bottom: 8.0),
                                         child: Align(
                                           alignment: Alignment.center,
-                                          child: Text('Reject',
+                                          child: Text('${localizeLangModel.rejected}',
                                               style: buttonRedFontStyle),
                                         ),
                                       ),
@@ -1731,9 +1737,9 @@ class _WarehouseAcceptanceDetailsState
                                         setState(() {
                                           showAlertDialog(
                                               context,
-                                              "OK",
-                                              "Alert",
-                                              "Received Packages must be less than or equal to Actual Packages");
+                                              "${localizeLangModel.ok}",
+                                              "${localizeLangModel.alert}",
+                                              "${localizeLangModel.received} ${localizeLangModel.packages} ${localizeLangModel.mustBeLessThanOrEqualTo} ${localizeLangModel.actual} ${localizeLangModel.packages}");
                                           isValidRcvdPkgs = false;
                                         });
 
@@ -1747,9 +1753,9 @@ class _WarehouseAcceptanceDetailsState
                                         setState(() {
                                           showAlertDialog(
                                               context,
-                                              "OK",
-                                              "Alert",
-                                              "Received GR. WT. must be less than or equal to Actual Weight");
+                                              "${localizeLangModel.ok}",
+                                              "${localizeLangModel.alert}",
+                                              "${localizeLangModel.received} ${localizeLangModel.grWt} ${localizeLangModel.mustBeLessThanOrEqualTo} ${localizeLangModel.actual} ${localizeLangModel.weight}");
 
                                           isValidRcvdGrWt = false;
                                         });
@@ -1792,9 +1798,9 @@ class _WarehouseAcceptanceDetailsState
                                             setState(() {
                                               showAlertDialog(
                                                   context,
-                                                  "OK",
-                                                  "Alert",
-                                                  "Acceptance Reason cannot be empty");
+                                                  "${localizeLangModel.ok}",
+                                                  "${localizeLangModel.alert}",
+                                                  "${localizeLangModel.accReason} ${localizeLangModel.cannotBeEmpty}");
                                               isValidDeliveryRemark = false;
                                               return;
                                             });
@@ -1827,10 +1833,10 @@ class _WarehouseAcceptanceDetailsState
                                                 CustomDialog(
                                               title: widget.vtNumber,
                                          description:
-                                                    "Warehouse Acceptance for AWB# " + widget.prefix + "-"+ widget.awbNumber + " in VT# " +                                            
+                                                    "${localizeLangModel.whAccept} ${localizeLangModel.For} AWB# " + widget.prefix + "-"+ widget.awbNumber + " in VT# " +
                                                   widget.vtNumber +
-                                                      " has been completed successfully",
-                                              buttonText: "Okay",
+                                                      " ${localizeLangModel.hasBeenSentSuccessfully}",
+                                              buttonText: "${localizeLangModel.ok}",
                                               imagepath:
                                                   'assets/images/successchk.gif',
                                               isMobile: useMobileLayout,
@@ -1847,13 +1853,13 @@ class _WarehouseAcceptanceDetailsState
                                             builder: (BuildContext context) =>
                                                 customAlertMessageDialog(
                                                     title: errMsgText == ""
-                                                        ? "Error Occured"
-                                                        : "Warehouse Acceptance Failed",
+                                                        ? "${localizeLangModel.errorOccured}"
+                                                        : "${localizeLangModel.whAccept} ${localizeLangModel.failed}",
                                                     description: errMsgText ==
                                                             ""
-                                                        ? "Error occured while performing Warehouse Acceptance, Please try again after some time"
+                                                        ? "${localizeLangModel.errorOccured} ${localizeLangModel.whiles} ${localizeLangModel.performing} ${localizeLangModel.whAccept}, ${localizeLangModel.tryAfterSometimeValidation}"
                                                         : errMsgText,
-                                                    buttonText: "Okay",
+                                                    buttonText: "${localizeLangModel.ok}",
                                                     imagepath:
                                                         'assets/images/warn.gif',
                                                     isMobile: useMobileLayout),
@@ -1894,7 +1900,7 @@ class _WarehouseAcceptanceDetailsState
                                             top: 8.0, bottom: 8.0),
                                         child: Align(
                                           alignment: Alignment.center,
-                                          child: Text('Submit',
+                                          child: Text('${localizeLangModel.submit}',
                                               style: buttonWhiteFontStyle),
                                         ),
                                       ),
@@ -1922,7 +1928,7 @@ class _WarehouseAcceptanceDetailsState
                             children: [
                               SizedBox(height: 10),
                               Text(
-                                "AWB Details",
+                                "${localizeLangModel.aWBNum} ${localizeLangModel.details}",
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.normal,
@@ -1954,7 +1960,7 @@ class _WarehouseAcceptanceDetailsState
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'AWB No.',
+                                                    '${localizeLangModel.aWBNum}',
                                                     style: TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
@@ -1974,7 +1980,7 @@ class _WarehouseAcceptanceDetailsState
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'VT No.',
+                                                    '${localizeLangModel.vTno}',
                                                     style: TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
@@ -2085,7 +2091,7 @@ class _WarehouseAcceptanceDetailsState
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'Commodity',
+                                                    '${localizeLangModel.commodity}',
                                                     style: TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
@@ -2105,7 +2111,7 @@ class _WarehouseAcceptanceDetailsState
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'AWB Destination',
+                                                    '${localizeLangModel.aWBDest}',
                                                     style: TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
@@ -2191,7 +2197,7 @@ class _WarehouseAcceptanceDetailsState
                                                 child: Align(
                                                   alignment: Alignment.center,
                                                   child: Text(
-                                                    'Actual \n NOP',
+                                                    '${localizeLangModel.actualNop}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontSize: 16,
@@ -2213,7 +2219,7 @@ class _WarehouseAcceptanceDetailsState
                                                 child: Align(
                                                   alignment: Alignment.center,
                                                   child: Text(
-                                                    'Received \n NOP',
+                                                    '${localizeLangModel.rcvdNOp}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontSize: 16,
@@ -2235,7 +2241,7 @@ class _WarehouseAcceptanceDetailsState
                                                 child: Align(
                                                   alignment: Alignment.center,
                                                   child: Text(
-                                                    'Actual \n Weight',
+                                                    '${localizeLangModel.actualGrWt}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontSize: 16,
@@ -2258,7 +2264,7 @@ class _WarehouseAcceptanceDetailsState
                                                 child: Align(
                                                   alignment: Alignment.center,
                                                   child: Text(
-                                                    'Received \n Weight',
+                                                    '${localizeLangModel.rcvdGrWt}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontSize: 16,
@@ -2407,7 +2413,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   .width /
                                                               2.5,
                                                       child: Text(
-                                                        "Received Packages",
+                                                        "${localizeLangModel.received} ${localizeLangModel.packages}",
                                                         style: TextStyle(
                                                           fontSize: 18,
                                                           fontWeight:
@@ -2467,7 +2473,7 @@ class _WarehouseAcceptanceDetailsState
                                                             border: InputBorder
                                                                 .none,
                                                             hintText:
-                                                                "Enter Received Packages",
+                                                                "${localizeLangModel.pleaseEnter} ${localizeLangModel.received} ${localizeLangModel.packages}",
                                                             hintStyle: TextStyle(
                                                                 color: isValidRcvdPkgs
                                                                     ? Colors
@@ -2498,7 +2504,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   .width /
                                                               2.5,
                                                       child: Text(
-                                                        "Driver Name",
+                                                        "${localizeLangModel.driverName}",
                                                         style: TextStyle(
                                                           fontSize: 18,
                                                           fontWeight:
@@ -2547,7 +2553,7 @@ class _WarehouseAcceptanceDetailsState
                                                             border: InputBorder
                                                                 .none,
                                                             hintText:
-                                                                "Enter Driver Name",
+                                                                "${localizeLangModel.pleaseEnter} ${localizeLangModel.driverName}",
                                                             hintStyle: TextStyle(
                                                                 color: Colors
                                                                     .grey),
@@ -2575,7 +2581,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   .width /
                                                               2.5,
                                                       child: Text(
-                                                        "Acceptance Reason",
+                                                        "${localizeLangModel.accReason}",
                                                         style: TextStyle(
                                                           fontSize: 18,
                                                           fontWeight:
@@ -2683,7 +2689,7 @@ class _WarehouseAcceptanceDetailsState
                                                                 .width /
                                                             2.5,
                                                     child: Text(
-                                                      "Received Gross Weight",
+                                                      "${localizeLangModel.rcvdGrWt}",
                                                       style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -2753,7 +2759,7 @@ class _WarehouseAcceptanceDetailsState
                                                           border:
                                                               InputBorder.none,
                                                           hintText:
-                                                              "Enter Received Gross Weight",
+                                                              "${localizeLangModel.pleaseEnter} ${localizeLangModel.rcvdGrWt}",
                                                           hintStyle: TextStyle(
                                                               color:
                                                                   isValidRcvdGrWt
@@ -2793,7 +2799,7 @@ class _WarehouseAcceptanceDetailsState
                                                               .center,
                                                       children: [
                                                         Text(
-                                                          "Signature",
+                                                          "${localizeLangModel.signature}",
                                                           style: TextStyle(
                                                             fontSize: 18,
                                                             fontWeight:
@@ -3044,7 +3050,7 @@ class _WarehouseAcceptanceDetailsState
                                                 //  width: MediaQuery.of(context).size.width, //180,
                                                 child: AlertDialog(
                                                   title: Text(
-                                                      'Rejection Details',
+                                                      '${localizeLangModel.rejected} ${localizeLangModel.details}',
                                                       style: TextStyle(
                                                           fontSize: 18,
                                                           fontWeight:
@@ -3062,7 +3068,7 @@ class _WarehouseAcceptanceDetailsState
                                                                 .width /
                                                             2.5,
                                                         child: Text(
-                                                          "Rejection Reason",
+                                                          "${localizeLangModel.rejected} ${localizeLangModel.reason}",
                                                           style: TextStyle(
                                                             fontSize: 18,
                                                             fontWeight:
@@ -3159,7 +3165,7 @@ class _WarehouseAcceptanceDetailsState
                                                                 .width /
                                                             2.5,
                                                         child: Text(
-                                                          "Damage Type (Opt.)",
+                                                          "${localizeLangModel.damageType} ${localizeLangModel.opt}",
                                                           style: TextStyle(
                                                             fontSize: 18,
                                                             fontWeight:
@@ -3245,7 +3251,7 @@ class _WarehouseAcceptanceDetailsState
                                                                 .width /
                                                             2.5,
                                                         child: Text(
-                                                          "Damaged Pieces",
+                                                          "${localizeLangModel.damagedPieces}",
                                                           style: TextStyle(
                                                             fontSize: 18,
                                                             fontWeight:
@@ -3308,7 +3314,7 @@ class _WarehouseAcceptanceDetailsState
                                                                   InputBorder
                                                                       .none,
                                                               hintText:
-                                                                  "Enter Damaged Pieces count",
+                                                                  "${localizeLangModel.pleaseEnter} ${localizeLangModel.damagedPieces} ${localizeLangModel.count}",
                                                               hintStyle: TextStyle(
                                                                   color: isValidDmgPkgs
                                                                       ? Colors
@@ -3339,7 +3345,7 @@ class _WarehouseAcceptanceDetailsState
                                                                 .width /
                                                             2.5,
                                                         child: Text(
-                                                          "Rejection Remark",
+                                                          "${localizeLangModel.rejected} ${localizeLangModel.remarks}",
                                                           style: TextStyle(
                                                             fontSize: 18,
                                                             fontWeight:
@@ -3382,7 +3388,7 @@ class _WarehouseAcceptanceDetailsState
                                                             border: InputBorder
                                                                 .none,
                                                             hintText:
-                                                                "Enter Rejection Remarks",
+                                                                "${localizeLangModel.pleaseEnter} ${localizeLangModel.rejected} ${localizeLangModel.remarks}",
                                                             hintStyle: TextStyle(
                                                                 color: Colors
                                                                     .grey),
@@ -3413,7 +3419,7 @@ class _WarehouseAcceptanceDetailsState
                                                         Navigator.of(context)
                                                             .pop(returnVal);
                                                       },
-                                                      child: Text('Cancel'),
+                                                      child: Text('${localizeLangModel.cancel}'),
                                                     ),
                                                     ElevatedButton(
                                                       onPressed: () {
@@ -3429,9 +3435,9 @@ class _WarehouseAcceptanceDetailsState
                                                             0) {
                                                           showAlertDialog(
                                                               context,
-                                                              "OK",
-                                                              "Alert",
-                                                              "Select Rejection Reason");
+                                                              "${localizeLangModel.ok}",
+                                                              "${localizeLangModel.alert}",
+                                                              "${localizeLangModel.select}${localizeLangModel.rejected}  ${localizeLangModel.reason} ");
                                                           return;
                                                         } else {
                                                           if (rejectionReasonSelected ==
@@ -3441,9 +3447,9 @@ class _WarehouseAcceptanceDetailsState
                                                                 "") {
                                                               showAlertDialog(
                                                                   context,
-                                                                  "OK",
-                                                                  "Alert",
-                                                                  "Enter damaged pieces quantity");
+                                                                  "${localizeLangModel.ok}",
+                                                                  "${localizeLangModel.alert}",
+                                                                  " ${localizeLangModel.pleaseEnter}  ${localizeLangModel.damagedPieces}  ${localizeLangModel.quantity}");
                                                               return;
                                                             } else {
                                                               if (int.parse(
@@ -3457,9 +3463,9 @@ class _WarehouseAcceptanceDetailsState
                                                                 setState(() {
                                                                   showAlertDialog(
                                                                       context,
-                                                                      "OK",
-                                                                      "Alert",
-                                                                      "Damaged Pieces quantity must be less than or equal to Actual Packages");
+                                                                      "${localizeLangModel.ok}",
+                                                                      "${localizeLangModel.alert}",
+                                                                      " ${localizeLangModel.damagedPieces}  ${localizeLangModel.quantity} ${localizeLangModel.mustBeLessThanOrEqualTo} ${localizeLangModel.actual} ${localizeLangModel.packages}");
 
                                                                   // isValidDmgPkgs =
                                                                   //     false;
@@ -3472,9 +3478,9 @@ class _WarehouseAcceptanceDetailsState
                                                                     "") {
                                                                   showAlertDialog(
                                                                       context,
-                                                                      "OK",
-                                                                      "Alert",
-                                                                      "Rejection Remark cannot be empty");
+                                                                      "${localizeLangModel.ok}",
+                                                                      "${localizeLangModel.alert}",
+                                                                      " ${localizeLangModel.rejection}  ${localizeLangModel.remarks}  ${localizeLangModel.cannotBeEmpty}");
                                                                 } else {
                                                                   List<String>
                                                                       returnVal =
@@ -3511,7 +3517,7 @@ class _WarehouseAcceptanceDetailsState
                                                           }
                                                         }
                                                       },
-                                                      child: Text('Okay'),
+                                                      child: Text('${localizeLangModel.ok}'),
                                                     ),
                                                   ],
                                                 ),
@@ -3530,10 +3536,10 @@ class _WarehouseAcceptanceDetailsState
                                                   CustomDialog(
                                                 title: widget.vtNumber,
                                                 description:
-                                                    "Warehouse Acceptance for AWB# " + widget.prefix + "-"+ widget.awbNumber + " in VT# " +                                            
+                                                    " ${localizeLangModel.whAccept}  ${localizeLangModel.For} AWB# " + widget.prefix + "-"+ widget.awbNumber + " in VT# " +
                                                   widget.vtNumber +
-                                                        " has been rejected successfully",
-                                                buttonText: "Okay",
+                                                        "  ${localizeLangModel.hasBeenRejectedSuccessfully} ",
+                                                buttonText: "${localizeLangModel.ok}",
                                                 imagepath:
                                                     'assets/images/successlines.gif',
                                                 isMobile: useMobileLayout,
@@ -3558,13 +3564,13 @@ class _WarehouseAcceptanceDetailsState
                                               builder: (BuildContext context) =>
                                                   customAlertMessageDialog(
                                                       title: errMsgText == ""
-                                                          ? "Error Occured"
-                                                          : "Rejection Failed",
+                                                          ? "${localizeLangModel.errorOccured}"
+                                                          : " ${localizeLangModel.rejection}  ${localizeLangModel.failed}",
                                                       description: errMsgText ==
                                                               ""
-                                                          ? "Error occured while performing Rejection Activity , Please try again after some time"
+                                                          ? " ${localizeLangModel.errorOccured}  ${localizeLangModel.whiles}  ${localizeLangModel.performing}  ${localizeLangModel.rejection} Activity , ${localizeLangModel.tryAfterSometimeValidation}"
                                                           : errMsgText,
-                                                      buttonText: "Okay",
+                                                      buttonText: "${localizeLangModel.ok}",
                                                       imagepath:
                                                           'assets/images/warn.gif',
                                                       isMobile:
@@ -3595,7 +3601,7 @@ class _WarehouseAcceptanceDetailsState
                                           child: Align(
                                             alignment: Alignment.center,
                                             child: Text(
-                                              'Reject',
+                                              '${localizeLangModel.rejected}',
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.normal,
@@ -3637,9 +3643,9 @@ class _WarehouseAcceptanceDetailsState
                                           setState(() {
                                             showAlertDialog(
                                                 context,
-                                                "OK",
-                                                "Alert",
-                                                "Received Packages must be less than or equal to Actual Packages");
+                                                "${localizeLangModel.ok}",
+                                                "${localizeLangModel.alert}",
+                                                " ${localizeLangModel.received}  ${localizeLangModel.packages}  ${localizeLangModel.mustBeLessThanOrEqualTo}  ${localizeLangModel.actual}  ${localizeLangModel.packages}");
                                             isValidRcvdPkgs = false;
                                           });
 
@@ -3653,9 +3659,9 @@ class _WarehouseAcceptanceDetailsState
                                           setState(() {
                                             showAlertDialog(
                                                 context,
-                                                "OK",
-                                                "Alert",
-                                                "Received GR. WT. must be less than or equal to Actual Weight");
+                                                "${localizeLangModel.ok}",
+                                                "${localizeLangModel.alert}",
+                                                " ${localizeLangModel.received}  ${localizeLangModel.grWt}  ${localizeLangModel.mustBeLessThanOrEqualTo}  ${localizeLangModel.actual}  ${localizeLangModel.weight}");
 
                                             isValidRcvdGrWt = false;
                                           });
@@ -3724,9 +3730,9 @@ class _WarehouseAcceptanceDetailsState
                                               setState(() {
                                                 showAlertDialog(
                                                     context,
-                                                    "OK",
-                                                    "Alert",
-                                                    "Acceptance Reason cannot be empty");
+                                                    "${localizeLangModel.ok}",
+                                                    "${localizeLangModel.alert}",
+                                                    "A ${localizeLangModel.accepted}  ${localizeLangModel.reason}  ${localizeLangModel.cannotBeEmpty}");
                                                 isValidDeliveryRemark = false;
                                                 return;
                                               });
@@ -3758,10 +3764,10 @@ class _WarehouseAcceptanceDetailsState
                                                   CustomDialog(
                                                 title: widget.vtNumber,
                                                description:
-                                                    "Warehouse Acceptance for AWB# " + widget.prefix + "-"+ widget.awbNumber + " in VT# " +                                            
+                                                    " ${localizeLangModel.whAccept}  ${localizeLangModel.For} AWB# " + widget.prefix + "-"+ widget.awbNumber + " in VT# " +
                                                   widget.vtNumber +
-                                                        " has been completed successfully",
-                                                buttonText: "Okay",
+                                                        " ${localizeLangModel.hasBeenCompletedSuccessfully}",
+                                                buttonText: "${localizeLangModel.ok}",
                                                 imagepath:
                                                     'assets/images/successchk.gif',
                                                 isMobile: useMobileLayout,
@@ -3777,13 +3783,13 @@ class _WarehouseAcceptanceDetailsState
                                               builder: (BuildContext context) =>
                                                   customAlertMessageDialog(
                                                       title: errMsgText == ""
-                                                          ? "Error Occured"
-                                                          : "Warehouse Acceptance Failed",
+                                                          ? "${localizeLangModel.errorOccured}"
+                                                          : " ${localizeLangModel.whAccept}  ${localizeLangModel.failed}",
                                                       description: errMsgText ==
                                                               ""
-                                                          ? "Error occured while performing Warehouse Acceptance, Please try again after some time"
+                                                          ? " ${localizeLangModel.errorOccured}  ${localizeLangModel.whiles}  ${localizeLangModel.performing}  ${localizeLangModel.whAccept},  ${localizeLangModel.tryAfterSometimeValidation}"
                                                           : errMsgText,
-                                                      buttonText: "Okay",
+                                                      buttonText: "${localizeLangModel.ok}",
                                                       imagepath:
                                                           'assets/images/warn.gif',
                                                       isMobile:
@@ -3821,7 +3827,7 @@ class _WarehouseAcceptanceDetailsState
                                           child: Align(
                                             alignment: Alignment.center,
                                             child: Text(
-                                              'Submit',
+                                              '${localizeLangModel.submit}',
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.normal,

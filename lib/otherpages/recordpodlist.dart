@@ -12,6 +12,9 @@ import 'package:luxair/widgets/speech_recognition.dart';
 import '../global.dart';
 import 'dart:convert';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class RecordPodList extends StatefulWidget {
   RecordPodList({Key? key}) : super(key: key);
 
@@ -97,6 +100,10 @@ class _RecordPodListState extends State<RecordPodList> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -195,7 +202,7 @@ class _RecordPodListState extends State<RecordPodList> {
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "POD List"),
+                headerText: "POD ${localizeLangModel!.list}"),
             useMobileLayout
                 ? Expanded(
                     flex: 0,
@@ -211,7 +218,7 @@ class _RecordPodListState extends State<RecordPodList> {
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("Search VT No.",
+                                child: Text("${localizeLangModel!.search} ${localizeLangModel.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(
@@ -238,7 +245,7 @@ class _RecordPodListState extends State<RecordPodList> {
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Search VT No.",
+                                          hintText: "${localizeLangModel!.search} ${localizeLangModel.vTno}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -335,7 +342,7 @@ class _RecordPodListState extends State<RecordPodList> {
                                                   .size
                                                   .width /
                                               3.11,
-                                          child: Text(" Search VT No.",
+                                          child: Text(" ${localizeLangModel!.search} ${localizeLangModel.vTno}",
                                               style: iPadGroupHeaderFontStyle),
                                         ),
                                         Padding(
@@ -371,7 +378,7 @@ class _RecordPodListState extends State<RecordPodList> {
                                                         .characters,
                                                 decoration: InputDecoration(
                                                   border: InputBorder.none,
-                                                  hintText: "Search VT No.",
+                                                  hintText: "${localizeLangModel!.search} ${localizeLangModel.vTno}",
                                                   hintStyle: TextStyle(
                                                       color: Colors.grey),
                                                   contentPadding:
@@ -824,6 +831,11 @@ class _RecordPodListState extends State<RecordPodList> {
 
 // This function is called whenever the text field changes
   void _runFilter(String enteredKeyword) {
+
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     List<DockInOutVT> results = [];
     if (enteredKeyword.isEmpty) {
       results = dockInOutVTListImport;
@@ -869,9 +881,9 @@ class _RecordPodListState extends State<RecordPodList> {
           showDialog(
             context: context,
             builder: (BuildContext context) => customAlertMessageDialog(
-                title: "Invalid VT",
-                description: "Kindly enter valid VT No.",
-                buttonText: "Okay",
+                title: "${localizeLangModel!.invalid} VT",
+                description: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.valid} VT No.",
+                buttonText: "${localizeLangModel!.ok}",
                 imagepath: 'assets/images/warn.gif',
                 isMobile: useMobileLayout),
           );

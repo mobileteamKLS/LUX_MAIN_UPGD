@@ -5,6 +5,9 @@ import 'package:luxair/widgets/customdialogue.dart';
 import 'package:luxair/widgets/headerclipper.dart';
 import 'package:luxair/widgets/headers.dart';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class AppFeedback extends StatefulWidget {
   AppFeedback({Key? key}) : super(key: key);
 
@@ -16,6 +19,10 @@ class _AppFeedbackState extends State<AppFeedback> {
     bool useMobileLayout = false;
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
      var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -80,7 +87,7 @@ class _AppFeedbackState extends State<AppFeedback> {
             // ),
           
             HeaderClipperWave(color1:Color(0xFF3383CD),
-                  color2:Color(0xFF11249F),headerText:       "App Feedback"),
+                  color2:Color(0xFF11249F),headerText:       "${localizeLangModel!.app} ${localizeLangModel!.feedback}"),
           
             Expanded(
               child: SingleChildScrollView(
@@ -104,7 +111,7 @@ class _AppFeedbackState extends State<AppFeedback> {
                       ),
                       Center(
                         child: Text(
-                          "   Give us Rating",
+                          "${localizeLangModel!.give} ${localizeLangModel!.us} ${localizeLangModel!.rating}",
                           style: TextStyle(
                             fontSize: useMobileLayout ? 18 : 20,
                             fontWeight: FontWeight.normal,
@@ -137,7 +144,7 @@ class _AppFeedbackState extends State<AppFeedback> {
                       ),
                       Center(
                         child: Text(
-                          "   Tell us more",
+                          "${localizeLangModel!.tellUsMore}",
                           style: TextStyle(
                               fontSize: useMobileLayout ? 18 : 20,
                             fontWeight: FontWeight.normal,
@@ -172,7 +179,7 @@ class _AppFeedbackState extends State<AppFeedback> {
                                   .multiline, // user keyboard will have a button to move cursor to next line
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Enter your feedback here",
+                                hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.your} ${localizeLangModel!.feedback} ${localizeLangModel!.here}",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
@@ -195,9 +202,9 @@ class _AppFeedbackState extends State<AppFeedback> {
                             showDialog(
                     context: context,
                     builder: (BuildContext context) => CustomDialog(
-                      title: "Feedback received",
-                      description: "Dear user we have noted your feedback",
-                      buttonText: "Okay",
+                      title: "${localizeLangModel.feedback} ${localizeLangModel.received}",
+                      description: "${localizeLangModel.dear} ${localizeLangModel.user} ${localizeLangModel.we} ${localizeLangModel.have} ${localizeLangModel.noted} ${localizeLangModel.your} ${localizeLangModel.feedback}",
+                      buttonText: "${localizeLangModel.ok}",
                       imagepath: 'assets/images/thanks.gif',
                                             isMobile: useMobileLayout,
                     ),
@@ -229,7 +236,7 @@ class _AppFeedbackState extends State<AppFeedback> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Submit',
+                                  '${localizeLangModel.submit}',
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.normal,

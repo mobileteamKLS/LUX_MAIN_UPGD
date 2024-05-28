@@ -8,6 +8,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class SlotsList extends StatefulWidget {
   const SlotsList({Key? key}) : super(key: key);
@@ -35,6 +37,10 @@ class _SlotsListState extends State<SlotsList> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Scaffold(
       body: Container(
         child: Column(
@@ -44,7 +50,7 @@ class _SlotsListState extends State<SlotsList> {
               HeaderClipperWave(
                   color1: Color(0xFF3383CD),
                   color2: Color(0xFF11249F),
-                  headerText: "Shipment List "),
+                  headerText: "${localizeLangModel!.shipments} ${localizeLangModel.list} "),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Row(
@@ -53,15 +59,15 @@ class _SlotsListState extends State<SlotsList> {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 4,
-                      child: Text("Mode", style: mobileHeaderFontStyle),
+                      child: Text("${localizeLangModel!.mode}", style: mobileHeaderFontStyle),
                     ),
                     AdvancedSwitch(
                       activeColor: Color(0xFF11249F),
                       inactiveColor: Color(0xFF11249F),
                       activeChild:
-                          Text('Import', style: mobileTextFontStyleWhite),
+                          Text('${localizeLangModel!.imports}', style: mobileTextFontStyleWhite),
                       inactiveChild:
-                          Text('Export', style: mobileTextFontStyleWhite),
+                          Text('${localizeLangModel!.exports}', style: mobileTextFontStyleWhite),
                       width: MediaQuery.of(context).size.width / 2.5,
                       height: 35,
                       controller: _controllerModeType,
@@ -146,6 +152,7 @@ class _SlotsListState extends State<SlotsList> {
                                         shipmentMode: selectedMode,
                                         GHA: selectedGHAID,
                                         GHAname: selectedGHA,
+                                        localizeLangModel: localizeLangModel,
                                       )));
                         } else {
                           List<AWBDetail> matches = [];
@@ -167,6 +174,7 @@ class _SlotsListState extends State<SlotsList> {
                                         shipmentMode: selectedMode,
                                         GHA: selectedGHAID,
                                         GHAname: selectedGHA,
+                                    localizeLangModel: localizeLangModel,
                                       )));
                         }
                       },
@@ -196,7 +204,7 @@ class _SlotsListState extends State<SlotsList> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'Book Slot',
+                              '${localizeLangModel!.bookSlot}',
                               style: TextStyle(
                                   fontSize:
                                       MediaQuery.of(context).size.width / 22,

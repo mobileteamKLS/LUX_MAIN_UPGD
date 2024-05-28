@@ -12,6 +12,8 @@ import 'package:luxair/widgets/qrscan.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class ScanQRCode extends StatefulWidget {
   ScanQRCode({Key? key}) : super(key: key);
@@ -58,6 +60,10 @@ class _ScanQRCodeState extends State<ScanQRCode> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
 
@@ -70,7 +76,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
           HeaderClipperWave(
               color1: Color(0xFF3383CD),
               color2: Color(0xFF11249F),
-              headerText: "Scan QR Code"),
+              headerText: "${localizeLangModel!.scan} QR ${localizeLangModel.code}"),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 8.0),
@@ -91,9 +97,9 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                               ? AdvancedSwitch(
                                   activeColor: Color(0xFF11249F),
                                   inactiveColor: Color(0xFF11249F),
-                                  activeChild: Text('Camera',
+                                  activeChild: Text('${localizeLangModel!.camera}',
                                       style: mobileToggleTextFontStyleWhite),
-                                  inactiveChild: Text('File',
+                                  inactiveChild: Text('${localizeLangModel!.file}',
                                       style: mobileToggleTextFontStyleWhite),
                                   width:
                                       MediaQuery.of(context).size.width / 2.5,
@@ -255,7 +261,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'Scan',
+                                    '${localizeLangModel!.scan}',
                                     style: TextStyle(
                                         fontSize: useMobileLayout
                                             ? MediaQuery.of(context)
@@ -314,7 +320,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                               width: MediaQuery.of(context).size.width /
                                   3, // hard coding child width
                               child: Text(
-                                "Scanned Code: ",
+                                "${localizeLangModel!.scan} ${localizeLangModel!.code}: ",
                                 style: TextStyle(
                                   fontSize:
                                       MediaQuery.of(context).size.width / 22,
@@ -388,7 +394,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                 if (scannedCodeReceived != "" &&
                                     walkInTokensList.length > 0)
                                   Text(
-                                      "Confirm your slot and submit for yard Check-in",
+                                      "${localizeLangModel!.confirmYourSlotAndSubmitForYardCheckIn}",
                                       style: useMobileLayout
                                           ? mobileGroupHeaderFontStyle
                                           : iPadGroupHeaderFontStyle),
@@ -424,7 +430,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                 .width /
                                                             3,
                                                         child: Text(
-                                                            'Vehicle No.',
+                                                            '${localizeLangModel!.vehicleNo}',
                                                             style:
                                                                 mobileHeaderFontStyle),
                                                       ),
@@ -450,7 +456,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                 .size
                                                                 .width /
                                                             3,
-                                                        child: Text('Mode',
+                                                        child: Text('${localizeLangModel?.mode}',
                                                             style:
                                                                 mobileHeaderFontStyle),
                                                       ),
@@ -460,7 +466,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                 .size
                                                                 .width /
                                                             2,
-                                                        child: Text('Exports',
+                                                        child: Text('${localizeLangModel?.exports}',
                                                             style:
                                                                 mobileYellowTextFontStyleBold),
                                                       ),
@@ -476,7 +482,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                 .width /
                                                             3,
                                                         child: Text(
-                                                            'Driver Name',
+                                                            '${localizeLangModel?.driverName}',
                                                             style:
                                                                 mobileHeaderFontStyle),
                                                       ),
@@ -502,7 +508,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                 .size
                                                                 .width /
                                                             3,
-                                                        child: Text('Time Slot',
+                                                        child: Text('${localizeLangModel?.timeSlot}',
                                                             style:
                                                                 mobileHeaderFontStyle),
                                                       ),
@@ -570,7 +576,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                   .shade300,
                                                               child: Center(
                                                                 child: Text(
-                                                                    'Vehicle No.',
+                                                                    '${localizeLangModel?.vehicleNo}',
                                                                     style:
                                                                         iPadYellowTextFontStyleNormal),
                                                               ),
@@ -589,7 +595,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                   .shade300,
                                                               child: Center(
                                                                 child: Text(
-                                                                    'Driver Name',
+                                                                    '${localizeLangModel?.driverName}',
                                                                     style:
                                                                         iPadYellowTextFontStyleNormal),
                                                               ),
@@ -608,7 +614,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                   .shade300,
                                                               child: Center(
                                                                 child: Text(
-                                                                    'Mode',
+                                                                    '${localizeLangModel?.mode}',
                                                                     style:
                                                                         iPadYellowTextFontStyleNormal),
                                                               ),
@@ -627,7 +633,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                   .shade300,
                                                               child: Center(
                                                                 child: Text(
-                                                                    'Time Slot',
+                                                                    '${localizeLangModel?.timeSlot}',
                                                                     style:
                                                                         iPadYellowTextFontStyleNormal),
                                                               ),
@@ -884,11 +890,11 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                     context,
                                                                 builder: (BuildContext context) => customAlertMessageDialog(
                                                                     title:
-                                                                        "No Records Selected",
+                                                                        "${localizeLangModel!.no} ${localizeLangModel!.record} ${localizeLangModel!.selected}",
                                                                     description:
-                                                                        "Select atleast one record to perform Yard Check-in",
+                                                                        "${localizeLangModel!.selectAtleastOneRecordToPerformYardCheckIn}",
                                                                     buttonText:
-                                                                        "Okay",
+                                                                        "${localizeLangModel?.ok}",
                                                                     imagepath:
                                                                         'assets/images/warn.gif',
                                                                     isMobile:
@@ -923,14 +929,14 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                   builder: (BuildContext context) => customAlertMessageDialog(
                                                                       title: errMsgText ==
                                                                               ""
-                                                                          ? "Error Occured"
-                                                                          : "Yard Check-in Failed",
+                                                                          ? "${localizeLangModel?.errorOccured}"
+                                                                          : "${localizeLangModel?.yardCheckIn} ${localizeLangModel!.failed}",
                                                                       description: errMsgText ==
                                                                               ""
-                                                                          ? "Error occured while performing Yard Check-in, Please try again after some time"
+                                                                          ? "${localizeLangModel!.errorOccuredWhilePerformingYardCheckIn}, ${localizeLangModel!.tryAfterSometimeValidation}"
                                                                           : errMsgText,
                                                                       buttonText:
-                                                                          "Okay",
+                                                                          "${localizeLangModel?.ok}",
                                                                       imagepath:
                                                                           'assets/images/warn.gif',
                                                                       isMobile:
@@ -945,13 +951,13 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                           context) =>
                                                                       CustomDialog(
                                                                     title:
-                                                                        'Yard Check-in Success',
+                                                                        '${localizeLangModel?.yardCheckIn} ${localizeLangModel!.success}',
                                                                     description:
-                                                                        "Yard Check-in for VT# " +
+                                                                        "${localizeLangModel?.yardCheckInForVT} " +
                                                                             selectedVT +
-                                                                            " has been completed successfully. You will receive SMS notification shortly.",
+                                                                            " ${localizeLangModel!.hasBeenCompletedSuccessfully} ${localizeLangModel!.youWillReceiveSMSNotificationShortly}",
                                                                     buttonText:
-                                                                        "Okay",
+                                                                        "${localizeLangModel?.ok}",
                                                                     imagepath:
                                                                         'assets/images/successchk.gif',
                                                                     isMobile:
@@ -1038,7 +1044,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                                                     Alignment
                                                                         .center,
                                                                 child: Text(
-                                                                  'Submit',
+                                                                  '${localizeLangModel?.submit}',
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           24,
@@ -1106,8 +1112,8 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                             CustomDialog(
                                           title: "WIVT220627006",
                                           description:
-                                              "Yard Check-in recorded successfully for VT# WIVT220627006. You will receive SMS notification shortly.",
-                                          buttonText: "Okay",
+                                              "${localizeLangModel!.yardCheckIndonesuccessfully} ${localizeLangModel!.For} VT# WIVT220627006. ${localizeLangModel!.youWillReceiveSMSNotificationShortly}",
+                                          buttonText: "${localizeLangModel?.ok}",
                                           imagepath:
                                               'assets/images/successchk.gif',
                                           isMobile: useMobileLayout,
@@ -1141,7 +1147,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
                                             top: 8.0, bottom: 8.0),
                                         child: Align(
                                           alignment: Alignment.center,
-                                          child: Text('Submit',
+                                          child: Text('${localizeLangModel?.submit}',
                                               style: buttonWhiteFontStyle),
                                         ),
                                       ),

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class SpeechRecognition extends StatefulWidget {
   const SpeechRecognition({Key? key}) : super(key: key);
 
@@ -53,6 +56,10 @@ class _SpeechRecognitionState extends State<SpeechRecognition> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
+
     return Scaffold(
       body: Stack(
         children: [
@@ -72,8 +79,8 @@ class _SpeechRecognitionState extends State<SpeechRecognition> {
                     //     // the target device
                     //     :
                     _speechEnabled
-                        ? 'Tap the microphone icon to start/stop recording...\nYou can say word "Search" and then last 4 digits of VT No.'
-                        : 'Speech not available',
+                        ? '${localizeLangModel!.tapTheMicrophoneIconToStartStopRecording}\n${localizeLangModel.youCanSayWordSearchAndThen}'
+                        : '${localizeLangModel!.speechNotAvailable}',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.normal,
@@ -84,7 +91,7 @@ class _SpeechRecognitionState extends State<SpeechRecognition> {
                 if (_lastWords != "") SizedBox(height: 20),
                 if (_lastWords != "")
                   Text(
-                    'Recognized words',
+                    '${localizeLangModel!.recognizedWords}',
                     style: TextStyle(fontSize: 20.0),
                   ),
 
@@ -119,7 +126,7 @@ class _SpeechRecognitionState extends State<SpeechRecognition> {
                 if (_lastWords != "") SizedBox(height: 20),
                 if (_lastWords != "" && _speechToText.isNotListening )
                   ElevatedButton(
-                    child: const Text('Process'),
+                    child: Text('${localizeLangModel!.proceed}'),
                     onPressed: () => Navigator.of(context)
                         .pop(_lastWords), //Navigator.pop(context),
                   ),
@@ -148,7 +155,7 @@ class _SpeechRecognitionState extends State<SpeechRecognition> {
         onPressed:
             // If not yet listening for speech start, otherwise stop
             _speechToText.isNotListening ? _startListening : _stopListening,
-        tooltip: 'Record',
+        tooltip: '${localizeLangModel!.record}',
         child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
       ),
     );

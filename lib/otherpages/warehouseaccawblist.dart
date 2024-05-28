@@ -14,6 +14,9 @@ import '../constants.dart';
 import '../global.dart';
 import 'dart:convert';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class WarehouseAcceptanceAwbList extends StatefulWidget {
   final String vtNumber;
   WarehouseAcceptanceAwbList({
@@ -255,6 +258,10 @@ class _WarehouseAcceptanceAwbListState
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -354,7 +361,7 @@ class _WarehouseAcceptanceAwbListState
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "W/H Acceptance AWB List"),
+                headerText: "${localizeLangModel!.warehouseAccpt} ${localizeLangModel.aWBNum} ${localizeLangModel.list}"),
             useMobileLayout
                 ? Expanded(
                     flex: 0,
@@ -392,7 +399,7 @@ class _WarehouseAcceptanceAwbListState
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("VT No.",
+                                child: Text("${localizeLangModel.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(
@@ -420,7 +427,7 @@ class _WarehouseAcceptanceAwbListState
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "VT No.",
+                                          hintText: "${localizeLangModel.vTno}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -615,7 +622,7 @@ class _WarehouseAcceptanceAwbListState
                                                   .size
                                                   .width /
                                               3.11,
-                                          child: Text(" VT No.",
+                                          child: Text(" ${localizeLangModel.vTno}",
                                               style: iPadGroupHeaderFontStyle),
                                         ),
                                         Padding(
@@ -652,7 +659,7 @@ class _WarehouseAcceptanceAwbListState
                                                         .characters,
                                                 decoration: InputDecoration(
                                                   border: InputBorder.none,
-                                                  hintText: " VT No.",
+                                                  hintText: " ${localizeLangModel.vTno}",
                                                   hintStyle: TextStyle(
                                                       color: Colors.grey),
                                                   contentPadding:

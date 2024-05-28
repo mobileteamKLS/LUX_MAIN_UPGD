@@ -11,6 +11,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 // ignore: must_be_immutable
 class YardCheckIn extends StatefulWidget {
@@ -32,6 +34,10 @@ class _YardCheckInState extends State<YardCheckIn> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     return Scaffold(
@@ -108,8 +114,7 @@ class _YardCheckInState extends State<YardCheckIn> {
                                   ),
                                 ),
                                 SizedBox(width: useMobileLayout ? 10 : 20),
-                                Text(
-                                  "Choose your request type ",
+                                Text("${localizeLangModel!.chooseYourRequestType}",
                                   style: TextStyle(
                                       fontSize: kIsWeb
                                           ? 48
@@ -278,8 +283,8 @@ class _YardCheckInState extends State<YardCheckIn> {
                                   Color(0xFF4364F7),
                                   Color(0xFFa8c0ff),
                                   Icons.directions_walk,
-                                  "Just Arrived ?",
-                                  "Walk-in",
+                                  "${localizeLangModel.just} ${localizeLangModel!.arrived} ?",
+                                  "${localizeLangModel.walkIn}",
                                   WalkInCustomer(),
                                   useMobileLayout),
                               RequestTypeMenuBlock(
@@ -288,16 +293,16 @@ class _YardCheckInState extends State<YardCheckIn> {
                                   //Color(0xFF7F7FD5),
 
                                   Icons.bookmark,
-                                  "Slot Booked ?",
-                                  "Yard Check-in",
+                                  "${localizeLangModel.bookSlot} ?",
+                                  "${localizeLangModel.yardCheckIn}",
                                   CheckInYard(),
                                   useMobileLayout),
                               RequestTypeMenuBlock(
                                   Color(0xFFf2709c),
                                   Color(0xFFff9472),
                                   Icons.qr_code,
-                                  "Have QR Code ?",
-                                  "Scan & Check-in",
+                                  "${localizeLangModel.have} QR ${localizeLangModel!.code}  ?",
+                                  "${localizeLangModel.scan} & ${localizeLangModel!.checkIn}",
                                   ScanQRCode(),
                                   useMobileLayout),
                               // RequestTypeMenuBlock(

@@ -12,6 +12,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class LiveDockStatus extends StatefulWidget {
   LiveDockStatus({Key? key}) : super(key: key);
@@ -21,6 +23,7 @@ class LiveDockStatus extends StatefulWidget {
 }
 
 class _LiveDockStatusState extends State<LiveDockStatus> {
+
   int modeSelected = 0, modeSelected1 = 0;
   bool dockOccupied = true,
       vehicleEnroute = true,
@@ -190,6 +193,9 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     if (kIsWeb) {
       // running on the web!
       print("running on the web!");
@@ -208,7 +214,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
           HeaderClipperWave(
               color1: Color(0xFF3383CD),
               color2: Color(0xFF11249F),
-              headerText: "Live Dock Status"),
+              headerText: "${localizeLangModel!.viewLive} ${localizeLangModel.dockStatus}"),
           //     "Live Dock Status ",
           Expanded(
             child: Padding(
@@ -230,9 +236,9 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                   AdvancedSwitch(
                                     activeColor: Color(0xFF11249F),
                                     inactiveColor: Color(0xFF11249F),
-                                    activeChild: Text('Import',
+                                    activeChild: Text('${localizeLangModel.imports}',
                                         style: mobileToggleTextFontStyleWhite),
-                                    inactiveChild: Text('Export',
+                                    inactiveChild: Text('${localizeLangModel.exports}',
                                         style: mobileToggleTextFontStyleWhite),
                                     width:
                                         MediaQuery.of(context).size.width / 3,
@@ -245,7 +251,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                     inactiveColor: Color(0xFF11249F),
                                     activeChild: Text('Queue',
                                         style: mobileToggleTextFontStyleWhite),
-                                    inactiveChild: Text('At Dock',
+                                    inactiveChild: Text('At ${localizeLangModel.docks}',
                                         style: mobileToggleTextFontStyleWhite),
                                     width:
                                         MediaQuery.of(context).size.width / 3,
@@ -262,7 +268,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Select Terminal",
+                                      "${localizeLangModel.selectTerminal}",
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.normal,
@@ -336,7 +342,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                   children: [
                                     SizedBox(height: 10),
                                     Text(
-                                      "Select Terminal",
+                                      "${localizeLangModel.selectTerminal}",
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.normal,
@@ -760,7 +766,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 2.3,
                                 child: Text(
-                                  "Mode",
+                                  "${localizeLangModel.mode}",
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.normal,
@@ -807,7 +813,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                   color: Colors.white,
                                 )
                               ],
-                              labels: ['Exports ', ' Imports'],
+                              labels: ['${localizeLangModel.exports} ', ' ${localizeLangModel.imports}'],
                               icons: [
                                 Icons.north,
                                 Icons.south,
@@ -1575,7 +1581,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                                         null) {
                                                       var submitCheckin =
                                                           await submitForDockUpdate(
-                                                        "Update",
+                                                        "${localizeLangModel.update}",
                                                         dsl.VTNo,
                                                         modeSelected == 1
                                                             ? "2"
@@ -1597,7 +1603,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                                             description: "VT# " +
                                                                 dsl.VTNo +
                                                                 " has been updated to new dock successfully",
-                                                            buttonText: "Okay",
+                                                            buttonText: "${localizeLangModel.ok}",
                                                             imagepath:
                                                                 'assets/images/successchk.gif',
                                                             isMobile:
@@ -1615,7 +1621,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                                           builder: (BuildContext context) => customAlertMessageDialog(
                                                               title: errMsgText ==
                                                                       ""
-                                                                  ? "Error Occured"
+                                                                  ? "${localizeLangModel.errorOccured}"
                                                                   : "Update Dock Failed",
                                                               description:
                                                                   errMsgText ==
@@ -1640,10 +1646,10 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                                           context) =>
                                                       customAlertMessageDialog(
                                                           title:
-                                                              "Update Failed",
+                                                              "${localizeLangModel.update} Failed",
                                                           description:
                                                               "No Docks Available at the moment to Assign",
-                                                          buttonText: "Okay",
+                                                          buttonText: "${localizeLangModel.ok}",
                                                           imagepath:
                                                               'assets/images/warn.gif',
                                                           isMobile:
@@ -1695,13 +1701,13 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                                         customAlertMessageDialog(
                                                             title: errMsgText ==
                                                                     ""
-                                                                ? "Error Occured"
+                                                                ? "${localizeLangModel.errorOccured}"
                                                                 : "Push To Queue Failed",
                                                             description:
                                                                 errMsgText == ""
                                                                     ? "Error occured while performing Push To Queue, Please try again after some time"
                                                                     : errMsgText,
-                                                            buttonText: "Okay",
+                                                            buttonText: "${localizeLangModel.ok}",
                                                             imagepath:
                                                                 'assets/images/warn.gif',
                                                             isMobile:
@@ -3142,6 +3148,10 @@ class _UpdateDockDialogState extends State<UpdateDockDialog> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AlertDialog(
@@ -3153,7 +3163,7 @@ class _UpdateDockDialogState extends State<UpdateDockDialog> {
             widget.isMobile
                 ? SizedBox(
                     width: MediaQuery.of(context).size.width / 2,
-                    child: Text(widget.isAssign ? 'Assign Dock' : 'Update Dock',
+                    child: Text(widget.isAssign ? '${localizeLangModel!.assignDock}' : '${localizeLangModel!.updateDock}',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -3164,8 +3174,8 @@ class _UpdateDockDialogState extends State<UpdateDockDialog> {
                     width: MediaQuery.of(context).size.width / 1.5,
                     child: Text(
                         widget.isAssign
-                            ? 'Assign dock for VT# ' + widget.vtnum
-                            : 'Update dock for VT# ' + widget.vtnum,
+                            ? '${localizeLangModel!.assignDock} ${localizeLangModel.For} VT# ' + widget.vtnum
+                            : '${localizeLangModel!.updateDock} ${localizeLangModel.For} VT# ' + widget.vtnum,
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -3213,7 +3223,7 @@ class _UpdateDockDialogState extends State<UpdateDockDialog> {
                 Row(
                   children: [
                     Text(
-                      "Dock Currently Assigned",
+                      "${localizeLangModel.docks} ${localizeLangModel.currently} ${localizeLangModel.assigned}",
                       style: TextStyle(
                         fontSize: widget.isMobile ? 16 : 22,
                         fontWeight: FontWeight.bold,
@@ -3261,7 +3271,7 @@ class _UpdateDockDialogState extends State<UpdateDockDialog> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Available Docks',
+                      Text('${localizeLangModel.availableDock}',
                           style: TextStyle(
                             fontSize: widget.isMobile ? 16 : 22,
                             fontWeight: FontWeight.bold,
@@ -3270,7 +3280,7 @@ class _UpdateDockDialogState extends State<UpdateDockDialog> {
                       SizedBox(
                         width: widget.isMobile ? 15 : 20,
                       ),
-                      Text('(Click on dock to select)',
+                      Text('(${localizeLangModel.clickOnDockToSelect})',
                           style: TextStyle(
                             fontSize: widget.isMobile ? 16 : 22,
                             fontStyle: FontStyle.italic,
@@ -3283,7 +3293,7 @@ class _UpdateDockDialogState extends State<UpdateDockDialog> {
               if (!widget.isMobile)
                 Row(
                   children: [
-                    Text('Available Docks',
+                    Text('${localizeLangModel.availableDock}',
                         style: TextStyle(
                           fontSize: widget.isMobile ? 16 : 22,
                           fontWeight: FontWeight.bold,
@@ -3292,7 +3302,7 @@ class _UpdateDockDialogState extends State<UpdateDockDialog> {
                     SizedBox(
                       width: widget.isMobile ? 15 : 20,
                     ),
-                    Text('(Click on dock to select)',
+                    Text('(${localizeLangModel.clickOnDockToSelect})',
                         style: TextStyle(
                           fontSize: widget.isMobile ? 16 : 22,
                           fontStyle: FontStyle.italic,
@@ -3358,7 +3368,7 @@ class _UpdateDockDialogState extends State<UpdateDockDialog> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      widget.isAssign ? 'Assign' : 'Update',
+                      widget.isAssign ? '${localizeLangModel.assign}' : '${localizeLangModel.update}',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -3597,6 +3607,10 @@ class DockTileContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Padding(
       padding:
           const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0, bottom: 8.0),
@@ -3648,8 +3662,8 @@ class DockTileContainer extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text(
                             isMobile
-                                ? lblText1 + " " + "not Available" // "All",
-                                : lblText1 + " " + "Unavailable",
+                                ? lblText1 + " " + "${localizeLangModel!.notAvailable}" // "All",
+                                : lblText1 + " " + "${localizeLangModel!.unavailable}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: isMobile ? 14 : 16,
@@ -3740,6 +3754,10 @@ class DockstatusListWeidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Container(
       width: MediaQuery.of(context).size.width / 1.02,
       child: isMobile
@@ -3788,7 +3806,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                   SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width / 4.5,
-                                    child: Text('Dock No.',
+                                    child: Text('${localizeLangModel!.dockno}',
                                         style: TextStyle(
                                             fontSize: MediaQuery.of(context)
                                                     .size
@@ -3810,7 +3828,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                   SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width / 5,
-                                    child: Text('Check-in',
+                                    child: Text('${localizeLangModel.checkIn}',
                                         style: TextStyle(
                                             fontSize: MediaQuery.of(context)
                                                     .size
@@ -3896,7 +3914,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                   SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width / 5,
-                                    child: Text('Trucking Company', //'VT No.',
+                                    child: Text('${localizeLangModel.truckingCompany}', //'VT No.',
                                         style: TextStyle(
                                             fontSize: MediaQuery.of(context)
                                                     .size
@@ -3926,7 +3944,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                     width:
                                         MediaQuery.of(context).size.width / 2.5,
                                     child: Text(
-                                        'Time at Dock (Mins.)', //'VT No.',
+                                        '${localizeLangModel.timeatDock} (${localizeLangModel.mins}.)', //'VT No.',
                                         style: TextStyle(
                                             fontSize: MediaQuery.of(context)
                                                     .size
@@ -3954,7 +3972,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                   SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width / 2.5,
-                                    child: Text('Driver' 's Mobile No.',
+                                    child: Text('${localizeLangModel.driverMobileNo}',
                                         style: TextStyle(
                                             fontSize: MediaQuery.of(context)
                                                     .size
@@ -4150,7 +4168,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         //Text('Dock No.'),
-                                        Text('Dock No.',
+                                        Text('${localizeLangModel!.dockno}',
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
@@ -4174,7 +4192,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text('Yard Check-in',
+                                        Text('${localizeLangModel.yardCheckIn}',
                                             style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -4194,7 +4212,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('Time at Dock (Mins.)', //'VT No.',
+                                      Text('${localizeLangModel.timeatDock} (${localizeLangModel.mins}.)', //'VT No.',
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
@@ -4225,7 +4243,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width /
                                         4.3, // hard coding child width
                                     child: Text(
-                                      'VT No.',
+                                      '${localizeLangModel.vTno}',
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -4236,7 +4254,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width /
                                         3, // hard coding child width
                                     child: Text(
-                                      'Trucking Company',
+                                      '${localizeLangModel.truckingCompany}',
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -4247,7 +4265,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width /
                                         4, // hard coding child width
                                     child: Text(
-                                      'Driver' 's Mobile No.',
+                                      '${localizeLangModel.driverMobileNo}',
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,

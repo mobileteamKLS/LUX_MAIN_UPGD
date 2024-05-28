@@ -14,6 +14,8 @@ import 'package:luxair/widgets/speech_recognition.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class TruckYardCheckInList extends StatefulWidget {
   const TruckYardCheckInList({Key? key}) : super(key: key);
@@ -23,6 +25,7 @@ class TruckYardCheckInList extends StatefulWidget {
 }
 
 class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
+
   String scannedCodeReceived = "";
   bool useMobileLayout = false;
   int modeSelected = 0; //, modeSelected1 = 0;
@@ -296,6 +299,10 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel?  localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -403,7 +410,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "Yard Check-in VT List"),
+                headerText: "${localizeLangModel!.yardCheckInVTList}"),
             // ClipPath(
             //   clipper: MyClippers1(),
             //   child: Container(
@@ -476,15 +483,15 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                               children: [
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width / 4,
-                                  child: Text("Mode",
+                                  child: Text("${localizeLangModel!.mode}",
                                       style: mobileHeaderFontStyle),
                                 ),
                                 AdvancedSwitch(
                                   activeColor: Color(0xFF11249F),
                                   inactiveColor: Color(0xFF11249F),
-                                  activeChild: Text('Import',
+                                  activeChild: Text('${localizeLangModel.imports}',
                                       style: mobileTextFontStyleWhite),
-                                  inactiveChild: Text('Export',
+                                  inactiveChild: Text('${localizeLangModel.exports}',
                                       style: mobileTextFontStyleWhite),
                                   width:
                                       MediaQuery.of(context).size.width / 2.5,
@@ -497,7 +504,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("Search VT No.",
+                                child: Text("${localizeLangModel.search} ${localizeLangModel.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(
@@ -524,7 +531,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Search VT No.",
+                                          hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -622,7 +629,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                                                   .width /
                                               2.45,
                                           child: Text(
-                                            " Mode",
+                                            "${localizeLangModel!.mode}",
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.normal,
@@ -658,7 +665,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                                                   color: Colors.white,
                                                 )
                                               ],
-                                              labels: ['Exports ', ' Imports'],
+                                              labels: ['${localizeLangModel.exports} ', ' ${localizeLangModel.imports}'],
                                               icons: [
                                                 Icons.north,
                                                 Icons.south,
@@ -717,7 +724,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                                                   .width /
                                               3.11,
                                           child: Text(
-                                            " Search VT No.",
+                                            " ${localizeLangModel.search} ${localizeLangModel.vTno}",
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.normal,
@@ -758,7 +765,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                                                         .characters,
                                                 decoration: InputDecoration(
                                                   border: InputBorder.none,
-                                                  hintText: "Search VT No.",
+                                                  hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                                   hintStyle: TextStyle(
                                                       color: Colors.grey),
                                                   contentPadding:

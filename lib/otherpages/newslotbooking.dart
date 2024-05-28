@@ -18,19 +18,25 @@ import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:intl/intl.dart';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class NewSlotBooking extends StatefulWidget {
   final List<AWBDetail> selectedShipments;
   final List<AWBDetailImport> selectedShipmentsImport;
   final String shipmentMode;
   final int GHA;
   final String GHAname;
-  const NewSlotBooking(
+
+  LangModel? localizeLangModel;
+
+  NewSlotBooking(
       {Key? key,
       required this.selectedShipments,
       required this.selectedShipmentsImport,
       required this.shipmentMode,
       required this.GHA,
-      required this.GHAname})
+      required this.GHAname, required this.localizeLangModel})
       : super(key: key);
 
   @override
@@ -38,6 +44,9 @@ class NewSlotBooking extends StatefulWidget {
 }
 
 class _NewSlotBookingState extends State<NewSlotBooking> {
+
+
+
   int selectedVehicleID = 0, selectedGHA = 0;
   int _currentStep = 0;
   bool isLoading = false, isSavingData = false, isErrorSave = false;
@@ -123,6 +132,10 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Scaffold(
       body: Container(
         child: Column(
@@ -132,7 +145,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
             HeaderClipperWaveThisForm(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "New Slot Booking "),
+                headerText: "${localizeLangModel!.addNew} ${localizeLangModel.bookSlot}"),
             Expanded(
               child: isSavingData
                   ? Center(
@@ -155,9 +168,9 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                             if (_currentStep > 0)
                               Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
-                                child: buildbutton("PREV", controls.onStepCancel),
+                                child: buildbutton("${localizeLangModel.pREV}", controls.onStepCancel),
                               ),
-                            buildbutton(_currentStep == 2 ? "SUBMIT" : "NEXT",
+                            buildbutton(_currentStep == 2 ? "${localizeLangModel.sUBMIT}" : "${localizeLangModel.nEXT}",
                                 controls.onStepContinue),
                             // TextButton(
                             //   onPressed: onStepCancel,
@@ -174,13 +187,13 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                       onStepCancel: cancel,
                       steps: <Step>[
                         Step(
-                          title: new Text('Select Slot'),
+                          title: new Text('${localizeLangModel.selectTimeSlot}'),
                           content: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Select GHA",
+                                "${localizeLangModel.selectGHA}",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal,
@@ -205,7 +218,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                     ),
                                   ),
                                   dropdownColor: Colors.white,
-                                  hint: Text("---- Select ----",
+                                  hint: Text("---- ${localizeLangModel.select} ----",
                                       style: mobileYellowTextFontStyleBold),
                                   value: selectedGHA,
                                   items: terminalsList.map((term) {
@@ -249,7 +262,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                               ),
                               SizedBox(height: 5),
                               Text(
-                                "Select Vehicle Type",
+                                "${localizeLangModel.select} ${localizeLangModel.vehicleType}",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal,
@@ -274,7 +287,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                     ),
                                   ),
                                   dropdownColor: Colors.white,
-                                  hint: Text("---- Select ----",
+                                  hint: Text("---- ${localizeLangModel.select} ----",
                                       style: mobileYellowTextFontStyleBold),
                                   value: selectedVehicleID,
                                   items: vehicletypesList.map((vehicle) {
@@ -311,7 +324,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Select Date",
+                                    "${localizeLangModel.selectDate}",
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.normal,
@@ -381,7 +394,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                             //     TextCapitalization.characters,
                                             decoration: InputDecoration(
                                               border: InputBorder.none,
-                                              hintText: "Select Date",
+                                              hintText: "${localizeLangModel.selectDate}",
                                               hintStyle:
                                                   TextStyle(color: Colors.grey),
                                               contentPadding:
@@ -404,7 +417,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                               ),
                               SizedBox(height: 5),
                               Text(
-                                "Select Preferred Time",
+                                "${localizeLangModel.select} ${localizeLangModel.preferred} ${localizeLangModel.time}",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal,
@@ -460,7 +473,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                   selectedSlotDate == "")
                                 if (slotsList.isNotEmpty)
                                   Text(
-                                    "Select Slot",
+                                    "${localizeLangModel.select} ${localizeLangModel.slot}",
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.normal,
@@ -473,7 +486,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                   selectedSlotDate != "")
                                 if (slotsList.isEmpty)
                                   Text(
-                                    "No slots available",
+                                    "${localizeLangModel.no} ${localizeLangModel.slots} ${localizeLangModel.available} ",
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.normal,
@@ -602,7 +615,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                               : StepState.disabled,
                         ),
                         Step(
-                          title: new Text('Driver Details'),
+                          title: new Text('${localizeLangModel.driver} ${localizeLangModel.details}'),
                           content: Column(
                             children: <Widget>[
                               buildInfoWidget(),
@@ -617,7 +630,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Driver Details",
+                                        "${localizeLangModel.driver} ${localizeLangModel.details}",
                                         style: mobileHeaderFontStyle,
                                       ),
                                       // GestureDetector(
@@ -644,7 +657,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                                     .size
                                                     .width /
                                                 4,
-                                            child: Text('Vehicle No.',
+                                            child: Text('${localizeLangModel.vehicleNo}',
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
@@ -699,7 +712,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                                             counterText: "",
                                                             isDense: true,
                                                             hintText:
-                                                                "Select/Enter vehicle",
+                                                                "${localizeLangModel.select}/${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicle}",
                                                             hintStyle: TextStyle(
                                                                 color: Colors
                                                                     .grey),
@@ -849,7 +862,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                                     .size
                                                     .width /
                                                 4,
-                                            child: Text('Name',
+                                            child: Text('${localizeLangModel.name}',
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
@@ -904,7 +917,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                                                       .none,
                                                               counterText: "",
                                                               hintText:
-                                                                  "Select/Enter name",
+                                                                  "${localizeLangModel.select}/${localizeLangModel.pleaseEnter} ${localizeLangModel.name}",
                                                               hintStyle: TextStyle(
                                                                   color: Colors
                                                                       .grey),
@@ -1002,7 +1015,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                                     .size
                                                     .width /
                                                 4,
-                                            child: Text('Mobile No.',
+                                            child: Text('${localizeLangModel.contactNo}',
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
@@ -1088,7 +1101,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                                     decoration: InputDecoration(
                                                       border: InputBorder.none,
                                                       hintText:
-                                                          "Enter mobile no",
+                                                          "${localizeLangModel.pleaseEnter} ${localizeLangModel.contactNo}",
                                                       hintStyle: TextStyle(
                                                           color: Colors.grey),
                                                       contentPadding:
@@ -1117,7 +1130,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                                     .size
                                                     .width /
                                                 4,
-                                            child: Text('License No.',
+                                            child: Text('${localizeLangModel.driverLicense}',
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
@@ -1162,7 +1175,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                                     decoration: InputDecoration(
                                                       border: InputBorder.none,
                                                       hintText:
-                                                          "Enter license no",
+                                                          "${localizeLangModel.pleaseEnter} ${localizeLangModel.driverLicense}",
                                                       hintStyle: TextStyle(
                                                           color: Colors.grey),
                                                       contentPadding:
@@ -1191,7 +1204,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                                     .size
                                                     .width /
                                                 4,
-                                            child: Text('STA(Opt.)',
+                                            child: Text(' ${localizeLangModel.sTA}${localizeLangModel.opt}',
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
@@ -1233,7 +1246,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                                             .characters,
                                                     decoration: InputDecoration(
                                                       border: InputBorder.none,
-                                                      hintText: "Enter sta",
+                                                      hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.sTA}",
                                                       hintStyle: TextStyle(
                                                           color: Colors.grey),
                                                       contentPadding:
@@ -1261,7 +1274,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                               : StepState.disabled,
                         ),
                         Step(
-                          title: new Text('Shipment Details'),
+                          title: new Text('${localizeLangModel.shipmentDetails}'),
                           content: Column(
                             children: <Widget>[
                               buildInfoWidget(),
@@ -1270,7 +1283,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    'Click to add more shipments -->  ',
+                                    '${localizeLangModel.clickHere} ${localizeLangModel.to} ${localizeLangModel.add} ${localizeLangModel.more} ${localizeLangModel.shipments} -->  ',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.normal,
@@ -1479,6 +1492,8 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
   }
 
   continued() async {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     print(_currentStep);
 
     //  if (_currentStep == 2) {
@@ -1497,7 +1512,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
       });
 
       if (selectedGHA == 0) {
-        showAlertDialog(context, "OK", "Validation Failed", "Select GHA");
+        showAlertDialog(context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}", "${localizeLangModel!.selectGHA}");
         setState(() {
           validGHA = false;
           _currentStep = 0;
@@ -1506,7 +1521,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
       }
       if (selectedVehicleID == 0) {
         showAlertDialog(
-            context, "OK", "Validation Failed", "Select Vehicle Type");
+            context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}", "${localizeLangModel!.select} ${localizeLangModel!.vehicleType}");
         setState(() {
           validVehicleT = false;
           _currentStep = 0;
@@ -1514,7 +1529,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
         return;
       }
       if (selectedSlotDate == "") {
-        showAlertDialog(context, "OK", "Validation Failed", "Select Date");
+        showAlertDialog(context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}", "${localizeLangModel!.select} ${localizeLangModel!.date}");
         setState(() {
           validDate = false;
           _currentStep = 0;
@@ -1522,7 +1537,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
         return;
       }
       if (selectedSlot == "") {
-        showAlertDialog(context, "OK", "Validation Failed", "Select Slot");
+        showAlertDialog(context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}", "${localizeLangModel!.select} ${localizeLangModel!.slot}");
         setState(() {
           _currentStep = 0;
         });
@@ -1530,7 +1545,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
       }
       if (txtVehicleNo.text.isEmpty) {
         showAlertDialog(
-            context, "OK", "Validation Failed", "Enter or Select Vehicle No.");
+            context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}", "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.oR} ${localizeLangModel!.select} ${localizeLangModel!.vehicleNo}");
         setState(() {
           validVehicleNo = false;
           _currentStep = 1;
@@ -1539,7 +1554,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
       }
       if (txtDriverName.text.isEmpty) {
         showAlertDialog(
-            context, "OK", "Validation Failed", "Enter or Select Driver Name");
+            context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}", "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.oR} ${localizeLangModel!.select} ${localizeLangModel!.driverName}");
         setState(() {
           validDname = false;
           _currentStep = 1;
@@ -1547,7 +1562,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
         return;
       }
       if (txtMobileNo.text.isEmpty) {
-        showAlertDialog(context, "OK", "Validation Failed", "Enter Mobile No.");
+        showAlertDialog(context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}", "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.contactNo}");
         setState(() {
           validDMobN = false;
           _currentStep = 1;
@@ -1557,7 +1572,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
 
       if (txtMobileNo.text.length < 10) {
         showAlertDialog(
-            context, "OK", "Validation Failed", "Invalid Mobile No.");
+            context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}", "${localizeLangModel!.invalid} ${localizeLangModel!.contactNo}");
         setState(() {
           validDMobN = false;
           _currentStep = 1;
@@ -1567,7 +1582,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
 
       if (txtLicNo.text.isEmpty) {
         showAlertDialog(
-            context, "OK", "Validation Failed", "Enter License No.");
+            context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}", "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.driverLicense}");
         setState(() {
           validDLic = false;
           _currentStep = 1;
@@ -1577,7 +1592,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
 
       if (txtLicNo.text.isEmpty) {
         showAlertDialog(
-            context, "OK", "Validation Failed", "Enter License No.");
+            context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}", "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.driverLicense}");
         setState(() {
           validDLic = false;
           _currentStep = 1;
@@ -1587,14 +1602,14 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
 
       if (widget.shipmentMode == "Import") {
         if (allocatedShipmentImport.isEmpty) {
-          showAlertDialog(context, "OK", "Validation Failed",
-              "Select at-least one shipment to book a slot");
+          showAlertDialog(context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}",
+              "${localizeLangModel!.selectAtLeastOneShipmentSlot}");
           return;
         }
       } else {
         if (allocatedShipment.isEmpty) {
-          showAlertDialog(context, "OK", "Validation Failed",
-              "Select at-least one shipment to book a slot");
+          showAlertDialog(context, "${localizeLangModel!.ok}", "${localizeLangModel!.validation} ${localizeLangModel!.failed}",
+              "${localizeLangModel!.selectAtLeastOneShipmentSlot}");
           return;
         }
       }
@@ -1604,9 +1619,9 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
           if (u.txtAllotedPCS.text.isEmpty) {
             showAlertDialog(
                 context,
-                "OK",
-                "Validation Failed",
-                "Enter Allocated NoP for " +
+                "${localizeLangModel!.ok}",
+                "${localizeLangModel!.validation} ${localizeLangModel!.failed}",
+                "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.allocateNOP} ${localizeLangModel!.For} " +
                     u.AirlinePrefix +
                     "-" +
                     u.MAWBNumber);
@@ -1618,9 +1633,9 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
           if (u.txtAllotedPCS.text.isEmpty) {
             showAlertDialog(
                 context,
-                "OK",
-                "Validation Failed",
-                "Enter Allocated NoP for " +
+                "${localizeLangModel!.ok}",
+                "${localizeLangModel!.validation} ${localizeLangModel!.failed}",
+                "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.allocateNOP} ${localizeLangModel!.For} " +
                     u.AirlinePrefix +
                     "-" +
                     u.MAWBNumber);
@@ -1634,9 +1649,9 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
           if (u.txtAllocatedWt.text.isEmpty) {
             showAlertDialog(
                 context,
-                "OK",
-                "Validation Failed",
-                "Enter Allocated GR. WT. for " +
+                "${localizeLangModel!.ok}",
+                "${localizeLangModel!.validation} ${localizeLangModel!.failed}",
+                "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.allocateGrossWt} ${localizeLangModel!.For} " +
                     u.AirlinePrefix +
                     "-" +
                     u.MAWBNumber);
@@ -1648,9 +1663,9 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
           if (u.txtAllocatedWt.text.isEmpty) {
             showAlertDialog(
                 context,
-                "OK",
-                "Validation Failed",
-                "Enter Allocated GR. WT. for " +
+                "${localizeLangModel!.ok}",
+                "${localizeLangModel!.validation} ${localizeLangModel!.failed}",
+                "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.allocateGrossWt} ${localizeLangModel!.For} " +
                     u.AirlinePrefix +
                     "-" +
                     u.MAWBNumber);
@@ -1668,9 +1683,9 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
           var dlgstatus = await showDialog(
             context: context,
             builder: (BuildContext context) => CustomDialog(
-              title: isErrorSave ? "Error Occured" : "Slot Booked",
+              title: isErrorSave ? "${localizeLangModel!.errorOccured}" : "${localizeLangModel!.bookSlot}",
               description: errMsgText.toString(),
-              buttonText: "Okay",
+              buttonText: "${localizeLangModel!.ok}",
               imagepath: isErrorSave
                   ? 'assets/images/warn.gif'
                   : 'assets/images/successchk.gif',
@@ -1696,6 +1711,10 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
   }
 
   buildInfoWidget() {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Card(
       elevation: 2,
       child: Padding(
@@ -1710,7 +1729,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 3,
-                  child: Text('Selected Date',
+                  child: Text('${localizeLangModel!.selected} ${localizeLangModel!.date}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1729,7 +1748,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 3,
-                  child: Text('Selected Slot',
+                  child: Text('${localizeLangModel!.selected} ${localizeLangModel!.slot}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1748,7 +1767,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 3,
-                  child: Text('Vehicle Type',
+                  child: Text('${localizeLangModel!.vehicleType}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1769,8 +1788,8 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                   width: MediaQuery.of(context).size.width / 3,
                   child: Text(
                       widget.shipmentMode == "Export"
-                          ? 'Time to Unload (Approx)'
-                          : 'Time to load (Approx)',
+                          ? '${localizeLangModel!.approxTimeUnload}'
+                          : '${localizeLangModel!.approxTimeToLoad}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1778,7 +1797,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 3,
-                  child: Text('80 Mins', style: VTlistTextFontStyle),
+                  child: Text('80 ${localizeLangModel!.mins}', style: VTlistTextFontStyle),
                 ),
               ],
             ),
@@ -1803,7 +1822,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 3,
-                  child: Text('GR. WT.',
+                  child: Text('${localizeLangModel!.grWt}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2016,6 +2035,9 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
   buildAllocatedShipmentWidget(AWBDetail _awb) {
     //var strName = "txtEdit" + _awb.AWBID.toString();
 
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Card(
       child: ExpansionTile(
         initiallyExpanded: true,
@@ -2032,10 +2054,9 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                   var userSelection = await showDialog(
                     context: context,
                     builder: (BuildContext context) => CustomConfirmDialog(
-                        title: "Removal Confirmation",
-                        description:
-                            "Are you sure you want to remove this Shipment? ",
-                        buttonText: "Okay",
+                        title: "${localizeLangModel!.removal} ${localizeLangModel.confirmation}",
+                        description: "${localizeLangModel.areYouSureYouWantToRemoveThisShipment}",
+                        buttonText: "${localizeLangModel!.ok}",
                         imagepath: 'assets/images/warn.gif',
                         isMobile: true),
                   );
@@ -2069,7 +2090,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 4,
-                  child: Text('Allocate Nop',
+                  child: Text('${localizeLangModel!.allocateNOP}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2100,7 +2121,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                           ],
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Enter allocate NoP",
+                            hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel.allocateNOP}",
                             hintStyle: TextStyle(color: Colors.grey),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 8),
@@ -2155,7 +2176,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 4,
-                  child: Text('Allocate GR. WT.',
+                  child: Text('${localizeLangModel.allocateGrossWt}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2195,7 +2216,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                           ],
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Enter Allocate GR. WT.",
+                            hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.allocateGrossWt}",
                             hintStyle: TextStyle(color: Colors.grey),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 8),
@@ -2245,7 +2266,8 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
 
   buildAllocatedShipmentWidgetImport(AWBDetailImport _awb) {
     //var strName = "txtEdit" + _awb.AWBID.toString();
-
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     return Card(
       child: ExpansionTile(
         initiallyExpanded: true,
@@ -2262,10 +2284,10 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                   var userSelection = await showDialog(
                     context: context,
                     builder: (BuildContext context) => CustomConfirmDialog(
-                        title: "Removal Confirmation",
+                        title: "${localizeLangModel!.removal} ${localizeLangModel.confirmation}",
                         description:
-                            "Are you sure you want to remove this Shipment? ",
-                        buttonText: "Okay",
+                            "${localizeLangModel.areYouSureYouWantToRemoveThisShipment}",
+                        buttonText: "${localizeLangModel!.ok}",
                         imagepath: 'assets/images/warn.gif',
                         isMobile: true),
                   );
@@ -2299,7 +2321,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 4,
-                  child: Text('Allocate Nop',
+                  child: Text('${localizeLangModel!.allocateNOP}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2330,7 +2352,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                           ],
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Enter allocate NoP",
+                            hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel.allocateNOP}",
                             hintStyle: TextStyle(color: Colors.grey),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 8),
@@ -2385,7 +2407,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 4,
-                  child: Text('Allocate GR. WT.',
+                  child: Text('${localizeLangModel.allocateGrossWt}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2425,7 +2447,7 @@ class _NewSlotBookingState extends State<NewSlotBooking> {
                           ],
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Enter Allocate GR. WT.",
+                            hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel.allocateGrossWt}",
                             hintStyle: TextStyle(color: Colors.grey),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 8),
@@ -2787,6 +2809,8 @@ class HeaderClipperWaveThisForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     bool useMobileLayout = false;
 
     if (kIsWeb) {

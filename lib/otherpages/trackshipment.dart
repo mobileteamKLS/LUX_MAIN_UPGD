@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:luxair/language/appLocalizations.dart';
 import 'package:luxair/widgets/headerclipper.dart';
 import 'package:luxair/widgets/timeline.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../language/model/lang_model.dart';
 
 class TrackShipemnt extends StatefulWidget {
   const TrackShipemnt({Key? key}) : super(key: key);
@@ -184,6 +186,10 @@ class _TrackShipemntState extends State<TrackShipemnt> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
        var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
 
@@ -195,7 +201,7 @@ class _TrackShipemntState extends State<TrackShipemnt> {
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "Track Shipemnt"),
+                headerText: "${localizeLangModel!.trackShipment}"),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -214,7 +220,7 @@ class _TrackShipemntState extends State<TrackShipemnt> {
                                 width: MediaQuery.of(context).size.width / 5,
                                 // hard coding child width
                                 child: Text(
-                                  "VT No.",
+                                  "${localizeLangModel!.vTno}",
                                style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -250,7 +256,7 @@ class _TrackShipemntState extends State<TrackShipemnt> {
                                     keyboardType: TextInputType.text,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: "Enter Tracking No.",
+                                      hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel.trackingNo}",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       counterText: "",
                                       contentPadding: EdgeInsets.symmetric(
@@ -324,7 +330,7 @@ class _TrackShipemntState extends State<TrackShipemnt> {
                                               2,
                                           // hard coding child width
                                           child: Text(
-                                            "No record found",
+                                            "${localizeLangModel!.no} ${localizeLangModel!.record} ${localizeLangModel.found}",
                                             style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -368,7 +374,7 @@ class _TrackShipemntState extends State<TrackShipemnt> {
                                                           .size
                                                           .width /
                                                       3,
-                                                  child: Text('From',
+                                                  child: Text('${localizeLangModel.from}',
                                                       style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -400,7 +406,7 @@ class _TrackShipemntState extends State<TrackShipemnt> {
                                                           .size
                                                           .width /
                                                       3,
-                                                  child: Text('to',
+                                                  child: Text('${localizeLangModel!.to}',
                                                        style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -431,7 +437,7 @@ class _TrackShipemntState extends State<TrackShipemnt> {
                                                           .size
                                                           .width /
                                                       3,
-                                                  child: Text('Last update on',
+                                                  child: Text('${localizeLangModel!.lastUpdatedOn}',
                                                   style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -473,7 +479,7 @@ class _TrackShipemntState extends State<TrackShipemnt> {
                                                 2,
                                             // hard coding child width
                                             child: Text(
-                                              "Shipping Partner",
+                                              "${localizeLangModel.shipping} ${localizeLangModel.partner}",
                                                style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(

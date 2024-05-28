@@ -13,6 +13,8 @@ import 'package:luxair/widgets/speech_recognition.dart';
 import 'dart:convert';
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class CargoDrop extends StatefulWidget {
   const CargoDrop({Key? key}) : super(key: key);
@@ -243,6 +245,10 @@ class _CargoDropState extends State<CargoDrop> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -342,7 +348,7 @@ class _CargoDropState extends State<CargoDrop> {
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "Cargo Drop VT List"),
+                headerText: "${localizeLangModel!.cargo} ${localizeLangModel.drop} VT ${localizeLangModel.list}"),
             useMobileLayout
                 ? Expanded(
                     flex: 0,
@@ -380,7 +386,7 @@ class _CargoDropState extends State<CargoDrop> {
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("Search VT No.",
+                                child: Text("${localizeLangModel.search} ${localizeLangModel.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(
@@ -407,7 +413,7 @@ class _CargoDropState extends State<CargoDrop> {
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Search VT No.",
+                                          hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -611,7 +617,7 @@ class _CargoDropState extends State<CargoDrop> {
                                                   .width /
                                               3.11,
                                           child: Text(
-                                            " Search VT No.",
+                                            " ${localizeLangModel.search} ${localizeLangModel.vTno}",
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.normal,
@@ -652,7 +658,7 @@ class _CargoDropState extends State<CargoDrop> {
                                                         .characters,
                                                 decoration: InputDecoration(
                                                   border: InputBorder.none,
-                                                  hintText: "Search VT No.",
+                                                  hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                                   hintStyle: TextStyle(
                                                       color: Colors.grey),
                                                   contentPadding:

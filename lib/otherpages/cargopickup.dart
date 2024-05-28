@@ -14,6 +14,8 @@ import 'package:luxair/widgets/speech_recognition.dart';
 import 'dart:convert';
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 import 'cargopickupdetails.dart';
 
 class CArgoPickUp extends StatefulWidget {
@@ -225,6 +227,10 @@ class _CArgoPickUpState extends State<CArgoPickUp> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -322,7 +328,7 @@ class _CArgoPickUpState extends State<CArgoPickUp> {
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "Cargo Pick-up VT List"),
+                headerText: "${localizeLangModel!.cargo} ${localizeLangModel.pickUp} VT ${localizeLangModel.list}"),
             useMobileLayout
                 ? Expanded(
                     flex: 0,
@@ -360,7 +366,7 @@ class _CArgoPickUpState extends State<CArgoPickUp> {
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("Search VT No.",
+                                child: Text("${localizeLangModel.search} ${localizeLangModel.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(
@@ -387,7 +393,7 @@ class _CArgoPickUpState extends State<CArgoPickUp> {
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Search VT No.",
+                                          hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -592,7 +598,7 @@ class _CArgoPickUpState extends State<CArgoPickUp> {
                                                   .width /
                                               3.11,
                                           child: Text(
-                                            " Search VT No.",
+                                            " ${localizeLangModel.search} ${localizeLangModel.vTno}",
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.normal,

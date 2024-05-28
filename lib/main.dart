@@ -1,23 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dashboards/splashscreen.dart';
+import 'language/appLocalizations.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+  Locale? locale = await _loadSavedLanguage();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((value) => runApp(MyApp()));
+      .then((value) => runApp(MyApp(locale: locale)));
+}
+
+Future<Locale?> _loadSavedLanguage() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? languageCode = prefs.getString('language_code');
+  if (languageCode != null) {
+    return Locale(languageCode);
+  }
+  return null;
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  late Locale? locale;
+  MyApp({Key? key, this.locale}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
- title: 'ACS-LUX',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
+      title: 'ACS-LUX',
+      locale: locale ?? Locale('en'),
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+
+      ],
+      supportedLocales: [
+        Locale('en', 'US'),
+        Locale('es', 'ES'),
+      ],
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the

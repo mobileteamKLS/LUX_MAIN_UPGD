@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:luxair/language/appLocalizations.dart';
 import 'package:scan/scan.dart';
+
+import '../language/model/lang_model.dart';
 
 class QRImageorScan extends StatefulWidget {
   const QRImageorScan({Key? key}) : super(key: key);
@@ -22,9 +25,15 @@ class _QRImageorScanState extends State<QRImageorScan> {
   /// Widget
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
+
+
     return Scaffold(
         appBar: AppBar(
-          title: Text("Image Picker"),
+          title: Text("${localizeLangModel!.image} ${localizeLangModel.picker}"),
         ),
         body: Container(
             child: imageFile == null
@@ -38,7 +47,7 @@ class _QRImageorScanState extends State<QRImageorScan> {
                           onPressed: () {
                             _getFromGallery();
                           },
-                          child: Text("PICK FROM GALLERY"),
+                          child: Text("${localizeLangModel!.pICK} ${localizeLangModel.from} ${localizeLangModel.gALLERY}"),
                         ),
                         Container(
                           height: 40.0,
@@ -56,7 +65,7 @@ class _QRImageorScanState extends State<QRImageorScan> {
                   )
                 : Column(
                     children: [
-                      Text("QR CODE SCANNED IS = " + qrcode.toString()),
+                      Text("QR ${localizeLangModel!.code} ${localizeLangModel!.scanned} IS = " + qrcode.toString()),
                       SizedBox(height: 30),
                       Container(
                         child: Image.file(

@@ -9,9 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:luxair/dashboards/login.dart';
 import 'package:luxair/otherpages/yardcheckin.dart';
 import 'package:luxair/widgets/headers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+import '../main.dart';
 import 'leaderboard.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 // import 'package:ani'
@@ -31,6 +35,10 @@ class _HomeScreenState extends State<HomeScreen> {
   bool useMobileLayout = false, isLoadingMain = false, showLabel = false;
   static List<LableDisplay> lblDisplay = [];
 
+
+  String _selectedLanguage = 'en';
+  Locale _locale = Locale('en');
+
   @override
   void dispose() {
     controller.dispose();
@@ -41,7 +49,34 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
    // getLabelStatus();
     super.initState();
+    _loadSavedLanguage();
     controller.addListener(onScroll);
+  }
+
+  Future<void> _loadSavedLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? languageCode = prefs.getString('language_code');
+    if (languageCode != null) {
+      setState(() {
+        _selectedLanguage = languageCode;
+        _locale = Locale(languageCode);
+      });
+    }
+  }
+
+  void _onLanguageChanged(String languageCode) async {
+    Locale locale = Locale(languageCode);
+    setState(() {
+      _selectedLanguage = languageCode;
+      _locale = locale;
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language_code', languageCode);
+
+    // Refresh the app with the new locale
+    MyApp? myApp = context.findAncestorWidgetOfExactType<MyApp>();
+    myApp?.locale = locale;
+    runApp(MyApp(locale: locale));
   }
 
   void onScroll() {
@@ -90,6 +125,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
 
@@ -155,24 +194,118 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: MediaQuery.of(context).size.height / 3, //180,
                       alignment: Alignment.center,
 
-                      child: DefaultTextStyle(
-                        style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.width / 15, //52,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                        child: AnimatedTextKit(
-                          animatedTexts: [
-                            TyperAnimatedText('Welcome !!'),
-                            TyperAnimatedText('Bonjour !!'),
-                            // TyperAnimatedText('Bienvenida !!'),
-                           // TyperAnimatedText('ਸੁਆਗਤ ਹੈ !!'),
-                            TyperAnimatedText('नमस्ते !!'),
-                            TyperAnimatedText('Bienvenida !!'),
-                            TyperAnimatedText('Welcome !!'),
-                          ],
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DefaultTextStyle(
+                            style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width / 15, //52,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                            child: AnimatedTextKit(
+                              animatedTexts: [
+                                TyperAnimatedText('Welcome !!'),
+                                TyperAnimatedText('Bonjour !!'),
+                                // TyperAnimatedText('Bienvenida !!'),
+                               // TyperAnimatedText('ਸੁਆਗਤ ਹੈ !!'),
+                                TyperAnimatedText('नमस्ते !!'),
+                                TyperAnimatedText('Bienvenida !!'),
+                                TyperAnimatedText('Welcome !!'),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.symmetric(
+                                vertical: 2.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.circular(
+                                    30),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 1.2,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets
+                                    .symmetric(
+                                    horizontal: 10.0),
+                                child:
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButton<
+                                      String>(
+                                    focusColor:
+                                    Colors.white,
+                                    iconEnabledColor:
+                                    Colors.white,
+                                    style: TextStyle(
+                                        color:
+                                        Colors.white),
+                                    value:
+                                    _selectedLanguage,
+                                    dropdownColor:
+                                    Colors.white,
+                                    onChanged: (newValue) {
+                                      _onLanguageChanged(
+                                          newValue!);
+                                    },
+                                    selectedItemBuilder:
+                                        (BuildContext
+                                    context) {
+                                      return [
+                                        'en',
+                                        'es'
+                                      ].map<Widget>(
+                                              (String value) {
+                                            return Center(
+                                              child: Text(
+                                                value == 'en'
+                                                    ? 'English'
+                                                    : 'Spanish',
+                                                style: TextStyle(
+                                                    color: Colors
+                                                        .white,
+                                                    fontSize:
+                                                    14,
+                                                    fontWeight:
+                                                    FontWeight
+                                                        .w500), // Change this to your desired color
+                                              ),
+                                            );
+                                          }).toList();
+                                    },
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: 'en',
+                                        child: Text(
+                                            'English',
+                                            style: TextStyle(
+                                                color: Colors
+                                                    .black)),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'es',
+                                        child: Text(
+                                            'Spanish',
+                                            style: TextStyle(
+                                                color: Colors
+                                                    .black)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
 
                       // Text("Wave clipper", style: TextStyle(
@@ -373,9 +506,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Color(0xFFff4b1f), // Color(0xFF1A2980),
                                   Color(0xFFff9068),
                                   Icons.check_circle,
-                                  "Easy",
-                                  "Yard",
-                                  "Check-In",
+                                  "${localizeLangModel!.easy}",
+                                  "${localizeLangModel.yard}",
+                                  "${localizeLangModel.checkIn}",
                                   YardCheckIn(),
                                   useMobileLayout),
                             ),
@@ -385,9 +518,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Color(0xFF0052D4),
                                   Color(0xFF9CECFB),
                                   Icons.login,
-                                  "Ground",
-                                  "Handler",
-                                  "Login",
+                                  "${localizeLangModel.ground}",
+                                  "${localizeLangModel.handler}",
+                                  "${localizeLangModel.login}",
                                   LoginPage(),
                                   useMobileLayout),
                             ),
@@ -416,7 +549,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             );
                                           },
                                           child: Text(
-                                            showLabel ? "Track Shipment" : "",
+                                            showLabel ? "${localizeLangModel!.trackShipment}" : "",
                                             style: TextStyle(
                                               fontSize: 24,
                                               fontWeight: FontWeight.bold,
@@ -436,7 +569,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         );
                                       },
                                       child: Text(
-                                        showLabel ? "Register Now" : "",
+                                        showLabel ? "${localizeLangModel.registerNow}" : "",
                                         style: TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold,

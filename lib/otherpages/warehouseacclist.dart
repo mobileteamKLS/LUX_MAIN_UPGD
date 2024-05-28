@@ -13,6 +13,9 @@ import 'package:luxair/widgets/speech_recognition.dart';
 import '../global.dart';
 import 'dart:convert';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class WarehouseAcceptanceList extends StatefulWidget {
   WarehouseAcceptanceList({Key? key}) : super(key: key);
 
@@ -243,6 +246,10 @@ class _WarehouseAcceptanceListState extends State<WarehouseAcceptanceList> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -339,7 +346,7 @@ class _WarehouseAcceptanceListState extends State<WarehouseAcceptanceList> {
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "W/H Acceptance List"),
+                headerText: "${localizeLangModel!.warehouseAccpt} ${localizeLangModel.list}"),
             useMobileLayout
                 ? Expanded(
                     flex: 0,
@@ -377,7 +384,7 @@ class _WarehouseAcceptanceListState extends State<WarehouseAcceptanceList> {
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("Search VT No.",
+                                child: Text("${localizeLangModel.search} ${localizeLangModel.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(
@@ -404,7 +411,7 @@ class _WarehouseAcceptanceListState extends State<WarehouseAcceptanceList> {
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Search VT No.",
+                                          hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -599,7 +606,7 @@ class _WarehouseAcceptanceListState extends State<WarehouseAcceptanceList> {
                                                   .size
                                                   .width /
                                               3.11,
-                                          child: Text(" Search VT No.",
+                                          child: Text(" ${localizeLangModel.search} ${localizeLangModel.vTno}",
                                               style: iPadGroupHeaderFontStyle),
                                         ),
                                         Padding(
@@ -635,7 +642,7 @@ class _WarehouseAcceptanceListState extends State<WarehouseAcceptanceList> {
                                                         .characters,
                                                 decoration: InputDecoration(
                                                   border: InputBorder.none,
-                                                  hintText: "Search VT No.",
+                                                  hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                                   hintStyle: TextStyle(
                                                       color: Colors.grey),
                                                   contentPadding:

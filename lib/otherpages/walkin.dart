@@ -9,6 +9,8 @@ import 'package:luxair/widgets/headerclipper.dart';
 import 'package:luxair/widgets/headers.dart';
 
 import '../constants.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class WalkInCustomer extends StatefulWidget {
   WalkInCustomer({Key? key}) : super(key: key);
@@ -77,6 +79,8 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -101,7 +105,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "Walk-in Details "),
+                headerText: "${localizeLangModel!.walkIn} ${localizeLangModel.details}"),
             Expanded(
               child: Padding(
                 padding: useMobileLayout
@@ -122,15 +126,15 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                   SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width / 2,
-                                    child: Text("Mode",
+                                    child: Text("${localizeLangModel!.mode}",
                                         style: mobileHeaderFontStyle),
                                   ),
                                   AdvancedSwitch(
                                     activeColor: Color(0xFF11249F),
                                     inactiveColor: Color(0xFF11249F),
-                                    activeChild: Text('Import',
+                                    activeChild: Text('${localizeLangModel!.imports}',
                                         style: mobileToggleTextFontStyleWhite),
-                                    inactiveChild: Text('Export',
+                                    inactiveChild: Text('${localizeLangModel!.exports}',
                                         style: mobileToggleTextFontStyleWhite),
                                     width:
                                         MediaQuery.of(context).size.width / 2.5,
@@ -139,7 +143,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                   ),
                                 ],
                               )
-                            : Text("Mode", style: iPadHeaderFontStyle),
+                            : Text("${localizeLangModel!.mode}", style: iPadHeaderFontStyle),
                         if (!useMobileLayout) SizedBox(height: 10),
                         if (!useMobileLayout)
                           ToggleSwitch(
@@ -198,7 +202,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                           ),
                         SizedBox(height: 10),
                         //  SizedBox(height: 10),
-                        Text("Select Terminal",
+                        Text("${localizeLangModel.select} ${localizeLangModel!.terminal}",
                             style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : iPadHeaderFontStyle),
@@ -226,7 +230,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                             menuMaxHeight:
                                 MediaQuery.of(context).size.height / 2.5,
 
-                            hint: Text("---- Select ----",
+                            hint: Text("---- ${localizeLangModel.select} ----",
                                 style: iPadYellowTextFontStyleBold),
                             value: selectedTerminalID,
                             items: terminalsList.map((terminal) {
@@ -259,7 +263,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width /
                                       1.8, // hard coding child width
-                                  child: Text("Vehicle Type",
+                                  child: Text("${localizeLangModel!.vehicleType}",
                                       style: useMobileLayout
                                           ? mobileHeaderFontStyle
                                           : iPadHeaderFontStyle),
@@ -291,7 +295,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                       menuMaxHeight:
                                           MediaQuery.of(context).size.height /
                                               2.5,
-                                      hint: Text("---- Select ----",
+                                      hint: Text("---- ${localizeLangModel.select} ----",
                                           style: iPadYellowTextFontStyleBold),
                                       //  value: selectedVehicleID,
                                       items: vehicletypesList.map((vehicle) {
@@ -324,7 +328,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width /
                                       1.8, // hard coding child width
-                                  child: Text("Vehicle No.",
+                                  child: Text("${localizeLangModel!.vehicleNo}",
                                       style: useMobileLayout
                                           ? mobileHeaderFontStyle
                                           : iPadHeaderFontStyle),
@@ -358,7 +362,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Enter Vehicle No.",
+                                          hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicleNo}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -389,7 +393,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                   width: useMobileLayout
                                       ? MediaQuery.of(context).size.width / 1.1
                                       : MediaQuery.of(context).size.width / 2.2,
-                                  child: Text("Trucking Company Name",
+                                  child: Text("${localizeLangModel!.truckingCompany} ${localizeLangModel!.name}",
                                       style: useMobileLayout
                                           ? mobileHeaderFontStyle
                                           : iPadHeaderFontStyle),
@@ -423,7 +427,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText:
-                                              "Enter trucking company name",
+                                              "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.truckingCompany} ${localizeLangModel!.name}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -447,7 +451,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                   width: useMobileLayout
                                       ? MediaQuery.of(context).size.width / 1.1
                                       : MediaQuery.of(context).size.width / 2.2,
-                                  child: Text("Driver Name",
+                                  child: Text("${localizeLangModel!.driverName}",
                                       style: useMobileLayout
                                           ? mobileHeaderFontStyle
                                           : iPadHeaderFontStyle),
@@ -480,7 +484,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Enter driver name",
+                                          hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.driverName}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -513,7 +517,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                   width: useMobileLayout
                                       ? MediaQuery.of(context).size.width / 1.1
                                       : MediaQuery.of(context).size.width / 2.2,
-                                  child: Text("Driver Mobile No.",
+                                  child: Text("${localizeLangModel!.driverMobileNo}",
                                       style: useMobileLayout
                                           ? mobileHeaderFontStyle
                                           : iPadHeaderFontStyle),
@@ -544,7 +548,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                         keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Enter driver Mobile No.",
+                                          hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.driverMobileNo}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -567,7 +571,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                   width: useMobileLayout
                                       ? MediaQuery.of(context).size.width / 1.1
                                       : MediaQuery.of(context).size.width / 2.2,
-                                  child: Text("Driver License No.",
+                                  child: Text("${localizeLangModel!.driverLicense} ${localizeLangModel!.no}",
                                       style: useMobileLayout
                                           ? mobileHeaderFontStyle
                                           : iPadHeaderFontStyle),
@@ -600,7 +604,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Enter driver License No.",
+                                          hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.driverLicense}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -635,7 +639,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                       ? MediaQuery.of(context).size.width / 1.1
                                       : MediaQuery.of(context).size.width / 2.2,
                                   child: Text(
-                                      "STA code (Opt.)", // "Driver Name",
+                                      "${localizeLangModel!.sTA} ${localizeLangModel!.code} ${localizeLangModel.opt}", // "Driver Name",
                                       style: useMobileLayout
                                           ? mobileHeaderFontStyle
                                           : iPadHeaderFontStyle),
@@ -669,7 +673,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                           border: InputBorder.none,
                                           counterText: "",
                                           hintText:
-                                              "Enter 13 Digit STA Code", //"Enter driver name",
+                                              "${localizeLangModel!.pleaseEnter} 13 Digit ${localizeLangModel!.sTA} ${localizeLangModel!.code}", //"Enter driver name",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -696,7 +700,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                   width: useMobileLayout
                                       ? MediaQuery.of(context).size.width / 1.1
                                       : MediaQuery.of(context).size.width / 2.2,
-                                  child: Text("Email ID (Opt.)",
+                                  child: Text("${localizeLangModel.emailId}",
                                       style: useMobileLayout
                                           ? mobileHeaderFontStyle
                                           : iPadHeaderFontStyle),
@@ -730,7 +734,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                         autocorrect: false,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Enter email id",
+                                          hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.emailId}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -868,7 +872,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      'Clear',
+                                      '${localizeLangModel.clear} ',
                                       style: TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.normal,
@@ -942,12 +946,12 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                               walkinTable: walkInTable,
                                               modeSelected: modeSelected == 0
                                                   ? "Drop-off"
-                                                  : "Pick-up",
+                                                  : "${localizeLangModel.pickUp} ",
                                             )),
                                   );
                                 } else {
-                                  showAlertDialog(context, "OK", "Alert",
-                                      "Kindly fill all fields highlighted in Red");
+                                  showAlertDialog(context, "${localizeLangModel.ok} ", "${localizeLangModel.alert} ",
+                                      "${localizeLangModel.Kindly_fill_all_fields_highlighted_in_Red}");
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -977,7 +981,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      ' Next',
+                                      ' ${localizeLangModel.next} ',
                                       style: TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.normal,

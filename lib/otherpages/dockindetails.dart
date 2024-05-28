@@ -9,6 +9,8 @@ import 'package:luxair/widgets/headers.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class DockInDetails extends StatefulWidget {
   bool isExport = false;
@@ -38,6 +40,8 @@ class _DockInDetailsState extends State<DockInDetails> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -49,7 +53,7 @@ class _DockInDetailsState extends State<DockInDetails> {
           HeaderClipperWave(
               color1: Color(0xFF3383CD),
               color2: Color(0xFF11249F),
-              headerText: "Dock-In Details"),
+              headerText: "${localizeLangModel!.dockIn} ${localizeLangModel.details}"),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -70,7 +74,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                               : MediaQuery.of(context).size.width / 7,
                           // hard coding child width
                           child: Text(
-                            "VT No.",
+                            "${localizeLangModel.vTno}",
                             style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -101,7 +105,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Enter Vehicle No.",
+                                hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicleNo}",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
@@ -206,7 +210,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                         SizedBox(height: useMobileLayout ? 10 : 20),
                         if (!isLoading)
                           Text(
-                            "Vehicle Details",
+                            "${localizeLangModel.vehicleDetails}",
                             style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -260,7 +264,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Vehicle No.',
+                                                                '${localizeLangModel.vehicleNo}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -278,7 +282,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Driver Name',
+                                                                '${localizeLangModel.driverName}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -364,7 +368,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Slot/ Dock Details',
+                                                                '${localizeLangModel.slot} / ${localizeLangModel.dockDetails}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -501,7 +505,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                     useMobileLayout ? 5 : 40),
                                           if (!widget.isExport)
                                             Text(
-                                              "Shipment Details",
+                                              "${localizeLangModel.shipmentDetails}",
                                               textAlign: TextAlign.start,
                                               style: useMobileLayout
                                                   ? mobileHeaderFontStyle
@@ -544,7 +548,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                                 .shade300,
                                                             child: Center(
                                                               child: Text(
-                                                                  'AWB No.',
+                                                                  '${localizeLangModel.aWBNum}',
                                                                   style:
                                                                       mobileYellowTextFontStyleBold),
                                                             ),
@@ -563,7 +567,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                                 .shade300,
                                                             child: Center(
                                                               child: Text(
-                                                                  'HAWB No.',
+                                                                  '${localizeLangModel.hAWBNo}',
                                                                   style:
                                                                       mobileYellowTextFontStyleBold),
                                                             ),
@@ -838,7 +842,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                           .yellow.shade300,
                                                       child: Center(
                                                         child: Text(
-                                                            'Vehicle No.',
+                                                            '${localizeLangModel.vehicleNo}',
                                                             style:
                                                                 iPadYellowTextFontStyleNormal),
                                                       ),
@@ -856,7 +860,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                           .yellow.shade300,
                                                       child: Center(
                                                         child: Text(
-                                                            'Driver Name',
+                                                            '${localizeLangModel.driverName}',
                                                             style:
                                                                 iPadYellowTextFontStyleNormal),
                                                       ),
@@ -874,7 +878,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                           .yellow.shade300,
                                                       child: Center(
                                                         child: Text(
-                                                            'Slot/ Dock Details',
+                                                            '${localizeLangModel.slot}/ ${localizeLangModel.dockDetails}',
                                                             style:
                                                                 iPadYellowTextFontStyleNormal),
                                                       ),
@@ -960,7 +964,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                         SizedBox(height: 20),
                                         if (!widget.isExport)
                                           Text(
-                                            "Shipment Details",
+                                            "${localizeLangModel.shipmentDetails}",
                                             style: TextStyle(
                                               fontSize: 28,
                                               fontWeight: FontWeight.normal,
@@ -996,7 +1000,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'AWB No.',
+                                                                '${localizeLangModel.aWBNum}',
                                                                 style:
                                                                     iPadYellowTextFontStyleNormal),
                                                           ),
@@ -1014,7 +1018,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'HAWB No.',
+                                                                '${localizeLangModel.hAWBNo}',
                                                                 style:
                                                                     iPadYellowTextFontStyleNormal),
                                                           ),
@@ -1325,10 +1329,10 @@ class _DockInDetailsState extends State<DockInDetails> {
                                     builder: (BuildContext context) =>
                                         CustomDialog(
                                       title: widget.selectedVtDetails.VTNo,
-                                      description: "Dock-In for VT# " +
+                                      description: "${localizeLangModel.dockIn} ${localizeLangModel.For} VT# " +
                                           widget.selectedVtDetails.VTNo +
-                                          " has been completed successfully",
-                                      buttonText: "Okay",
+                                          "${localizeLangModel.hasBeenSentSuccessfully}",
+                                      buttonText: "${localizeLangModel.ok}",
                                       imagepath: 'assets/images/successchk.gif',
                                       isMobile: useMobileLayout,
                                     ),
@@ -1349,18 +1353,17 @@ class _DockInDetailsState extends State<DockInDetails> {
                                     builder: (BuildContext context) =>
                                         customAlertMessageDialog(
                                             title: errMsgText == ""
-                                                ? "Error Occured"
-                                                : "Dock-In Failed",
+                                                ? "${localizeLangModel.errorOccured}"
+                                                : "${localizeLangModel.dockIn} ${localizeLangModel.failed}",
                                             description: errMsgText == ""
-                                                ? "Error occured while performing Dock-In, Please try again after some time"
+                                                ? "${localizeLangModel.errorOccured} ${localizeLangModel.whiles} ${localizeLangModel.performing} ${localizeLangModel.dockIn}, ${localizeLangModel.tryAfterSometimeValidation}"
                                                 : errMsgText,
-                                            buttonText: "Okay",
+                                            buttonText: "${localizeLangModel.ok}",
                                             imagepath: 'assets/images/warn.gif',
                                             isMobile: useMobileLayout),
                                   );
                                 }
                               },
-
                               style: ElevatedButton.styleFrom(
                                 elevation: 4.0,
                                 shape: RoundedRectangleBorder(
@@ -1392,7 +1395,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      'Submit',
+                                      '${localizeLangModel.submit}',
                                       style: TextStyle(
                                           fontSize: useMobileLayout
                                               ? MediaQuery.of(context)

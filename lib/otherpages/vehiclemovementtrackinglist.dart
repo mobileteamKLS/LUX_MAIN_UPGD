@@ -15,6 +15,8 @@ import 'package:luxair/widgets/speech_recognition.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class VehicleMovementTrackingList extends StatefulWidget {
   const VehicleMovementTrackingList({Key? key}) : super(key: key);
@@ -301,6 +303,10 @@ class _VehicleMovementTrackingListState
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -407,7 +413,7 @@ class _VehicleMovementTrackingListState
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "Vehicle Movement VT List"),
+                headerText: "${localizeLangModel!.vehicle} Movement VT ${localizeLangModel.list}"),
             // ClipPath(
             //   clipper: MyClippers1(),
             //   child: Container(
@@ -480,15 +486,15 @@ class _VehicleMovementTrackingListState
                               children: [
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width / 4,
-                                  child: Text("Mode",
+                                  child: Text("${localizeLangModel!.mode}",
                                       style: mobileHeaderFontStyle),
                                 ),
                                 AdvancedSwitch(
                                   activeColor: Color(0xFF11249F),
                                   inactiveColor: Color(0xFF11249F),
-                                  activeChild: Text('Import',
+                                  activeChild: Text('${localizeLangModel!.imports}',
                                       style: mobileTextFontStyleWhite),
-                                  inactiveChild: Text('Export',
+                                  inactiveChild: Text('${localizeLangModel!.exports}',
                                       style: mobileTextFontStyleWhite),
                                   width:
                                       MediaQuery.of(context).size.width / 2.5,
@@ -501,7 +507,7 @@ class _VehicleMovementTrackingListState
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("Search VT No.",
+                                child: Text("${localizeLangModel!.search} ${localizeLangModel!.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(
@@ -528,7 +534,7 @@ class _VehicleMovementTrackingListState
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Search VT No.",
+                                          hintText: "${localizeLangModel!.search} ${localizeLangModel!.vTno}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -626,7 +632,7 @@ class _VehicleMovementTrackingListState
                                                   .width /
                                               2.45,
                                           child: Text(
-                                            " Mode",
+                                            " ${localizeLangModel!.mode}",
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.normal,
@@ -721,7 +727,7 @@ class _VehicleMovementTrackingListState
                                                   .width /
                                               3.11,
                                           child: Text(
-                                            " Search VT No.",
+                                            " ${localizeLangModel!.search} ${localizeLangModel!.vTno}",
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.normal,
@@ -762,7 +768,7 @@ class _VehicleMovementTrackingListState
                                                         .characters,
                                                 decoration: InputDecoration(
                                                   border: InputBorder.none,
-                                                  hintText: "Search VT No.",
+                                                  hintText: "${localizeLangModel!.search} ${localizeLangModel!.vTno}",
                                                   hintStyle: TextStyle(
                                                       color: Colors.grey),
                                                   contentPadding:

@@ -12,8 +12,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
-class WalkInAwbDetails extends StatefulWidget {
+  class WalkInAwbDetails extends StatefulWidget {
   final String modeSelected;
   final List<WalkinMain> walkinTable;
   WalkInAwbDetails(
@@ -260,6 +262,11 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     return Scaffold(
@@ -274,9 +281,9 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
             var dlgstatus = await showDialog(
               context: context,
               builder: (BuildContext context) => CustomDialog(
-                title: "VT Generated",
+                title: "VT ${localizeLangModel!.generated}",
                 description: errMsgText,
-                buttonText: "Okay",
+                buttonText: "${localizeLangModel!.ok}",
                 imagepath: 'assets/images/successchk.gif',
                 isMobile: useMobileLayout,
               ),
@@ -301,7 +308,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
           //   );
           // }
         },
-        label: const Text('Submit',
+        label: Text('${localizeLangModel!.submit}',
             style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.normal,
@@ -436,7 +443,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
             HeaderClipperWaveMultiline(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "Enter AWB Details",
+                headerText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.aWBNum} ${localizeLangModel.details}",
                 modeText: widget.modeSelected.toString(),
                 isMobile: useMobileLayout,
                 isWeb: kIsWeb),
@@ -568,7 +575,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                           child: CircularProgressIndicator())),
                   SizedBox(height: 10),
                   Text(
-                    "Saving Data",
+                    "${localizeLangModel.saving} ${localizeLangModel.data}",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -588,7 +595,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 1.4,
                       child: Text(
-                        (mawbList.length == 0) ? "" : " MAWB List",
+                        (mawbList.length == 0) ? "" : " ${localizeLangModel.mawbNo} ${localizeLangModel.list}",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -640,10 +647,9 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                 context: context,
                                 builder: (BuildContext context) =>
                                     CustomConfirmDialog(
-                                        title: "ADD HOUSE ?",
-                                        description:
-                                            "Would you like Proceed to add House in this Master ",
-                                        buttonText: "Okay",
+                                        title: "${localizeLangModel.add!.toUpperCase()} ${localizeLangModel.hOUSE} ?",
+                                        description: "${localizeLangModel.wouldYouLikeProceedToAddHouseInThisMaster}",
+                                        buttonText: "${localizeLangModel.ok}",
                                         imagepath: 'assets/images/question.gif',
                                         isMobile: useMobileLayout),
                               );
@@ -702,7 +708,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Add MAWB',
+                                '${localizeLangModel.add} ${localizeLangModel.mawbNo}',
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.normal,
@@ -921,7 +927,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                 : selectedMawbNo == ""
                                     ? Text(" ")
                                     : Text(
-                                        " HAWB List for MAWB# " +
+                                        " ${localizeLangModel!.hAWBNo} ${localizeLangModel.list} ${localizeLangModel.For} ${localizeLangModel!.mawbNo}# " +
                                             selectedMawbNo,
                                         style: TextStyle(
                                           fontSize: 24,
@@ -977,7 +983,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      'Add HAWB',
+                                      '${localizeLangModel.add} ${localizeLangModel!.hAWBNo}',
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.normal,
@@ -1068,6 +1074,10 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
     //   child: Text(_awb.mawbno),
     // );
 
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
+
     return Stack(
       children: [
         GestureDetector(
@@ -1141,9 +1151,9 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
               var userSelection = await showDialog(
                 context: context,
                 builder: (BuildContext context) => CustomConfirmDialog(
-                    title: "Are you sure ?",
-                    description: "Are you sure you want to delete this Master ",
-                    buttonText: "Okay",
+                    title: "${localizeLangModel!.areYouSure}",
+                    description: "${localizeLangModel.areYouSureYouWantToDeleteThisMaster}",
+                    buttonText: "${localizeLangModel!.ok}",
                     imagepath: 'assets/images/warn.gif',
                     isMobile: useMobileLayout),
               );
@@ -1203,6 +1213,10 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
   }
 
   buildMawbListMobile(AWB _awb, index) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     // return Container(
     //   height: 200,
     //   color: Colors.yellow.shade100,
@@ -1276,9 +1290,9 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
               var userSelection = await showDialog(
                 context: context,
                 builder: (BuildContext context) => CustomConfirmDialog(
-                    title: "Are you sure ?",
-                    description: "Are you sure you want to delete this Master ",
-                    buttonText: "Okay",
+                    title: "${localizeLangModel!.areYouSure}",
+                    description: "${localizeLangModel.areYouSureYouWantToDeleteThisMaster}",
+                    buttonText: "${localizeLangModel!.ok}",
                     imagepath: 'assets/images/warn.gif',
                     isMobile: useMobileLayout),
               );
@@ -1344,6 +1358,9 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
   buildHawbListIpad(AWB _awb, index) {
     //  print(_awb.mawbno + "   " + _awb.hawbno);
 
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Stack(
       children: [
         GestureDetector(
@@ -1386,7 +1403,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   //Text('Dock No.'),
-                                  Text('Hawb No.',
+                                  Text('${localizeLangModel!.hAWBNo}',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -1409,7 +1426,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   //Text('Dock No.'),
-                                  Text('Destination',
+                                  Text('${localizeLangModel.destination}',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -1432,7 +1449,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   //Text('Dock No.'),
-                                  Text('Drop NoP',
+                                  Text('${localizeLangModel.drop} ${localizeLangModel.noP}',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -1455,7 +1472,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   //Text('Dock No.'),
-                                  Text('Drop NoP Gross Wt.',
+                                  Text('${localizeLangModel.drop} ${localizeLangModel.noP} ${localizeLangModel.grWt}',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -1495,7 +1512,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               //Text('Dock No.'),
-                              Text('Nature of goods',
+                              Text('${localizeLangModel.natureofGoods}',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -1518,7 +1535,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               //Text('Dock No.'),
-                              Text('Freight Forawarder (Opt.)',
+                              Text('${localizeLangModel.freightForwarder}',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -1549,9 +1566,9 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
               var userSelection = await showDialog(
                 context: context,
                 builder: (BuildContext context) => CustomConfirmDialog(
-                    title: "Are you sure ?",
-                    description: "Are you sure you want to delete this House ",
-                    buttonText: "Okay",
+                    title: "${localizeLangModel.areYouSure}",
+                    description: "${localizeLangModel.areYouSureYouWantToDeleteThisHouse}",
+                    buttonText: "${localizeLangModel.ok}",
                     imagepath: 'assets/images/warn.gif',
                     isMobile: useMobileLayout),
               );
@@ -1595,6 +1612,9 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
 
   buildMawbListIpad(AWB _awb, index) {
     //  print(_awb.mawbno + "   " + _awb.hawbno);
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
 
     return Stack(
       children: [
@@ -1640,7 +1660,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   //Text('Dock No.'),
-                                  Text('Mawb No.',
+                                  Text('${localizeLangModel!.mawbNo}',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -1663,7 +1683,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   //Text('Dock No.'),
-                                  Text('Destination',
+                                  Text('${localizeLangModel!.destination}',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -1686,7 +1706,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   //Text('Dock No.'),
-                                  Text('Drop NoP',
+                                  Text('${localizeLangModel!.drop} ${localizeLangModel!.noP}',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -1709,7 +1729,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   //Text('Dock No.'),
-                                  Text('NoP Gross Wt.',
+                                  Text('${localizeLangModel!.noP} ${localizeLangModel!.grossWt1}',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -1749,7 +1769,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               //Text('Dock No.'),
-                              Text('Commodity',
+                              Text('${localizeLangModel.commodity}',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -1772,7 +1792,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               //Text('Dock No.'),
-                              Text('Freight Forawarder (Opt.)',
+                              Text('${localizeLangModel!.freightForwarder} ${localizeLangModel.opt}',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -1803,9 +1823,9 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
               var userSelection = await showDialog(
                 context: context,
                 builder: (BuildContext context) => CustomConfirmDialog(
-                    title: "Are you sure ?",
-                    description: "Are you sure you want to delete this Master ",
-                    buttonText: "Okay",
+                    title: "${localizeLangModel.areYouSure}",
+                    description: "${localizeLangModel.areYouSureYouWantToDeleteThisMaster}",
+                    buttonText: "${localizeLangModel!.ok}",
                     imagepath: 'assets/images/warn.gif',
                     isMobile: useMobileLayout),
               );
@@ -1850,7 +1870,8 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
 
   buildHawbListMobile(AWB _awb, index) {
     //  print(_awb.mawbno + "   " + _awb.hawbno);
-
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     return Stack(
       children: [
         GestureDetector(
@@ -1892,7 +1913,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                           children: [
                             SizedBox(
                               width: MediaQuery.of(context).size.width / 2.6,
-                              child: Text('Hawb No.',
+                              child: Text('${localizeLangModel!.hAWBNo}',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -1900,7 +1921,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width / 3,
-                              child: Text('Destination',
+                              child: Text('${localizeLangModel!.destination}',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -1939,7 +1960,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                           children: [
                             SizedBox(
                               width: MediaQuery.of(context).size.width / 2.6,
-                              child: Text('Drop NoP',
+                              child: Text('${localizeLangModel!.drop} ${localizeLangModel!.noP}',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -1947,7 +1968,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width / 2.8,
-                              child: Text('Drop NoP GR. WT.',
+                              child: Text('${localizeLangModel!.drop} ${localizeLangModel!.noP} ${localizeLangModel!.grWt}',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -2002,7 +2023,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //Text('Dock No.'),
-                                Text('Nature of goods',
+                                Text('${localizeLangModel!.natureofGoods}',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -2025,7 +2046,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //Text('Dock No.'),
-                                Text('Freight Forawarder (Opt.)',
+                                Text('${localizeLangModel!.freightForwarder} ${localizeLangModel.opt}',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -2057,9 +2078,9 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
               var userSelection = await showDialog(
                 context: context,
                 builder: (BuildContext context) => CustomConfirmDialog(
-                    title: "Are you sure ?",
-                    description: "Are you sure you want to delete this House ",
-                    buttonText: "Okay",
+                    title: "${localizeLangModel.areYouSure}",
+                    description: "${localizeLangModel.areYouSureYouWantToDeleteThisHouse}",
+                    buttonText: "${localizeLangModel.ok}",
                     imagepath: 'assets/images/warn.gif',
                     isMobile: useMobileLayout),
               );
@@ -2102,6 +2123,9 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
   }
 
   buildMawbPopUpIpad() {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Container(
       height: MediaQuery.of(context).size.height / 5.2, // height: 250,
       width: MediaQuery.of(context).size.width / 6,
@@ -2110,7 +2134,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Add MAWB',
+            Text('${localizeLangModel!.add} ${localizeLangModel.mawbNo}',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -2149,7 +2173,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 3.8,
                     child: Text(
-                      "Shipment/Pick-up type",
+                      "${localizeLangModel!.shipments}/ ${localizeLangModel!.pickUp} ${localizeLangModel!.type}",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.normal,
@@ -2171,7 +2195,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 4.2,
                   child: Text(
-                    "MAWB No.",
+                    "${localizeLangModel!.mawbNo}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -2183,8 +2207,8 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   width: MediaQuery.of(context).size.width / 9,
                   child: Text(
                     widget.modeSelected.toLowerCase().contains("pick")
-                        ? "Origin"
-                        : "Destination",
+                        ? "${localizeLangModel!.origin}"
+                        : "${localizeLangModel!.destination}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -2306,7 +2330,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 counterText: "",
-                                hintText: "Select prefix",
+                                hintText: "${localizeLangModel.select} ${localizeLangModel.prefix}",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
@@ -2361,7 +2385,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                       controller: txtMawbnoM,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Enter MAWB No.",
+                        hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.mawbNo}",
                         counterText: "",
                         hintStyle: TextStyle(color: Colors.grey),
                         contentPadding:
@@ -2404,7 +2428,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               counterText: "",
-                              hintText: "Select origin",
+                              hintText: "${localizeLangModel.select} ${localizeLangModel.origin}",
                               hintStyle: TextStyle(color: Colors.grey),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 8),
@@ -2471,8 +2495,8 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   width: MediaQuery.of(context).size.width / 6.4,
                   child: Text(
                     (widget.modeSelected.toLowerCase().contains("pick"))
-                        ? "Pick-up NoP"
-                        : "Drop-off NoP",
+                        ? "${localizeLangModel!.pickUp} ${localizeLangModel!.noP}"
+                        : "Drop-off ${localizeLangModel!.noP}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -2483,7 +2507,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 6,
                   child: Text(
-                    "NoP Gross Wt.",
+                    "${localizeLangModel!.noP} ${localizeLangModel!.grossWt1}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -2557,8 +2581,8 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                         counterText: "",
                         hintText:
                             (widget.modeSelected.toLowerCase().contains("pick"))
-                                ? "Enter pick-up NoP"
-                                : "Enter drop-off NoP",
+                                ? "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.pickUp} ${localizeLangModel!.noP}"
+                                : "${localizeLangModel!.pleaseEnter} drop-off ${localizeLangModel!.noP}",
                         hintStyle: TextStyle(color: Colors.grey),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -2604,7 +2628,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         counterText: "",
-                        hintText: "Enter NoP gross wt.",
+                        hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.noP} ${localizeLangModel!.grossWt1}",
                         hintStyle: TextStyle(color: Colors.grey),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -2639,7 +2663,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2.5,
                     child: Text(
-                      "Freight Forwarder(Opt.)",
+                      "${localizeLangModel!.freightForwarder}",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.normal,
@@ -2674,7 +2698,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                           controller: txtff,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Enter Freight forwarder",
+                            hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.freightForwarder}",
                             hintStyle: TextStyle(color: Colors.grey),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 8),
@@ -2694,7 +2718,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Text(
-                    "Commodity",
+                    "${localizeLangModel.commodity}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -2722,10 +2746,10 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                       ),
-                      hint: Text("---- Select ----", style: iPadTextFontStyle),
+                      hint: Text("---- ${localizeLangModel.select} ----", style: iPadTextFontStyle),
                       dropdownColor: Colors.white,
                       value: commoditySelected == ""
-                          ? "Select"
+                          ? "${localizeLangModel.select}"
                           : commoditySelected, // "Select",
                       items: [
                         'Select',
@@ -2818,7 +2842,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Clear',
+                      '${localizeLangModel!.clear}',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -2921,7 +2945,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Save',
+                      '${localizeLangModel!.save}',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -3168,6 +3192,10 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
   }
 
   buildMawbPopUpMobile() {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Container(
       //  height: MediaQuery.of(context).size.height / 5.2,// height: 250,
       width: MediaQuery.of(context).size.width,
@@ -3176,7 +3204,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Add MAWB', style: buttonWhiteFontStyleSmall),
+            Text('${localizeLangModel!.add} ${localizeLangModel.mawbNo}', style: buttonWhiteFontStyleSmall),
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
@@ -3216,7 +3244,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2.7,
                     child: Text(
-                      "Shipment/Pick-up type",
+                      "${localizeLangModel.shipments} / ${localizeLangModel.pickUp} ${localizeLangModel.type}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -3227,7 +3255,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 4,
                     child: Text(
-                      "Origin",
+                      "${localizeLangModel.origin}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -3299,7 +3327,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                         textCapitalization: TextCapitalization.characters,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Enter origin",
+                          hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.origin}",
                           counterText: "",
                           hintStyle: TextStyle(color: Colors.grey),
                           contentPadding:
@@ -3333,7 +3361,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 6.5,
                     child: Text(
-                      " Prefix",
+                      " ${localizeLangModel.prefix}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -3344,7 +3372,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2.5,
                     child: Text(
-                      "MAWB No.",
+                      "${localizeLangModel.mawbNo}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -3378,7 +3406,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             counterText: "",
-                            hintText: "Enter prefix",
+                            hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.prefix}",
                             hintStyle: TextStyle(color: Colors.grey),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 8),
@@ -3414,7 +3442,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                         controller: txtMawbnoM,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Enter MAWB No.",
+                          hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.mawbNo}",
                           counterText: "",
                           hintStyle: TextStyle(color: Colors.grey),
                           contentPadding:
@@ -3462,7 +3490,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
               SizedBox(
                 width: MediaQuery.of(context).size.width / 1.8,
                 child: Text(
-                  "HAWB No.",
+                  "${localizeLangModel.hAWBNo}",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
@@ -3489,7 +3517,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                     controller: txthawbnoM,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: "Enter HAWB No.",
+                      hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.hAWBNo}",
                       hintStyle: TextStyle(color: Colors.grey),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -3577,7 +3605,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 4,
                     child: Text(
-                      "Pick-up NoP",
+                      "${localizeLangModel.pickUp} ${localizeLangModel.noP}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -3589,7 +3617,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 4,
                     child: Text(
-                      "NoP GR. WT.",
+                      "${localizeLangModel.noP} ${localizeLangModel.grWt}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -3626,7 +3654,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                         controller: txtpickupnopM,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Enter pick-up NoP",
+                          hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.pickUp} ${localizeLangModel.noP}",
                           hintStyle: TextStyle(color: Colors.grey),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -3670,7 +3698,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                         controller: txtgrwtnopM,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Enter NoP gross wt.",
+                          hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.noP} ${localizeLangModel.grossWt1}",
                           hintStyle: TextStyle(color: Colors.grey),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -3691,7 +3719,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2.5,
                     child: Text(
-                      "Nature of Goods",
+                      "${localizeLangModel.natureofGoods}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -3723,7 +3751,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   controller: txtnatureofgoodsM,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Enter nature of goods",
+                    hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.natureofGoods}",
                     hintStyle: TextStyle(color: Colors.grey),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -3764,7 +3792,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Clear',
+                      '${localizeLangModel.clear}',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.normal,
@@ -3838,7 +3866,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Save',
+                      '${localizeLangModel.save}',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.normal,
@@ -3855,6 +3883,8 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
   }
 
   buildHawbPopUpIpad() {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     return Container(
       height: MediaQuery.of(context).size.height / 5.2,
       width: MediaQuery.of(context).size.width / 6,
@@ -3863,7 +3893,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Add HAWB',
+            Text('${localizeLangModel!.add} ${localizeLangModel.hAWBNo}',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -3901,7 +3931,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 4.2,
                   child: Text(
-                    "Origin",
+                    "${localizeLangModel.origin}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -3912,7 +3942,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 4.3,
                   child: Text(
-                    "Prefix",
+                    "${localizeLangModel.prefix}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -3923,7 +3953,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 5,
                   child: Text(
-                    "MAWB No.",
+                    "${localizeLangModel.mawbNo}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -3960,7 +3990,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                         counterText: "",
                         fillColor: Colors.grey.shade200,
                         border: InputBorder.none,
-                        hintText: "Enter origin",
+                        hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.origin}",
                         hintStyle: TextStyle(color: Colors.grey),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4002,7 +4032,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                         filled: true,
                         fillColor: Colors.grey.shade200,
                         border: InputBorder.none,
-                        hintText: "Enter prefix",
+                        hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.prefix}",
                         hintStyle: TextStyle(color: Colors.grey),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4039,7 +4069,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                         filled: true,
                         fillColor: Colors.grey.shade200,
                         border: InputBorder.none,
-                        hintText: "Enter MAWB No.",
+                        hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.mawbNo}",
                         hintStyle: TextStyle(color: Colors.grey),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4061,7 +4091,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 4.2,
                   child: Text(
-                    "HAWB No.",
+                    "${localizeLangModel.hAWBNo}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -4072,7 +4102,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 4.3,
                   child: Text(
-                    "Pick-up NoP",
+                    "${localizeLangModel.pickUp} ${localizeLangModel.noP}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -4083,7 +4113,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 5,
                   child: Text(
-                    "NoP Gross Wt.",
+                    "${localizeLangModel.noP} ${localizeLangModel.grossWt1}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -4116,7 +4146,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                       controller: txthawbnoH,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Enter HAWB No.",
+                        hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.hAWBNo}",
                         hintStyle: TextStyle(color: Colors.grey),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4156,7 +4186,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                       maxLength: 8,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Enter pick-up NoP",
+                        hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.pickUp} ${localizeLangModel.noP}",
                         counterText: "",
                         hintStyle: TextStyle(color: Colors.grey),
                         contentPadding:
@@ -4203,7 +4233,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         counterText: "",
-                        hintText: "Enter NoP gross wt.",
+                        hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.noP} ${localizeLangModel.grossWt1}",
                         hintStyle: TextStyle(color: Colors.grey),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4224,7 +4254,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Text(
-                    "Nature of Goods",
+                    "${localizeLangModel.natureofGoods}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -4255,7 +4285,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                 controller: txtnatureofgoodsH,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: "Enter nature of goods",
+                  hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.natureofGoods}",
                   hintStyle: TextStyle(color: Colors.grey),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4295,7 +4325,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Clear',
+                      '${localizeLangModel.clear}',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -4365,7 +4395,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Save',
+                      '${localizeLangModel.save}',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -4382,6 +4412,11 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
   }
 
   buildHawbPopUpMobile() {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
+
     return Container(
       // height: MediaQuery.of(context).size.height / 5.2,
       width: MediaQuery.of(context).size.width,
@@ -4390,7 +4425,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Add HAWB',
+            Text('${localizeLangModel!.add} ${localizeLangModel!.hAWBNo}',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -4432,7 +4467,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 4,
                     child: Text(
-                      "Origin",
+                      "${localizeLangModel!.origin}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -4466,7 +4501,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                           filled: true,
                           fillColor: Colors.grey.shade200,
                           border: InputBorder.none,
-                          hintText: "Enter origin",
+                          hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.origin}",
                           hintStyle: TextStyle(color: Colors.grey),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4488,7 +4523,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 4,
                     child: Text(
-                      "Prefix",
+                      "${localizeLangModel.prefix}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -4499,7 +4534,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2.5,
                     child: Text(
-                      "MAWB No.",
+                      "${localizeLangModel!.mawbNo}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -4533,7 +4568,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                           filled: true,
                           fillColor: Colors.grey.shade200,
                           border: InputBorder.none,
-                          hintText: "Enter prefix",
+                          hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel.prefix}",
                           hintStyle: TextStyle(color: Colors.grey),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4568,7 +4603,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                           filled: true,
                           fillColor: Colors.grey.shade200,
                           border: InputBorder.none,
-                          hintText: "Enter MAWB No.",
+                          hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.mawbNo}",
                           hintStyle: TextStyle(color: Colors.grey),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4698,7 +4733,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
               SizedBox(
                 width: MediaQuery.of(context).size.width / 1.8,
                 child: Text(
-                  "HAWB No.",
+                  "${localizeLangModel!.hAWBNo}",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
@@ -4727,7 +4762,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                     controller: txthawbnoH,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: "Enter HAWB No.",
+                      hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.hAWBNo}",
                       hintStyle: TextStyle(color: Colors.grey),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4747,7 +4782,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 3.5,
                     child: Text(
-                      "Pick-up NoP",
+                      "${localizeLangModel!.pickUp} ${localizeLangModel!.noP}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -4759,7 +4794,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 4,
                     child: Text(
-                      "NoP GR. WT.",
+                      "${localizeLangModel!.noP} ${localizeLangModel!.grWt}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -4797,7 +4832,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                         ],
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Enter pick-up NoP",
+                          hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.pickUp} ${localizeLangModel!.noP}",
                           hintStyle: TextStyle(color: Colors.grey),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4842,7 +4877,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                         controller: txtgrwtnopH,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Enter NoP gross wt.",
+                          hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.noP} ${localizeLangModel!.grossWt1}",
                           hintStyle: TextStyle(color: Colors.grey),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4863,7 +4898,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2.5,
                     child: Text(
-                      "Nature of Goods",
+                      "${localizeLangModel!.natureofGoods}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -4894,7 +4929,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   controller: txtnatureofgoodsH,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Enter nature of goods",
+                    hintText: "${localizeLangModel!.pleaseEnter} ${localizeLangModel!.natureofGoods}",
                     hintStyle: TextStyle(color: Colors.grey),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -4934,7 +4969,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Clear',
+                      '${localizeLangModel!.clear}',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.normal,
@@ -5004,7 +5039,7 @@ class _WalkInAwbDetailsState extends State<WalkInAwbDetails> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Save',
+                      '${localizeLangModel!.save}',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.normal,

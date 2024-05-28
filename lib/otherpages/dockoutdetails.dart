@@ -9,6 +9,8 @@ import 'package:luxair/datastructure/vehicletoken.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 
 class DockOutDetails extends StatefulWidget {
@@ -39,6 +41,10 @@ class _DockOutDetailsState extends State<DockOutDetails> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -50,7 +56,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
           HeaderClipperWave(
               color1: Color(0xFF3383CD),
               color2: Color(0xFF11249F),
-              headerText: "Dock-Out Details"),
+              headerText: "${localizeLangModel!.dockOut} ${localizeLangModel.details}"),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -71,7 +77,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                               : MediaQuery.of(context).size.width / 7,
                           // hard coding child width
                           child: Text(
-                            "VT No.",
+                            "${localizeLangModel.vTno}",
                             style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -102,7 +108,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Enter Vehicle No.",
+                                hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicleNo}",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
@@ -139,7 +145,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                         SizedBox(height: useMobileLayout ? 10 : 20),
                         if (!isLoading)
                           Text(
-                            "Vehicle Details",
+                            "${localizeLangModel.vehicleDetails}",
                             style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -193,7 +199,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Vehicle No.',
+                                                                '${localizeLangModel.vehicleNo}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -211,7 +217,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Driver Name',
+                                                                '${localizeLangModel.driverName}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -297,7 +303,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Slot/ Dock Details',
+                                                                '${localizeLangModel.slot}/ ${localizeLangModel.dockDetails}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -350,7 +356,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                     useMobileLayout ? 5 : 40),
                                           if (!widget.isExport)
                                             Text(
-                                              "Shipment Details",
+                                              "${localizeLangModel.shipmentDetails}",
                                               textAlign: TextAlign.start,
                                               style: useMobileLayout
                                                   ? mobileHeaderFontStyle
@@ -393,7 +399,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                                 .shade300,
                                                             child: Center(
                                                               child: Text(
-                                                                  'AWB No.',
+                                                                  '${localizeLangModel.aWBNum}',
                                                                   style:
                                                                       mobileYellowTextFontStyleBold),
                                                             ),
@@ -412,7 +418,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                                 .shade300,
                                                             child: Center(
                                                               child: Text(
-                                                                  'HAWB No.',
+                                                                  '${localizeLangModel.hAWBNo}',
                                                                   style:
                                                                       mobileYellowTextFontStyleBold),
                                                             ),
@@ -513,7 +519,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                             color: Colors.yellow
                                                                 .shade300,
                                                             child: Center(
-                                                              child: Text('CRN',
+                                                              child: Text('${localizeLangModel.cRN}',
                                                                   style:
                                                                       mobileYellowTextFontStyleBold),
                                                             ),
@@ -688,7 +694,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                           .yellow.shade300,
                                                       child: Center(
                                                         child: Text(
-                                                            'Vehicle No.',
+                                                            '${localizeLangModel.vehicleNo}',
                                                             style:
                                                                 iPadYellowTextFontStyleNormal),
                                                       ),
@@ -706,7 +712,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                           .yellow.shade300,
                                                       child: Center(
                                                         child: Text(
-                                                            'Driver Name',
+                                                            '${localizeLangModel.driverName}',
                                                             style:
                                                                 iPadYellowTextFontStyleNormal),
                                                       ),
@@ -724,7 +730,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                           .yellow.shade300,
                                                       child: Center(
                                                         child: Text(
-                                                            'Slot/ Dock Details',
+                                                            '${localizeLangModel.slot}/ ${localizeLangModel.dockDetails}',
                                                             style:
                                                                 iPadYellowTextFontStyleNormal),
                                                       ),
@@ -810,7 +816,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                         SizedBox(height: 20),
                                         if (!widget.isExport)
                                           Text(
-                                            "Shipment Details",
+                                            "${localizeLangModel.shipmentDetails}",
                                             style: TextStyle(
                                               fontSize: 28,
                                               fontWeight: FontWeight.normal,
@@ -846,7 +852,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'AWB No.',
+                                                                '${localizeLangModel.aWBNum}',
                                                                 style:
                                                                     iPadYellowTextFontStyleNormal),
                                                           ),
@@ -864,7 +870,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'HAWB No.',
+                                                                '${localizeLangModel.hAWBNo}',
                                                                 style:
                                                                     iPadYellowTextFontStyleNormal),
                                                           ),
@@ -994,7 +1000,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                                           color: Colors
                                                               .yellow.shade300,
                                                           child: Center(
-                                                            child: Text('CRN',
+                                                            child: Text('${localizeLangModel.cRN}',
                                                                 style:
                                                                     iPadYellowTextFontStyleNormal),
                                                           ),
@@ -1175,10 +1181,10 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                     builder: (BuildContext context) =>
                                         CustomDialog(
                                       title: widget.selectedVtDetails.VTNo,
-                                      description: "Dock-Out for VT# " +
+                                      description: "${localizeLangModel.dockOut} ${localizeLangModel.For} VT# " +
                                           widget.selectedVtDetails.VTNo +
-                                          " has been completed successfully",
-                                      buttonText: "Okay",
+                                          " ${localizeLangModel.hasBeenSentSuccessfully}",
+                                      buttonText: "${localizeLangModel.ok}",
                                       imagepath: 'assets/images/successchk.gif',
                                       isMobile: useMobileLayout,
                                     ),
@@ -1199,12 +1205,12 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                     builder: (BuildContext context) =>
                                         customAlertMessageDialog(
                                             title: errMsgText == ""
-                                                ? "Error Occured"
-                                                : "Dock-Out Failed",
+                                                ? "${localizeLangModel.errorOccured}"
+                                                : "${localizeLangModel.dockOut} ${localizeLangModel.failed}",
                                             description: errMsgText == ""
-                                                ? "Error occured while performing Dock-Out, Please try again after some time"
+                                                ? "${localizeLangModel.errorOccured} ${localizeLangModel.whiles} ${localizeLangModel.performing} ${localizeLangModel.dockOut}, ${localizeLangModel.tryAfterSometimeValidation}"
                                                 : errMsgText,
-                                            buttonText: "Okay",
+                                            buttonText: "${localizeLangModel.ok}",
                                             imagepath: 'assets/images/warn.gif',
                                             isMobile: useMobileLayout),
                                   );
@@ -1242,7 +1248,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      'Submit',
+                                      '${localizeLangModel.submit}',
                                       style: TextStyle(
                                           fontSize: useMobileLayout
                                               ? MediaQuery.of(context)

@@ -18,6 +18,9 @@ import '../constants.dart';
 import '../global.dart';
 import 'dart:convert';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
 
@@ -41,14 +44,32 @@ class _LoginPageState extends State<LoginPage> {
   bool isPasswordEntered = true;
   bool isLoading = false, isLoadingMain = false, showLabel = false;
 
+  String _selectedLanguage = 'en';
+  Locale _locale = Locale('en');
+
   @override
   void initState() {
     //getLabelStatus();
     super.initState();
+    _loadSavedLanguage();
+  }
+  Future<void> _loadSavedLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? languageCode = prefs.getString('language_code');
+    if (languageCode != null) {
+      setState(() {
+        _selectedLanguage = languageCode;
+        _locale = Locale(languageCode);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     return Scaffold(
@@ -119,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     SizedBox(height: 20),
                     Text(
-                      "Log in to your account ",
+                      "${localizeLangModel!.loginToYourAccount} ",
                       style: TextStyle(
                         fontSize: useMobileLayout
                             ? MediaQuery.of(context).size.width / 20
@@ -173,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Username",
+                                    hintText: "${localizeLangModel!.username}",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 8, horizontal: 8),
@@ -251,7 +272,7 @@ class _LoginPageState extends State<LoginPage> {
                                       },
                                     ),
                                     border: InputBorder.none,
-                                    hintText: "Password",
+                                    hintText: "${localizeLangModel.password}",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 8, horizontal: 8),
@@ -320,8 +341,8 @@ class _LoginPageState extends State<LoginPage> {
                                   if (isUserNameEntered && isPasswordEntered) {
                                     var abc = await loginUser(context);
                                     if (abc == false)
-                                      showAlertDialog(context, "OK", "Alert",
-                                          "Username or Password is incorrect");
+                                      showAlertDialog(context, "${localizeLangModel.ok}", "${localizeLangModel.alert}",
+                                          "${localizeLangModel.usernamePasswordIncorrect}");
                                     else {
                                       Navigator.push(
                                         context,
@@ -365,7 +386,7 @@ class _LoginPageState extends State<LoginPage> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      'Login',
+                                      '${localizeLangModel.loginButton}',
                                       style: TextStyle(
                                           fontSize: useMobileLayout
                                               ? MediaQuery.of(context)
@@ -430,10 +451,10 @@ class _LoginPageState extends State<LoginPage> {
                                     context: context,
                                     builder: (BuildContext context) =>
                                         customAlertMessageDialog(
-                                            title: "Invalid Details",
+                                            title: "${localizeLangModel.invalidDetails}",
                                             description:
-                                                "Username or Password is incorrect",
-                                            buttonText: "Okay",
+                                                "${localizeLangModel.usernamePasswordIncorrect}",
+                                            buttonText: "${localizeLangModel.ok}",
                                             imagepath: 'assets/images/warn.gif',
                                             isMobile: useMobileLayout),
                                   );
@@ -446,10 +467,10 @@ class _LoginPageState extends State<LoginPage> {
                                       context: context,
                                       builder: (BuildContext context) =>
                                           customAlertMessageDialog(
-                                              title: "Invalid User",
+                                              title: "${localizeLangModel.invalidDetails}",
                                               description:
-                                                  "Your are not authorized to use this Application ",
-                                              buttonText: "Okay",
+                                                  "${localizeLangModel.notAuthorizedToUseApplication} ",
+                                              buttonText: "${localizeLangModel.ok}",
                                               imagepath:
                                                   'assets/images/warn.gif',
                                               isMobile: useMobileLayout),
@@ -459,10 +480,10 @@ class _LoginPageState extends State<LoginPage> {
                                       context: context,
                                       builder: (BuildContext context) =>
                                           customAlertMessageDialog(
-                                              title: "Invalid User",
+                                              title: "${localizeLangModel.invalidUser}",
                                               description:
-                                                  "Your are not authorized to use this Application ",
-                                              buttonText: "Okay",
+                                                  "${localizeLangModel.notAuthorizedToUseApplication} ",
+                                              buttonText: "${localizeLangModel.ok}",
                                               imagepath:
                                                   'assets/images/warn.gif',
                                               isMobile: useMobileLayout),
@@ -526,7 +547,7 @@ class _LoginPageState extends State<LoginPage> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Login',
+                                  '${localizeLangModel.loginButton}',
                                   style: TextStyle(
                                       fontSize: useMobileLayout
                                           ? MediaQuery.of(context).size.width /
@@ -563,7 +584,7 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 },
                                 child: Text(
-                                  showLabel ? "Track Shipment" : "",
+                                  showLabel ? "${localizeLangModel!.trackShipment}" : "",
                                   style: TextStyle(
                                     fontSize: useMobileLayout
                                         ? MediaQuery.of(context).size.width / 23
@@ -584,7 +605,7 @@ class _LoginPageState extends State<LoginPage> {
                               );
                             },
                             child: Text(
-                              showLabel ? "Register Now" : "",
+                              showLabel ? "${localizeLangModel!.newRegistration}" : "",
                               style: TextStyle(
                                 fontSize: useMobileLayout
                                     ? MediaQuery.of(context).size.width / 23
@@ -622,7 +643,7 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                             },
                             child: Text(
-                              "Back to Dashboard",
+                              "${localizeLangModel!.backToDashboard}",
                               style: TextStyle(
                                 fontSize: useMobileLayout
                                     ? MediaQuery.of(context).size.width / 23
@@ -882,7 +903,8 @@ class _LoginPageState extends State<LoginPage> {
                     OrganizationtypeIdString: organizationTypes);
 
                 setPreferences(userDetails[1]);
-              } else {
+              }
+              else {
                 loggedinUser = new UserDetails(
                     UserId: userDetails[0].UserId,
                     OrgName: userDetails[0].OrgName,

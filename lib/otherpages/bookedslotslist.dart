@@ -9,6 +9,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class BookedSlotsList extends StatefulWidget {
   const BookedSlotsList({Key? key}) : super(key: key);
@@ -46,6 +48,10 @@ class _BookedSlotsListState extends State<BookedSlotsList> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -56,14 +62,14 @@ class _BookedSlotsListState extends State<BookedSlotsList> {
               HeaderClipperWave(
                   color1: Color(0xFF3383CD),
                   color2: Color(0xFF11249F),
-                  headerText: "Booked Slots List "),
+                  headerText: "${localizeLangModel!.bookSlot} ${localizeLangModel.list} "),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Row(
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 3,
-                      child: Text("Mode", style: mobileHeaderFontStyle),
+                      child: Text("${localizeLangModel.mode}", style: mobileHeaderFontStyle),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 4.0),
@@ -71,9 +77,9 @@ class _BookedSlotsListState extends State<BookedSlotsList> {
                         activeColor: Color(0xFF11249F),
                         inactiveColor: Color(0xFF11249F),
                         activeChild:
-                            Text('Import', style: mobileTextFontStyleWhite),
+                            Text('${localizeLangModel.imports}', style: mobileTextFontStyleWhite),
                         inactiveChild:
-                            Text('Export', style: mobileTextFontStyleWhite),
+                            Text('${localizeLangModel.exports}', style: mobileTextFontStyleWhite),
                         width: MediaQuery.of(context).size.width / 2.5,
                         height: 35,
                         controller: _controllerModeType,
@@ -92,7 +98,7 @@ class _BookedSlotsListState extends State<BookedSlotsList> {
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width / 3,
                         child:
-                            Text("Search VT No.", style: mobileHeaderFontStyle),
+                            Text("${localizeLangModel.search} ${localizeLangModel.vTno}", style: mobileHeaderFontStyle),
                       ),
                     ),
                     Padding(
@@ -117,7 +123,7 @@ class _BookedSlotsListState extends State<BookedSlotsList> {
                               textCapitalization: TextCapitalization.characters,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Search VT No.",
+                                hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
@@ -285,6 +291,11 @@ class _BookedSlotsListState extends State<BookedSlotsList> {
   }
 
   buildBookedSlotsList12(BookedAWBDetail bawbd) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
+
+
     // DateTime dateNow = bawbd.CreatedDate;
     // print("dateNow");
     // print(dateNow);
@@ -428,6 +439,8 @@ class _BookedSlotsListState extends State<BookedSlotsList> {
   }
 
   buildBookedSlotsListImport(BookedAWBDetailImport bawbd) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     return Card(
       elevation: 3,
       color: Colors.white,
@@ -465,14 +478,14 @@ class _BookedSlotsListState extends State<BookedSlotsList> {
                             context: context,
                             builder: (BuildContext context) =>
                                 CustomConfirmDialog(
-                                    title: "Cancel Confirmation",
+                                    title: "${localizeLangModel!.cancel} ${localizeLangModel.confirm}",
                                     description:
-                                        "Are you sure you want to cancel \n" +
+                                        "${localizeLangModel.areYouSureYouWantToCancel} \n" +
                                             "VT # " +
                                             bawbd.VehicleTokenNo +
-                                            "\n Booked for " +
+                                            "\n ${localizeLangModel!.booked}  ${localizeLangModel!.For}" +
                                             bawbd.SlotTime,
-                                    buttonText: "Okay",
+                                    buttonText: "${localizeLangModel!.ok}",
                                     imagepath: 'assets/images/warn.gif',
                                     isMobile: true),
                           );
@@ -621,6 +634,8 @@ class _BookedSlotsListState extends State<BookedSlotsList> {
   }
 
   buildBookedSlotsList(BookedAWBDetail bawbd) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     return Card(
       elevation: 3,
       color: Colors.white,
@@ -658,14 +673,14 @@ class _BookedSlotsListState extends State<BookedSlotsList> {
                             context: context,
                             builder: (BuildContext context) =>
                                 CustomConfirmDialog(
-                                    title: "Cancel Confirmation",
+                                    title: "${localizeLangModel!.cancel} ${localizeLangModel!.confirm}",
                                     description:
-                                        "Are you sure you want to cancel \n" +
+                                        "${localizeLangModel.areYouSureYouWantToCancel} \n" +
                                             "VT # " +
                                             bawbd.tokenno +
-                                            "\n Booked for " +
+                                            "\n ${localizeLangModel!.booked} ${localizeLangModel!.For} " +
                                             bawbd.SlotTime,
-                                    buttonText: "Okay",
+                                    buttonText: "${localizeLangModel!.ok}",
                                     imagepath: 'assets/images/warn.gif',
                                     isMobile: true),
                           );

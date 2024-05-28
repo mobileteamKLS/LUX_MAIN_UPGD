@@ -8,6 +8,8 @@ import 'package:luxair/widgets/headers.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class CheckInYard extends StatefulWidget {
   CheckInYard({Key? key}) : super(key: key);
@@ -30,6 +32,10 @@ class _CheckInYardState extends State<CheckInYard> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -42,7 +48,7 @@ class _CheckInYardState extends State<CheckInYard> {
           HeaderClipperWave(
               color1: Color(0xFF3383CD),
               color2: Color(0xFF11249F),
-              headerText: "Easy Yard Check-in"),
+              headerText: "${localizeLangModel!.easy} ${localizeLangModel.yard} ${localizeLangModel.checkIn}"),
           Expanded(
             child: Padding(
               padding: useMobileLayout
@@ -63,15 +69,15 @@ class _CheckInYardState extends State<CheckInYard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Search by Vehicle No.",
+                                "${localizeLangModel.search} by ${localizeLangModel.vehicleNo}",
                                 style: mobileTextLabelFontStyle,
                               ),
                               //  SizedBox(height: 10),
                               Row(
                                 children: [
-                                  Text(" OR ", style: mobileHeaderFontStyle),
+                                  Text(" ${localizeLangModel.oR} ", style: mobileHeaderFontStyle),
                                   //     SizedBox(width: 10),
-                                  Text("Vehicle Token No.",
+                                  Text("${localizeLangModel.vehicle} ${localizeLangModel.tokenNo}",
                                       style: mobileTextLabelFontStyle),
                                 ],
                               ),
@@ -80,7 +86,7 @@ class _CheckInYardState extends State<CheckInYard> {
                         : Row(
                             children: [
                               Text(
-                                "Search by Vehicle No.",
+                                "${localizeLangModel.search} by ${localizeLangModel.vehicleNo}",
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.normal,
@@ -89,7 +95,7 @@ class _CheckInYardState extends State<CheckInYard> {
                               ),
                               SizedBox(width: useMobileLayout ? 10 : 18),
                               Text(
-                                "OR",
+                                "${localizeLangModel.oR}",
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.normal,
@@ -98,7 +104,7 @@ class _CheckInYardState extends State<CheckInYard> {
                               ),
                               SizedBox(width: useMobileLayout ? 10 : 18),
                               Text(
-                                "Vehicle Token No.",
+                                "${localizeLangModel.vehicle} ${localizeLangModel.tokenNo}",
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.normal,
@@ -148,7 +154,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                   TextCapitalization.characters,
                                               decoration: InputDecoration(
                                                 border: InputBorder.none,
-                                                hintText: "Enter Vehicle No.",
+                                                hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicleNo}",
                                                 hintStyle: TextStyle(
                                                     color: Colors.grey),
                                                 contentPadding:
@@ -168,7 +174,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                     child: Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "OR",
+                                        "${localizeLangModel.oR}",
                                         style: TextStyle(
                                           fontSize: MediaQuery.of(context)
                                                   .size
@@ -216,7 +222,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                               TextCapitalization.characters,
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: "Enter Vehicle Token No.",
+                                            hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicle} ${localizeLangModel.tokenNo}",
                                             hintStyle:
                                                 TextStyle(color: Colors.grey),
                                             contentPadding:
@@ -265,7 +271,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                         readOnly: isSaving ? true : false,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Enter Vehicle No.",
+                                          hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicleNo}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -293,7 +299,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    "OR",
+                                    "${localizeLangModel.oR}",
                                     style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.normal,
@@ -335,7 +341,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                         readOnly: isSaving ? true : false,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Enter Vehicle Token No.",
+                                          hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicle} ${localizeLangModel.tokenNo}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -413,7 +419,7 @@ class _CheckInYardState extends State<CheckInYard> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Search',
+                                  '${localizeLangModel.search}',
                                   style: TextStyle(
                                       fontSize: useMobileLayout
                                           ? MediaQuery.of(context).size.width /
@@ -462,7 +468,7 @@ class _CheckInYardState extends State<CheckInYard> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Clear',
+                                  '${localizeLangModel.clear}',
                                   style: TextStyle(
                                       fontSize: useMobileLayout
                                           ? MediaQuery.of(context).size.width /
@@ -504,7 +510,7 @@ class _CheckInYardState extends State<CheckInYard> {
                               if (isSearched) SizedBox(height: 10),
                               if (isSearched && walkInTokensList.length > 0)
                                 Text(
-                                    "Confirm your slot and submit for Yard Check-in",
+                                    "${localizeLangModel.confirm} ${localizeLangModel.your} ${localizeLangModel.slot} ${localizeLangModel.and} ${localizeLangModel.submit} ${localizeLangModel.For} ${localizeLangModel.yard} ${localizeLangModel.checkIn}",
                                     style: useMobileLayout
                                         ? mobileGroupHeaderFontStyle
                                         : iPadGroupHeaderFontStyle),
@@ -537,7 +543,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                   .size
                                                                   .width /
                                                               3,
-                                                      child: Text('Vehicle No.',
+                                                      child: Text('${localizeLangModel.vehicleNo}',
                                                           style:
                                                               mobileHeaderFontStyle),
                                                     ),
@@ -562,7 +568,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                   .size
                                                                   .width /
                                                               3,
-                                                      child: Text('Mode',
+                                                      child: Text('${localizeLangModel.mode}',
                                                           style:
                                                               mobileHeaderFontStyle),
                                                     ),
@@ -572,7 +578,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                   .size
                                                                   .width /
                                                               2,
-                                                      child: Text('Exports',
+                                                      child: Text('${localizeLangModel.exports}',
                                                           style:
                                                               mobileYellowTextFontStyleBold),
                                                     ),
@@ -587,7 +593,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                   .size
                                                                   .width /
                                                               3,
-                                                      child: Text('Driver Name',
+                                                      child: Text('${localizeLangModel.driverName}',
                                                           style:
                                                               mobileHeaderFontStyle),
                                                     ),
@@ -613,7 +619,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                   .size
                                                                   .width /
                                                               3,
-                                                      child: Text('Time Slot',
+                                                      child: Text('${localizeLangModel.timeSlot}',
                                                           style:
                                                               mobileHeaderFontStyle),
                                                     ),
@@ -679,7 +685,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                 .shade300,
                                                             child: Center(
                                                               child: Text(
-                                                                  'Vehicle No.',
+                                                                  '${localizeLangModel.vehicleNo}',
                                                                   style:
                                                                       iPadYellowTextFontStyleNormal),
                                                             ),
@@ -697,7 +703,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                 .shade300,
                                                             child: Center(
                                                               child: Text(
-                                                                  'Driver Name',
+                                                                  '${localizeLangModel.driverName}',
                                                                   style:
                                                                       iPadYellowTextFontStyleNormal),
                                                             ),
@@ -715,7 +721,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                 .shade300,
                                                             child: Center(
                                                               child: Text(
-                                                                  'Mode',
+                                                                  '${localizeLangModel.mode}',
                                                                   style:
                                                                       iPadYellowTextFontStyleNormal),
                                                             ),
@@ -733,7 +739,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                 .shade300,
                                                             child: Center(
                                                               child: Text(
-                                                                  'Time Slot',
+                                                                  '${localizeLangModel.timeSlot}',
                                                                   style:
                                                                       iPadYellowTextFontStyleNormal),
                                                             ),
@@ -984,11 +990,11 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                       context) =>
                                                                   customAlertMessageDialog(
                                                                       title:
-                                                                          "No Records Selected",
+                                                                          "${localizeLangModel.no} ${localizeLangModel.record} ${localizeLangModel.selected}",
                                                                       description:
-                                                                          "Select atleast one record to perform Yard Check-in",
+                                                                          "${localizeLangModel.selectAtleastOneRecordToPerformYardCheckIn}",
                                                                       buttonText:
-                                                                          "Okay",
+                                                                          "${localizeLangModel.ok}",
                                                                       imagepath:
                                                                           'assets/images/warn.gif',
                                                                       isMobile:
@@ -1022,14 +1028,14 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                 builder: (BuildContext context) => customAlertMessageDialog(
                                                                     title: errMsgText ==
                                                                             ""
-                                                                        ? "Error Occured"
-                                                                        : "Yard Check-in Failed",
+                                                                        ? "${localizeLangModel.errorOccured}"
+                                                                        : "${localizeLangModel.yardCheckIn} ${localizeLangModel.failed}",
                                                                     description: errMsgText ==
                                                                             ""
-                                                                        ? "Error occured while performing Yard Check-in, Please try again after some time"
+                                                                        ? "${localizeLangModel.errorOccuredWhilePerformingYardCheckIn}, ${localizeLangModel.tryAfterSometimeValidation}"
                                                                         : errMsgText,
                                                                     buttonText:
-                                                                        "Okay",
+                                                                        "${localizeLangModel.ok}",
                                                                     imagepath:
                                                                         'assets/images/warn.gif',
                                                                     isMobile:
@@ -1044,13 +1050,13 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                         context) =>
                                                                     CustomDialog(
                                                                   title:
-                                                                      'Yard Check-in Success',
+                                                                      '${localizeLangModel.yardCheckIn} ${localizeLangModel.success}',
                                                                   description:
-                                                                      "Yard Check-in for VT# " +
+                                                                      "${localizeLangModel.yardCheckInForVT}" +
                                                                           selectedVT +
-                                                                          " has been completed successfully.",
+                                                                          " ${localizeLangModel.hasBeenSentSuccessfully}",
                                                                   buttonText:
-                                                                      "Okay",
+                                                                      "${localizeLangModel.ok}",
                                                                   imagepath:
                                                                       'assets/images/successchk.gif',
                                                                   isMobile:
@@ -1137,7 +1143,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                                                   Alignment
                                                                       .center,
                                                               child: Text(
-                                                                'Submit',
+                                                                '${localizeLangModel.submit}',
                                                                 style: TextStyle(
                                                                     fontSize:
                                                                         24,
@@ -1204,8 +1210,8 @@ class _CheckInYardState extends State<CheckInYard> {
                                           CustomDialog(
                                         title: "WIVT220627006",
                                         description:
-                                            "Yard Check-in recorded successfully for VT# WIVT220627006. You will receive SMS notification shortly.",
-                                        buttonText: "Okay",
+                                            "${localizeLangModel.yardCheckIndonesuccessfully} ${localizeLangModel.For} VT# WIVT220627006. ${localizeLangModel.youWillReceiveSMSNotificationShortly}",
+                                        buttonText: "${localizeLangModel.ok}",
                                         imagepath:
                                             'assets/images/successchk.gif',
                                         isMobile: useMobileLayout,
@@ -1239,7 +1245,7 @@ class _CheckInYardState extends State<CheckInYard> {
                                           top: 8.0, bottom: 8.0),
                                       child: Align(
                                         alignment: Alignment.center,
-                                        child: Text('Submit',
+                                        child: Text('${localizeLangModel.submit}',
                                             style: buttonWhiteFontStyle),
                                       ),
                                     ),

@@ -10,6 +10,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 class SlotsListAdditional extends StatefulWidget {
   final List<AWBDetail> selectedShipments;
@@ -41,6 +43,10 @@ class _SlotsListAdditionalState extends State<SlotsListAdditional> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return Scaffold(
       body: Container(
         child: Column(
@@ -50,14 +56,14 @@ class _SlotsListAdditionalState extends State<SlotsListAdditional> {
               HeaderClipperWaveAdditional(
                   color1: Color(0xFF3383CD),
                   color2: Color(0xFF11249F),
-                  headerText: "Shipment List"),
+                  headerText: "${localizeLangModel!.shipments} ${localizeLangModel.list}"),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Row(
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 4,
-                      child: Text("Mode", style: mobileHeaderFontStyle),
+                      child: Text("${localizeLangModel!.mode}", style: mobileHeaderFontStyle),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 4,
@@ -253,7 +259,7 @@ class _SlotsListAdditionalState extends State<SlotsListAdditional> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'Done',
+                              '${localizeLangModel.done}',
                               style: TextStyle(
                                   fontSize:
                                       MediaQuery.of(context).size.width / 22,
@@ -849,6 +855,8 @@ class HeaderClipperWaveAdditional extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     bool useMobileLayout = false;
 
     if (kIsWeb) {
@@ -927,7 +935,7 @@ class HeaderClipperWaveAdditional extends StatelessWidget {
               ),
               if (headerText.contains("multiline"))
                 Text(
-                  " Mode : Export",
+                  " ${localizeLangModel!.mode} : ${localizeLangModel.exports}",
                   style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width / 18, //48,
                       fontWeight: FontWeight.normal,

@@ -6,6 +6,9 @@ import 'package:luxair/widgets/customdialogue.dart';
 import '../constants.dart';
 import 'package:luxair/widgets/headerclipper.dart';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class CargoPickUpDetails extends StatefulWidget {
      bool isExport = false;
   final VehicleToken selectedVtDetails;
@@ -34,6 +37,8 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
   
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     return Scaffold(
@@ -44,7 +49,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
           HeaderClipperWave(
               color1: Color(0xFF3383CD),
               color2: Color(0xFF11249F),
-              headerText: "Cargo Pick-up Details"),
+              headerText: "${localizeLangModel!.cargo} ${localizeLangModel.pickUp} ${localizeLangModel.details}"),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -65,7 +70,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                               : MediaQuery.of(context).size.width / 7,
                           // hard coding child width
                           child: Text(
-                            "VT No.",
+                            "${localizeLangModel.vTno}",
                             style: useMobileLayout
                                 ? mobileHeaderFontStyle
                                 : TextStyle(
@@ -95,7 +100,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Enter Vehicle No.",
+                                hintText: "${localizeLangModel.pleaseEnter} ${localizeLangModel.vehicleNo}",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
@@ -132,7 +137,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                         ),
                         SizedBox(height: useMobileLayout ? 10 : 20),
                         Text(
-                          "Vehicle Details",
+                          "${localizeLangModel.vehicleDetails}",
                           style: useMobileLayout
                               ? mobileHeaderFontStyle
                               : TextStyle(
@@ -186,7 +191,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Vehicle No.',
+                                                                '${localizeLangModel.vehicleNo}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -204,7 +209,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Driver Name',
+                                                                '${localizeLangModel.driverName}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -251,7 +256,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                               .yellow.shade100,
                                                           child: Center(
                                                             child: Text(
-                                                                "DRIVERNAME",
+                                                                "${localizeLangModel.driverName!.toUpperCase()}",
                                                                 style:
                                                                     mobileDetailsYellowBold),
                                                           ),
@@ -284,7 +289,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'Slot/ Dock Details',
+                                                                '${localizeLangModel.slot}/ ${localizeLangModel.dockDetails}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -313,7 +318,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                               .yellow.shade100,
                                                           child: Center(
                                                             child: Text(
-                                                                "SLOTTIME",
+                                                                "${localizeLangModel.slotTime!.toUpperCase()}",
                                                                 style:
                                                                     mobileDetailsYellowBold),
                                                           ),
@@ -332,7 +337,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                           SizedBox(
                                               height: useMobileLayout ? 5 : 40),
                                           Text(
-                                            "Shipment Details",
+                                            "${localizeLangModel.shipmentDetails}",
                                             textAlign: TextAlign.start,
                                             style: useMobileLayout
                                                 ? mobileHeaderFontStyle
@@ -372,7 +377,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'AWB No.',
+                                                                '${localizeLangModel.aWBNum}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -391,7 +396,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                               .yellow.shade300,
                                                           child: Center(
                                                             child: Text(
-                                                                'HAWB No.',
+                                                                '${localizeLangModel.hAWBNo}',
                                                                 style:
                                                                     mobileYellowTextFontStyleBold),
                                                           ),
@@ -419,7 +424,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                           child: Center(
                                                             child: Text(
                                                                 // dvd.
-                                                                "MAWBNumber",
+                                                                "${localizeLangModel.mawbNo}",
                                                                 style:
                                                                     mobileDetailsYellowBold),
                                                           ),
@@ -439,7 +444,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                           child: Center(
                                                             child: Text(
                                                                 // dvd.
-                                                                "HAWBNumber",
+                                                                "${localizeLangModel.hAWBNo}",
                                                                 style:
                                                                     mobileDetailsYellowBold),
                                                           ),
@@ -640,7 +645,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'Vehicle No.',
+                                                    '${localizeLangModel.vehicleNo}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -660,7 +665,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'Driver Name',
+                                                    '${localizeLangModel.driverName}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -680,7 +685,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'Slot/ Dock Details',
+                                                    '${localizeLangModel.slot} / ${localizeLangModel.dockDetails}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -777,7 +782,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'AWB No.',
+                                                    '${localizeLangModel.aWBNum}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -797,7 +802,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    'HAWB No.',
+                                                    '${localizeLangModel.hAWBNo}',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -1062,10 +1067,10 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                             context: context,
                             builder: (BuildContext context) => CustomDialog(
                               title: txtVTNO.text,
-                              description: "Cargo Pick-up for VT# " +
+                              description: "${localizeLangModel.cargo} ${localizeLangModel.pickUp} ${localizeLangModel.For} VT# " +
                                   txtVTNO.text +
-                                  " has been completed successfully",
-                              buttonText: "Okay",
+                                  " ${localizeLangModel.hasBeenSentSuccessfully}",
+                              buttonText: "${localizeLangModel.ok}",
                               imagepath: 'assets/images/successchk.gif',
                                             isMobile: useMobileLayout,
                             ),
@@ -1097,7 +1102,7 @@ class _CargoPickUpDetailsState extends State<CargoPickUpDetails> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Submit',
+                                '${localizeLangModel.submit}',
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.normal,

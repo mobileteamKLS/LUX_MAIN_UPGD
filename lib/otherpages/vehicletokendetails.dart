@@ -7,6 +7,8 @@ import 'package:luxair/widgets/headerclipper.dart';
 
 import '../constants.dart';
 import '../global.dart';
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
 
 // bool useMobileLayout = false;
 
@@ -51,6 +53,10 @@ class _VehicleTokenDetailsState extends State<VehicleTokenDetails> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     // print("useMobileLayout");
@@ -72,7 +78,7 @@ class _VehicleTokenDetailsState extends State<VehicleTokenDetails> {
               HeaderClipperWave(
                   color1: Color(0xFF3383CD),
                   color2: Color(0xFF11249F),
-                  headerText: "Vehicle Token Details"), //VTNo
+                  headerText: "${localizeLangModel!.vehicleToken} ${localizeLangModel.details}"), //VTNo
               isLoading
                   ? Center(
                       child: Container(
@@ -197,6 +203,10 @@ class SCticketShape extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     print("vehicleSMSToBind1 length = " + vehicleSMSToBind.length.toString());
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -273,7 +283,7 @@ class SCticketShape extends StatelessWidget {
                           height: isMobile ? 40 : 50,
                           color: Colors.yellow.shade300,
                           child: Center(
-                            child: Text('Vehicle No.',
+                            child: Text('${localizeLangModel!.vehicleNo}',
                                 style: isMobile
                                     ? mobileYellowTextFontStyleBold
                                     : iPadYellowTextFontStyleBold),
@@ -288,7 +298,7 @@ class SCticketShape extends StatelessWidget {
                           height: isMobile ? 40 : 50,
                           color: Colors.yellow.shade300,
                           child: Center(
-                            child: Text('Driver Name',
+                            child: Text('${localizeLangModel!.driverName}',
                                 style: isMobile
                                     ? mobileYellowTextFontStyleBold
                                     : iPadYellowTextFontStyleBold),
@@ -348,7 +358,7 @@ class SCticketShape extends StatelessWidget {
                           height: isMobile ? 40 : 50,
                           color: Colors.yellow.shade300,
                           child: Center(
-                            child: Text('Mobile No.',
+                            child: Text('${localizeLangModel!.contactNo}',
                                 style: isMobile
                                     ? mobileYellowTextFontStyleBold
                                     : iPadYellowTextFontStyleBold),
@@ -366,7 +376,7 @@ class SCticketShape extends StatelessWidget {
                           height: isMobile ? 40 : 50,
                           color: Colors.yellow.shade300,
                           child: Center(
-                            child: Text('Slot/ Dock Details',
+                            child: Text('${localizeLangModel!.slot}/ ${localizeLangModel!.dockDetails}',
                                 style: isMobile
                                     ? mobileYellowTextFontStyleBold
                                     : iPadYellowTextFontStyleBold),

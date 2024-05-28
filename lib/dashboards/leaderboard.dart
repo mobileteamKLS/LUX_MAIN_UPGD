@@ -5,6 +5,9 @@ import 'package:vertical_barchart/vertical-barchartmodel.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:luxair/widgets/piechart.dart';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class LeaderBoard extends StatefulWidget {
   const LeaderBoard({Key? key}) : super(key: key);
 
@@ -15,6 +18,8 @@ class LeaderBoard extends StatefulWidget {
 class _LeaderBoardState extends State<LeaderBoard> {
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     return Scaffold(
       backgroundColor: Color(0xFFE7E5E5),
       body: SingleChildScrollView(
@@ -51,25 +56,25 @@ class _LeaderBoardState extends State<LeaderBoard> {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(children: [
                                 GraphCards(Color(0xFF24c6dc), Color(0xFF514a9d),
-                                    "Trucks", "16", "Booked", "20", "Arrived"),
+                                    "${localizeLangModel!.trucks}", "16", "${localizeLangModel!.booked}", "20", "${localizeLangModel!.arrived}"),
                                 GraphCards(
                                     Color(0xFFf2709c),
                                     Color(0xFFff9472),
-                                    "Shipments",
+                                    "${localizeLangModel.shipments}",
                                     "4",
-                                    "Processed",
+                                    "${localizeLangModel.processed}",
                                     "20",
                                     "Booked"),
                                 GraphCards(
                                     Color(0xFFff4b1f),
                                     Color(0xFFff9068),
-                                    "Shipments",
+                                    "${localizeLangModel.shipments}",
                                     "5",
-                                    "Accepted",
+                                    "${localizeLangModel.accepted}",
                                     "1",
-                                    "Rejected"),
+                                    "${localizeLangModel.rejected}"),
                                 GraphCards(Color(0xFF134e5e), Color(0xFF71b280),
-                                    "Docks", "4", "Occupied", "9", "Total"),
+                                    "${localizeLangModel.docks}", "4", "${localizeLangModel.occupied}", "9", "${localizeLangModel!.total}"),
                              Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
@@ -92,7 +97,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            "Processed",
+                                            "${localizeLangModel.processed}",
                                             style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -121,7 +126,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                                 ),
                                                 SizedBox(height: 16),
                                                 Text(
-                                                  "at verification counter", // 'QR code',
+                                                  "${localizeLangModel.atVerificationCounter}", // 'QR code',
                                                   style: TextStyle(
                                                       fontSize: 20,
                                                       fontWeight:
@@ -166,7 +171,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Vehicle Timings (Hourly)",
+                                        "${localizeLangModel.vehicleTimingsHourly}",
                                         style: TextStyle(
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
@@ -199,7 +204,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                                         .width /
                                                     4,
                                             child: Text(
-                                              "Vehicle Type",
+                                              "${localizeLangModel.vehicleType}",
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold,
@@ -212,7 +217,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                                     .width /
                                                 8,
                                             child: Text(
-                                              "Wait Time",
+                                              "${localizeLangModel.waitTime}",
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold,
@@ -225,7 +230,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                                     .width /
                                                 8,
                                             child: Text(
-                                              "Dwell Time",
+                                              "${localizeLangModel.dwellTime}",
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold,
@@ -238,25 +243,25 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                       VehicleTimingRow(
                                           Colors.red,
                                           Icons.arrow_drop_up,
-                                          "Crane",
+                                          "${localizeLangModel.crane}",
                                           "122",
                                           "127"),
                                       VehicleTimingRow(
                                           Colors.green,
                                           Icons.arrow_drop_down,
-                                          "Lowboy",
+                                          "${localizeLangModel.lowboy}",
                                           "125",
                                           "127"),
                                       VehicleTimingRow(
                                           Colors.red,
                                           Icons.arrow_drop_up,
-                                          "40-53 ft Trailer",
+                                          "${localizeLangModel.s4053FtTrailer}",
                                           "64",
                                           "66"),
                                       VehicleTimingRow(
                                           Colors.green,
                                           Icons.arrow_drop_down,
-                                          "Flat-bed/Box Truck(10-12 ft)",
+                                          "${localizeLangModel.flatBed}/${localizeLangModel.boxTruck1012Ft}",
                                           "50",
                                           "45"),
                                       SizedBox(height: 8),
@@ -288,7 +293,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            "Commodities Handled (Weekly)",
+                                            "${localizeLangModel.commoditiesHandledWeekly}",
                                             style: TextStyle(
                                                 fontSize: 22,
                                                 fontWeight: FontWeight.bold,
@@ -298,7 +303,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              "General Cargo",
+                                              "${localizeLangModel.generalCargo}",
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.normal,
@@ -336,7 +341,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              "Perishables",
+                                              "${localizeLangModel.perishables}",
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.normal,
@@ -374,7 +379,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              "Hazardous",
+                                              "${localizeLangModel.hazardous}",
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.normal,
@@ -412,7 +417,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              "Medicines",
+                                              "${localizeLangModel.medicines}",
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.normal,
@@ -469,14 +474,14 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                           height: 20,
                                         ),
                                          Text(
-                                          "Total",
+                                          "${localizeLangModel.total}",
                                           style: TextStyle(
                                               fontSize: 22,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black),
                                         ),
                                         Text(
-                                          "Walk-in (Weekly)",
+                                          "${localizeLangModel.walkInWeekly}",
                                           style: TextStyle(
                                               fontSize: 22,
                                               fontWeight: FontWeight.bold,
@@ -516,7 +521,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                                   ),
                                                   SizedBox(width: 10),
                                                   new Text(
-                                                    "10 Import",
+                                                    "10 ${localizeLangModel.imports}",
                                                     style: new TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -544,7 +549,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                                   ),
                                                   SizedBox(width: 10),
                                                   new Text(
-                                                    "40 Export",
+                                                    "40 ${localizeLangModel.exports}",
                                                     style: new TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -583,14 +588,14 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                         height: 20,
                                       ),
                                          Text(
-                                          "Total",
+                                          "${localizeLangModel.total}",
                                           style: TextStyle(
                                               fontSize: 22,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black),
                                         ),
                                       Text(
-                                        "Web (Weekly)",
+                                        "${localizeLangModel.webWeekly}",
                                         style: TextStyle(
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
@@ -630,7 +635,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                                 ),
                                                 SizedBox(width: 10),
                                                 new Text(
-                                                  "20 Import",
+                                                  "20 ${localizeLangModel.imports}",
                                                   style: new TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -658,7 +663,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                                 ),
                                                 SizedBox(width: 10),
                                                 new Text(
-                                                  "20 Export",
+                                                  "20 ${localizeLangModel.exports}",
                                                   style: new TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -696,14 +701,14 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                         height: 20,
                                       ),
                                          Text(
-                                          "Total",
+                                          "${localizeLangModel.total}",
                                           style: TextStyle(
                                               fontSize: 22,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black),
                                         ),
                                       Text(
-                                        "Mobiles (Weekly)",
+                                        "${localizeLangModel.mobilesWeekly}",
                                         style: TextStyle(
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
@@ -743,7 +748,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                                 ),
                                                 SizedBox(width: 10),
                                                 new Text(
-                                                  "20 Import",
+                                                  "20 ${localizeLangModel.imports}",
                                                   style: new TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -822,10 +827,10 @@ class _LeaderBoardState extends State<LeaderBoard> {
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Indicator(
                                     color: Color(0xff3887fe),
-                                    text: 'Lowboy',
+                                    text: '${localizeLangModel.lowboy}',
                                     isSquare: true,
                                     title: "40%",
                                     isWeb: kIsWeb,
@@ -835,7 +840,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                   ),
                                   Indicator(
                                     color: Color(0xffee984d),
-                                    text: 'Crane',
+                                    text: '${localizeLangModel.crane}',
                                     isSquare: true,
                                     title: "30%",
                                     isWeb: kIsWeb,
@@ -845,7 +850,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                   ),
                                   Indicator(
                                     color: Color(0xffab4eba),
-                                    text: 'Flat-bed',
+                                    text: '${localizeLangModel.flatBed}',
                                     isSquare: true,
                                     title: "15%",
                                     isWeb: kIsWeb,
@@ -855,7 +860,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                   ),
                                   Indicator(
                                     color: Color(0xff26af61),
-                                    text: '40-53ft Trailer',
+                                    text: '${localizeLangModel.s4053FtTrailer}',
                                     isSquare: true,
                                     title: "15%",
                                     isWeb: kIsWeb,

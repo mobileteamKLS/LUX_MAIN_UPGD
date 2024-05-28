@@ -11,6 +11,9 @@ import '../constants.dart';
 import '../global.dart';
 import 'dart:convert';
 
+import '../language/appLocalizations.dart';
+import '../language/model/lang_model.dart';
+
 class RecordPodAwbList extends StatefulWidget {
   final String vtNumber;
   RecordPodAwbList({Key? key, required this.vtNumber}) : super(key: key);
@@ -224,6 +227,9 @@ class _RecordPodAwbListState extends State<RecordPodAwbList> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     var smallestDimension = MediaQuery.of(context).size.shortestSide;
     useMobileLayout = smallestDimension < 600;
     print("useMobileLayout");
@@ -323,7 +329,7 @@ class _RecordPodAwbListState extends State<RecordPodAwbList> {
             HeaderClipperWave(
                 color1: Color(0xFF3383CD),
                 color2: Color(0xFF11249F),
-                headerText: "POD AWB List"),
+                headerText: "POD ${localizeLangModel!.aWBNum} ${localizeLangModel!.list}"),
             useMobileLayout
                 ? Expanded(
                     flex: 0,
@@ -361,7 +367,7 @@ class _RecordPodAwbListState extends State<RecordPodAwbList> {
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("VT No.",
+                                child: Text("${localizeLangModel!.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(
@@ -389,7 +395,7 @@ class _RecordPodAwbListState extends State<RecordPodAwbList> {
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "VT No.",
+                                          hintText: "${localizeLangModel!.vTno}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(
@@ -486,7 +492,7 @@ class _RecordPodAwbListState extends State<RecordPodAwbList> {
                                                   .size
                                                   .width /
                                               3.11,
-                                          child: Text(" VT No.",
+                                          child: Text(" ${localizeLangModel!.vTno}",
                                               style: iPadGroupHeaderFontStyle),
                                         ),
                                         Padding(
@@ -523,7 +529,7 @@ class _RecordPodAwbListState extends State<RecordPodAwbList> {
                                                         .characters,
                                                 decoration: InputDecoration(
                                                   border: InputBorder.none,
-                                                  hintText: " VT No.",
+                                                  hintText: " ${localizeLangModel!.vTno}",
                                                   hintStyle: TextStyle(
                                                       color: Colors.grey),
                                                   contentPadding:
@@ -696,6 +702,12 @@ class _RecordPodAwbListState extends State<RecordPodAwbList> {
   }
 
   buildWarehouseAWBList(PODAWB _dl, index) {
+
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
+
     return index < 120
         ? GestureDetector(
             onTap: () async{
@@ -755,7 +767,7 @@ class _RecordPodAwbListState extends State<RecordPodAwbList> {
                             Row(
                               children: [
                                
-                                Text("Hawb No. - " + _dl.HAWBNumber,
+                                Text("${localizeLangModel!.hAWBNo} - " + _dl.HAWBNumber,
                                     style: mobileGroupHeaderFontStyleBold),
                               ],
                             ),
@@ -811,7 +823,7 @@ class _RecordPodAwbListState extends State<RecordPodAwbList> {
 
                           if (_dl.HAWBNumber != "") SizedBox(width: 20),
                           if (_dl.HAWBNumber != "")
-                            Text("Hawb No. - " + _dl.HAWBNumber,
+                            Text("${localizeLangModel!.hAWBNo} - " + _dl.HAWBNumber,
                                 style: iPadGroupHeaderFontStyleBold),
 
                           // payload {VTNo: IVT2211180004, OperationType: 3, OrganizationBranchId: 136204}
