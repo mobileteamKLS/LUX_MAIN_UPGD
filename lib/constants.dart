@@ -280,13 +280,13 @@ const iPadToggleTextFontStyleWhite = TextStyle(
 class Settings {
 
   static const String ACSServiceURL =
-      "https://acsdemoservice.kalelogistics.com/srvMobile.asmx"; //YVRA UAT Server
-  static const String ACSServiceImageURL =
-      'https://acsdemoservice.kalelogistics.com/';
-  static const String loginUrl =
-      "https://acsdemoservice.kalelogistics.com/srvMobile.asmx";
-  static const String ACSWFSServiceURL =
-      "https://acsdemoservice.kalelogistics.com/srvMobile.asmx";
+      "https://bogacssrv.kalelogistics.com/srvmobile.asmx"; //YVRA UAT Server
+  // static const String ACSServiceImageURL =
+  //     'https://acsdemoservice.kalelogistics.com/';
+  // static const String loginUrl =
+  //     "https://acsdemoservice.kalelogistics.com/srvMobile.asmx";
+  // static const String ACSWFSServiceURL =
+  //     "https://acsdemoservice.kalelogistics.com/srvMobile.asmx";
 
   //YVRA UAT LINK PROVIDED ON 31-OCT-2022 -  this is for YVRA UAT
 
