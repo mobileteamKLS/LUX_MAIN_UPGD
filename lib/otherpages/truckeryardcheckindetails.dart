@@ -21,9 +21,9 @@ class TruckYardCheckInDetails extends StatefulWidget {
   bool isExport = false;
   final VehicleToken selectedVtDetails;
   LangModel? localizeLangModel;
-
+  bool isDisable = false;
   TruckYardCheckInDetails(
-      {Key? key, required this.selectedVtDetails, required this.isExport, required this.localizeLangModel})
+      {Key? key, required this.selectedVtDetails, required this.isExport, required this.localizeLangModel, required this.isDisable})
       : super(key: key);
 
   @override
@@ -32,7 +32,7 @@ class TruckYardCheckInDetails extends StatefulWidget {
 }
 
 class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
-  bool useMobileLayout = false, isLoading = false, isDisable = false;
+  bool useMobileLayout = false, isLoading = false;
   TextEditingController txtVTNO = new TextEditingController();
 
   @override
@@ -42,10 +42,10 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
 
     print("check_yard_detail ${isTrucker}");
 
-    checking();
+   // checking();
   }
 
-  checking() async {
+/*  checking() async {
     if (isTrucker || isTruckerFF){
       await checkLocation();
     }
@@ -55,8 +55,8 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
 
     print("Enter location check");
 
-    /*AppLocalizations? localizations = AppLocalizations.of(context);
-    LangModel? localizeLangModel = localizations!.localizeLangModel;*/
+    *//*AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;*//*
 
 
 
@@ -148,7 +148,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
 //return 40;
       return dist * 1.609344;
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -580,7 +580,7 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                             onPressed: () async {
                               if (isLoading) return;
 
-                              if (isDisable) return;
+                              if (widget.isDisable) return;
                               // showSuccessMessage();
                               var submitCheckin = await submitYardCheckIn(
                                   widget.isExport ? '2' : '1',
@@ -640,18 +640,18 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
                                   end: Alignment.bottomLeft,
                                   colors: [
                                     isLoading
-                                        ? isDisable
+                                        ? widget.isDisable
                                             ? Colors.grey
                                             : Color(0xFF1220BC)
-                                        : isDisable
+                                        : widget.isDisable
                                             ? Colors.grey
                                             : Color(
                                                 0xFF1220BC), //Color(0xFF1220BC),
                                     isLoading
-                                        ? isDisable
+                                        ? widget.isDisable
                                             ? Colors.grey
                                             : Color(0xFF3540E8)
-                                        : isDisable
+                                        : widget.isDisable
                                             ? Colors.grey
                                             : Color(
                                                 0xFF3540E8), // Color(0xFF3540E8),

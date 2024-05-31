@@ -1176,8 +1176,7 @@ class _DockInState extends State<DockIn> {
   void _runFilter(String enteredKeyword) {
     List<DockInOutVT> results = [];
     if (enteredKeyword.isEmpty) {
-      results =
-          modeSelected == 0 ? dockInOutVTListExport : dockInOutVTListImport;
+      results = modeSelected == 0 ? dockInOutVTListExport : dockInOutVTListImport;
       setState(() {
         dockInOutVTListToBind = results;
         isSearched = false;

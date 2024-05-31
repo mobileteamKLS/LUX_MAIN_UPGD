@@ -1154,6 +1154,42 @@ class _WarehouseAcceptanceListState extends State<WarehouseAcceptanceList> {
       if (enteredKeyword.isEmpty) {
         results = dockInOutVTListExport;
       } else {
+
+
+        print("enteredKeyword == " + enteredKeyword.toLowerCase());
+        print("modeSelected == " + modeSelected.toString());
+        print("isSearched == " + isSearched.toString());
+
+        results.addAll(dockInOutVTListExport);
+        if (isSearched) {
+          setState(() {
+            // print("results.length == ");
+            dockInOutVTListToBind = dockInOutVTListRandom;
+          });
+        }
+        else {
+          print("results.length == " + results.length.toString());
+
+          results.retainWhere((DockInOutVT element) =>
+              element.VTNo.toLowerCase()
+                  .contains(enteredKeyword.toLowerCase()));
+
+          print("results.length after filter == " + results.length.toString());
+
+          setState(() {
+            // print("results.length == ");
+            dockInOutVTListToBind = results;
+          });
+        }
+
+
+
+
+
+
+
+/*
+
         if (!enteredKeyword.startsWith("E")) {
           if (enteredKeyword.startsWith("0")) {
             print("enteredKeyword == " + enteredKeyword.toLowerCase());
@@ -1193,7 +1229,7 @@ class _WarehouseAcceptanceListState extends State<WarehouseAcceptanceList> {
                   isMobile: useMobileLayout),
             );
           }
-        }
+        }*/
       }
       // Refresh the UI
     }

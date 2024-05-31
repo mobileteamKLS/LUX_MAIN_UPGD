@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:scan/scan.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -11,11 +12,12 @@ import 'package:luxair/widgets/common.dart';
 import 'package:luxair/widgets/headerclipper.dart';
 import 'package:luxair/widgets/qrscan.dart';
 import 'package:luxair/widgets/speech_recognition.dart';
-
+import 'dart:math' as math;
 import '../constants.dart';
 import '../global.dart';
 import '../language/appLocalizations.dart';
 import '../language/model/lang_model.dart';
+import '../widgets/customdialogue.dart';
 
 class TruckYardCheckInList extends StatefulWidget {
   const TruckYardCheckInList({Key? key}) : super(key: key);
@@ -40,7 +42,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
   List<VehicleToken> vehicleToeknListImport = [];
   List<VehicleToken> vehicleToeknListExport = [];
   List<VehicleToken> vehicleToeknListtRandom = [];
-
+  bool isDisable = false;
   // List<VehicleToken> vehicleToeknListImport = [
   //   TokenList(
   //       VTNo: "IVT2206200020",
@@ -202,7 +204,116 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
       getVehicleToeknList(4); //Export
       print("export");
     }
+
+    checking();
+
+
     super.initState();
+  }
+
+  checking() async {
+    if (isTrucker || isTruckerFF){
+      await checkLocation();
+    }
+  }
+
+  checkLocation() async {
+
+    print("Enter location check");
+
+    /*AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;*/
+
+
+
+    print("getting locaation");
+    try {
+      var abc = await determinePosition();
+      print(abc);
+      if (abc.toLowerCase().contains("disabled")) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => customAlertMessageDialog(
+              title: "location disabled",
+              description: abc.toString(),
+              buttonText: "ok",
+              imagepath: 'assets/images/warn.gif',
+              isMobile: useMobileLayout),
+        );
+        return;
+      }
+
+      if (abc.toLowerCase().contains("denied")) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => customAlertMessageDialog(
+              title: "location access denied",
+              description: abc.toString(),
+              buttonText: "ok",
+              imagepath: 'assets/images/warn.gif',
+              isMobile: useMobileLayout),
+        );
+        return;
+      }
+
+      if (abc.toLowerCase().contains("ok")) {
+        print("getting locaation");
+        await getLocation();
+      }
+    } catch (Exc) {
+      print(Exc);
+    } finally {
+      print("this is finally");
+    }
+  }
+
+  getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    latitude = position.latitude;
+    longitude = position.longitude;
+
+    print(latitude.toString());
+    print(longitude.toString());
+
+    var disCalc = await distance(double.parse(locationDetailsSaved[0].Latitude),
+        double.parse(locationDetailsSaved[0].Longitude), latitude, longitude);
+    print(disCalc);
+
+    print("DisCalculation Location======= ${disCalc}");
+
+    print("DisCalculation Location Radious======= ${locationDetailsSaved[0].RadiousinMeter.toString()}");
+
+
+
+    print(locationDetailsSaved[0].RadiousinMeter.toString());
+    if (disCalc > locationDetailsSaved[0].RadiousinMeter) {
+      setState(() {
+        isDisable = true;
+      });
+    }
+  }
+
+  distance(lat1, lon1, lat2, lon2) async {
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+      return 0;
+    } else {
+      var radlat1 = math.pi * lat1 / 180;
+      var radlat2 = math.pi * lat2 / 180;
+      var theta = lon1 - lon2;
+      var radtheta = math.pi * theta / 180;
+      var dist = math.sin(radlat1) * math.sin(radlat2) +
+          math.cos(radlat1) * math.cos(radlat2) * math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = math.acos(dist);
+      dist = dist * 180 / math.pi;
+      dist = dist * 60 * 1.1515;
+//return 40;
+      return dist * 1.609344;
+    }
   }
 
   @override
@@ -924,7 +1035,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                               itemBuilder: (BuildContext, index) {
                                 VehicleToken _dockinlist =
                                     vehicleToeknListToBind.elementAt(index);
-                                return buildDockList(_dockinlist, index, localizeLangModel);
+                                return buildDockList(_dockinlist, index, localizeLangModel, isDisable);
                               },
                               itemCount: vehicleToeknListToBind.length,
                               shrinkWrap: true,
@@ -937,7 +1048,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
     );
   }
 
-  buildDockList(VehicleToken _dl, index, localizeLangModel) {
+  buildDockList(VehicleToken _dl, index, localizeLangModel, isDisable) {
 
 
 
@@ -951,7 +1062,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                 MaterialPageRoute(
                     builder: (context) => TruckYardCheckInDetails(
                         isExport: checked ? false : true,
-                        selectedVtDetails: _dl, localizeLangModel: localizeLangModel,)),
+                        selectedVtDetails: _dl, localizeLangModel: localizeLangModel,isDisable: isDisable,)),
               );
               print(returnVal.toString());
               if (returnVal != null) if (returnVal == true) {
