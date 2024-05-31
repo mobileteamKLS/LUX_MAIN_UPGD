@@ -924,7 +924,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                               itemBuilder: (BuildContext, index) {
                                 VehicleToken _dockinlist =
                                     vehicleToeknListToBind.elementAt(index);
-                                return buildDockList(_dockinlist, index);
+                                return buildDockList(_dockinlist, index, localizeLangModel);
                               },
                               itemCount: vehicleToeknListToBind.length,
                               shrinkWrap: true,
@@ -937,16 +937,21 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
     );
   }
 
-  buildDockList(VehicleToken _dl, index) {
+  buildDockList(VehicleToken _dl, index, localizeLangModel) {
+
+
+
+
     return index < 12
         ? GestureDetector(
             onTap: () async {
+
               var returnVal = await Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => TruckYardCheckInDetails(
                         isExport: checked ? false : true,
-                        selectedVtDetails: _dl)),
+                        selectedVtDetails: _dl, localizeLangModel: localizeLangModel,)),
               );
               print(returnVal.toString());
               if (returnVal != null) if (returnVal == true) {

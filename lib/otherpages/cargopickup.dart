@@ -757,7 +757,7 @@ class _CArgoPickUpState extends State<CArgoPickUp> {
                               itemBuilder: (BuildContext, index) {
                                 VehicleToken _dockinlist =
                                     vehicleToeknListToBind.elementAt(index);
-                                return buildDockList(_dockinlist, index);
+                                return buildDockList(_dockinlist, index, localizeLangModel);
                               },
                               itemCount: vehicleToeknListToBind.length,
                               shrinkWrap: true,
@@ -770,7 +770,7 @@ class _CArgoPickUpState extends State<CArgoPickUp> {
     );
   }
 
-  buildDockList(VehicleToken _dl, index) {
+  buildDockList(VehicleToken _dl, index, localizeLangModel) {
     return index < 120
         ? GestureDetector(
             onTap: () async {
@@ -778,7 +778,7 @@ class _CArgoPickUpState extends State<CArgoPickUp> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => TruckYardCheckInDetails(
-                        isExport: false, selectedVtDetails: _dl)),
+                        isExport: false, selectedVtDetails: _dl, localizeLangModel: localizeLangModel,)),
               );
 
               if (returnVal != null) if (returnVal == true)

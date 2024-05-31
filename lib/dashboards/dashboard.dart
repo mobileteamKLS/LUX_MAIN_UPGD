@@ -907,24 +907,24 @@ class _DashboardsState extends State<Dashboards> {
                       useMobileLayout),
 
                 if (isTrucker || isTruckerFF)
-                  DashboardBlocks(
+                  /*DashboardBlocks(
                       Color(0xFFff9472),
                       Color(0xFFf2709c),
                       Icons.book_online_outlined,
                       "${localizeLangModel!.booked}",
                       "${localizeLangModel!.slot}",
                       SlotsList(),
-                      useMobileLayout),
+                      useMobileLayout),*/
 
                 if (isTrucker || isTruckerFF)
-                  DashboardBlocks(
+                 /* DashboardBlocks(
                       Color(0xFFa8c0ff),
                       Color(0xFF4364F7),
                       Icons.fact_check_outlined,
                       "${localizeLangModel!.view}",
                       "${localizeLangModel.bookedSlots}",
                       BookedSlotsList(),
-                      useMobileLayout),
+                      useMobileLayout),*/
 
                 if (isTPS)
                   DashboardBlocks(

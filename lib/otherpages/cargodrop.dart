@@ -776,7 +776,7 @@ class _CargoDropState extends State<CargoDrop> {
                               itemBuilder: (BuildContext, index) {
                                 VehicleToken _dockinlist =
                                     vehicleToeknListToBind.elementAt(index);
-                                return buildDockList(_dockinlist, index);
+                                return buildDockList(_dockinlist, index, localizeLangModel);
                               },
                               itemCount: vehicleToeknListToBind.length,
                               shrinkWrap: true,
@@ -789,7 +789,7 @@ class _CargoDropState extends State<CargoDrop> {
     );
   }
 
-  buildDockList(VehicleToken _dl, index) {
+  buildDockList(VehicleToken _dl, index, localizeLangModel) {
     return index < 120
         ? GestureDetector(
             onTap: () async {
@@ -798,7 +798,7 @@ class _CargoDropState extends State<CargoDrop> {
                 MaterialPageRoute(
                     builder: (context) => TruckYardCheckInDetails(
                         isExport:  true,
-                        selectedVtDetails: _dl)),
+                        selectedVtDetails: _dl, localizeLangModel: localizeLangModel,)),
               );
               if (returnVal != null) if (returnVal == true) 
               getVehicleToeknList(8); 

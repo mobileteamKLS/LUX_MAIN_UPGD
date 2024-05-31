@@ -20,9 +20,10 @@ import '../language/model/lang_model.dart';
 class TruckYardCheckInDetails extends StatefulWidget {
   bool isExport = false;
   final VehicleToken selectedVtDetails;
+  LangModel? localizeLangModel;
 
   TruckYardCheckInDetails(
-      {Key? key, required this.selectedVtDetails, required this.isExport})
+      {Key? key, required this.selectedVtDetails, required this.isExport, required this.localizeLangModel})
       : super(key: key);
 
   @override
@@ -37,14 +38,27 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
   @override
   void initState() {
     txtVTNO.text = widget.selectedVtDetails.VTNo; //"WIVT220627006";
-    if (isTrucker || isTruckerFF) checkLocation();
     super.initState();
+
+    print("check_yard_detail ${isTrucker}");
+
+    checking();
+  }
+
+  checking() async {
+    if (isTrucker || isTruckerFF){
+      await checkLocation();
+    }
   }
 
   checkLocation() async {
 
-    AppLocalizations? localizations = AppLocalizations.of(context);
-    LangModel? localizeLangModel = localizations!.localizeLangModel;
+    print("Enter location check");
+
+    /*AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;*/
+
+
 
      print("getting locaation");
     try {
@@ -54,9 +68,9 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
         showDialog(
           context: context,
           builder: (BuildContext context) => customAlertMessageDialog(
-              title: "${localizeLangModel!.location} ${localizeLangModel.disabled}",
+              title: "${widget.localizeLangModel!.location} ${widget.localizeLangModel!.disabled}",
               description: abc.toString(),
-              buttonText: "${localizeLangModel!.ok}",
+              buttonText: "${widget.localizeLangModel!.ok}",
               imagepath: 'assets/images/warn.gif',
               isMobile: useMobileLayout),
         );
@@ -67,9 +81,9 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
         showDialog(
           context: context,
           builder: (BuildContext context) => customAlertMessageDialog(
-              title: "${localizeLangModel!.location} ${localizeLangModel.access} ${localizeLangModel.denied}",
+              title: "${widget.localizeLangModel!.location} ${widget.localizeLangModel!.access} ${widget.localizeLangModel!.denied}",
               description: abc.toString(),
-              buttonText: "${localizeLangModel!.ok}",
+              buttonText: "${widget.localizeLangModel!.ok}",
               imagepath: 'assets/images/warn.gif',
               isMobile: useMobileLayout),
         );
@@ -100,6 +114,12 @@ class _TruckYardCheckInDetailsState extends State<TruckYardCheckInDetails> {
     var disCalc = await distance(double.parse(locationDetailsSaved[0].Latitude),
         double.parse(locationDetailsSaved[0].Longitude), latitude, longitude);
     print(disCalc);
+
+    print("DisCalculation Location======= ${disCalc}");
+
+    print("DisCalculation Location Radious======= ${locationDetailsSaved[0].RadiousinMeter.toString()}");
+
+
 
  print(locationDetailsSaved[0].RadiousinMeter.toString());
     if (disCalc > locationDetailsSaved[0].RadiousinMeter) {
