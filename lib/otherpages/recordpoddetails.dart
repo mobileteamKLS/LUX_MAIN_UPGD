@@ -351,7 +351,7 @@ class _RecordPodDetailsState extends State<RecordPodDetails> {
                                                 height: 30,
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
-                                                  child: Text('${localizeLangModel.cRN} ${localizeLangModel.no} .',
+                                                  child: Text('${localizeLangModel.cRN}.',
                                                       style:
                                                           mobileYellowTextFontStyleBold),
                                                 ),
@@ -2305,7 +2305,7 @@ class _RecordPodDetailsState extends State<RecordPodDetails> {
                                                 color: Colors.yellow.shade300,
                                                 child: Center(
                                                   child: Text(
-                                                    '${localizeLangModel.cRN} ${localizeLangModel.no}',
+                                                    '${localizeLangModel.cRN}.',
                                                     style: TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:

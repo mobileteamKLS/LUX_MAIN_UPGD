@@ -21,7 +21,7 @@ class TruckYardCheckInDetails extends StatefulWidget {
   bool isExport = false;
   final VehicleToken selectedVtDetails;
   LangModel? localizeLangModel;
-  bool isDisable = false;
+  bool isDisable;
   TruckYardCheckInDetails(
       {Key? key, required this.selectedVtDetails, required this.isExport, required this.localizeLangModel, required this.isDisable})
       : super(key: key);

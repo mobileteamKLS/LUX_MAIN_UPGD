@@ -220,7 +220,85 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(
                             height: 20,
                           ),
-                          Padding(
+
+                          DropdownButtonHideUnderline(
+                            child: Container(
+                              constraints: BoxConstraints(
+                                  minHeight: 50),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.grey,
+                                    width: 0.2),
+                                borderRadius:
+                                BorderRadius.all(
+                                    Radius.circular(5)),
+                                color: Colors.white,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10),
+                              child: DropdownButton<String>(
+
+                                focusColor: Colors.black,
+                                iconEnabledColor: Colors.black,
+                                style: TextStyle(color: Colors.black),
+                                value: _selectedLanguage,
+                                dropdownColor: Colors.white,
+                                onChanged: (newValue) {
+                                  _onLanguageChanged(
+                                      newValue!);
+                                },
+                                selectedItemBuilder:
+                                    (BuildContext
+                                context) {
+                                  return [
+                                    'en',
+                                    'es'
+                                  ].map<Widget>(
+                                          (String value) {
+                                        return Center(
+                                          child: Text(
+                                            value == 'en'
+                                                ? 'En'
+                                                : 'Sp',
+                                            /*style: TextStyle(
+
+                                                  color: Colors
+                                                      .black,
+                                                  fontSize:
+                                                  14,
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .w500)*/
+
+                                            style: useMobileLayout
+                                                ? mobileTextFontStyle
+                                                : iPadYellowTextFontStyleBold                                             , // Change this to your desired color
+                                          ),
+                                        );
+                                      }).toList();
+                                },
+                                items: [
+                                  DropdownMenuItem(
+                                    value: 'en',
+                                    child: Text(
+                                        'En',
+                                        style: TextStyle(
+                                            color: Colors
+                                                .black)),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'es',
+                                    child: Text(
+                                        'Sp',
+                                        style: TextStyle(
+                                            color: Colors
+                                                .black)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          /*Padding(
                             padding:
                             const EdgeInsets.symmetric(
                                 vertical: 2.0),
@@ -304,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
 

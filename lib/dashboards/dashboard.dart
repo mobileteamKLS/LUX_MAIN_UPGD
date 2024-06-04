@@ -334,106 +334,24 @@ class _DashboardsState extends State<Dashboards> {
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 2.0),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                    border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 1.2,
-                                                    ),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10.0),
-                                                    child:
-                                                        DropdownButtonHideUnderline(
-                                                      child: DropdownButton<
-                                                          String>(
-                                                        focusColor:
-                                                            Colors.white,
-                                                        iconEnabledColor:
-                                                            Colors.white,
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                        value:
-                                                            _selectedLanguage,
-                                                        dropdownColor:
-                                                            Colors.white,
-                                                        onChanged: (newValue) {
-                                                          _onLanguageChanged(
-                                                              newValue!);
-                                                        },
-                                                        selectedItemBuilder:
-                                                            (BuildContext
-                                                                context) {
-                                                          return [
-                                                            'en',
-                                                            'es'
-                                                          ].map<Widget>(
-                                                              (String value) {
-                                                            return Center(
-                                                              child: Text(
-                                                                value == 'en'
-                                                                    ? 'English'
-                                                                    : 'Spanish',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500), // Change this to your desired color
-                                                              ),
-                                                            );
-                                                          }).toList();
-                                                        },
-                                                        items: [
-                                                          DropdownMenuItem(
-                                                            value: 'en',
-                                                            child: Text(
-                                                                'English',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black)),
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            value: 'es',
-                                                            child: Text(
-                                                                'Spanish',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black)),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
+
                                             ],
                                           ),
+
+
                                           if (!useMobileLayout)
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  top: 5.0),
+                                                  top: 2.0),
                                               child: Text(
                                                 printDate,
                                                 //"28 June 2022 23:40 ",
                                                 style: TextStyle(
                                                   fontSize: useMobileLayout
                                                       ? MediaQuery.of(context)
-                                                              .size
-                                                              .width /
-                                                          25
+                                                      .size
+                                                      .width /
+                                                      25
                                                       : 26,
                                                   fontWeight: FontWeight.normal,
                                                   color: Colors.white,
@@ -441,24 +359,25 @@ class _DashboardsState extends State<Dashboards> {
                                               ),
                                             ),
                                           useMobileLayout
-                                              ? SizedBox(height: 6)
+                                              ? SizedBox(height:5)
                                               : SizedBox(height: 10),
+
                                           if (isGHA)
                                             SizedBox(
                                               width: useMobileLayout
                                                   ? MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2
-                                                  : 230,
+                                                  .size
+                                                  .width /
+                                                  2.7
+                                                  : 100,
                                               height: useMobileLayout
                                                   ? MediaQuery.of(context)
-                                                          .size
-                                                          .height /
-                                                      18
+                                                  .size
+                                                  .height /
+                                                  18
                                                   : 50,
                                               child:
-                                                  DropdownButtonHideUnderline(
+                                              DropdownButtonHideUnderline(
                                                 child: Container(
                                                   constraints: BoxConstraints(
                                                       minHeight: 50),
@@ -467,8 +386,8 @@ class _DashboardsState extends State<Dashboards> {
                                                         color: Colors.grey,
                                                         width: 0.2),
                                                     borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(5)),
+                                                    BorderRadius.all(
+                                                        Radius.circular(5)),
                                                     color: Colors.white,
                                                   ),
                                                   padding: EdgeInsets.symmetric(
@@ -532,6 +451,9 @@ class _DashboardsState extends State<Dashboards> {
                                                 ),
                                               ),
                                             ),
+
+
+
                                         ],
                                       ),
                                     ),
@@ -819,6 +741,167 @@ class _DashboardsState extends State<Dashboards> {
                                     // )
                                   ]),
                             ),
+
+
+                            DropdownButtonHideUnderline(
+                              child: Container(
+                                constraints: BoxConstraints(
+                                    minHeight: 50),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.grey,
+                                      width: 0.2),
+                                  borderRadius:
+                                  BorderRadius.all(
+                                      Radius.circular(5)),
+                                  color: Colors.white,
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10),
+                                child: DropdownButton<String>(
+
+                                  focusColor: Colors.black,
+                                  iconEnabledColor: Colors.black,
+                                  style: TextStyle(color: Colors.black),
+                                  value: _selectedLanguage,
+                                  dropdownColor: Colors.white,
+                                  onChanged: (newValue) {
+                                    _onLanguageChanged(
+                                        newValue!);
+                                  },
+                                  selectedItemBuilder:
+                                      (BuildContext
+                                  context) {
+                                    return [
+                                      'en',
+                                      'es'
+                                    ].map<Widget>(
+                                            (String value) {
+                                          return Center(
+                                            child: Text(
+                                              value == 'en'
+                                                  ? 'En'
+                                                  : 'Sp',
+                                              /*style: TextStyle(
+
+                                                  color: Colors
+                                                      .black,
+                                                  fontSize:
+                                                  14,
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .w500)*/
+
+                                                style: useMobileLayout
+                                                    ? mobileTextFontStyle
+                                                    : iPadYellowTextFontStyleBold                                             , // Change this to your desired color
+                                            ),
+                                          );
+                                        }).toList();
+                                  },
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'en',
+                                      child: Text(
+                                          'En',
+                                          style: TextStyle(
+                                              color: Colors
+                                                  .black)),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'es',
+                                      child: Text(
+                                          'Sp',
+                                          style: TextStyle(
+                                              color: Colors
+                                                  .black)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                         /*   Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.circular(
+                                    20),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 1.2,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets
+                                    .symmetric(
+                                    horizontal: 10.0),
+                                child:
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButton<
+                                      String>(
+                                    focusColor:
+                                    Colors.white,
+                                    iconEnabledColor:
+                                    Colors.white,
+                                    style: TextStyle(
+                                        color:
+                                        Colors.white),
+                                    value:
+                                    _selectedLanguage,
+                                    dropdownColor:
+                                    Colors.white,
+                                    onChanged: (newValue) {
+                                      _onLanguageChanged(
+                                          newValue!);
+                                    },
+                                    selectedItemBuilder:
+                                        (BuildContext
+                                    context) {
+                                      return [
+                                        'en',
+                                        'es'
+                                      ].map<Widget>(
+                                              (String value) {
+                                            return Center(
+                                              child: Text(
+                                                value == 'en'
+                                                    ? 'English'
+                                                    : 'Spanish',
+                                                style: TextStyle(
+                                                    color: Colors
+                                                        .white,
+                                                    fontSize:
+                                                    14,
+                                                    fontWeight:
+                                                    FontWeight
+                                                        .w500), // Change this to your desired color
+                                              ),
+                                            );
+                                          }).toList();
+                                    },
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: 'en',
+                                        child: Text(
+                                            'English',
+                                            style: TextStyle(
+                                                color: Colors
+                                                    .black)),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'es',
+                                        child: Text(
+                                            'Spanish',
+                                            style: TextStyle(
+                                                color: Colors
+                                                    .black)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),*/
+
                           ]),
                     ),
                   ),

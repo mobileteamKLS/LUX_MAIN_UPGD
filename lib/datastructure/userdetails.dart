@@ -117,7 +117,7 @@ class LocationDetails {
   final String Latitude;
   final String Longitude;
   final bool IsActive;
-  final double RadiousinMeter;
+  final int RadiousinMeter;
 
   LocationDetails({
     required this.Latitude,

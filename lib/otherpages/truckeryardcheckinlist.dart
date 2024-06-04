@@ -337,8 +337,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
 
     var queryParams = {
       "OperationType": modeType.toString(), // "",
-      "OrganizationBranchId":
-          selectedTerminalID, // loggedinUser.OrganizationBranchId,
+      "OrganizationBranchId": selectedTerminalID, // loggedinUser.OrganizationBranchId,
     };
     await Global()
         .postData(
@@ -615,7 +614,7 @@ class _TruckYardCheckInListState extends State<TruckYardCheckInList> {
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("${localizeLangModel.search} ${localizeLangModel.vTno}",
+                                child: Text("${localizeLangModel.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(

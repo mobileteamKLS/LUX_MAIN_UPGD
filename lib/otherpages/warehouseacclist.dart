@@ -384,7 +384,7 @@ class _WarehouseAcceptanceListState extends State<WarehouseAcceptanceList> {
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("${localizeLangModel.search} ${localizeLangModel.vTno}",
+                                child: Text("${localizeLangModel.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(

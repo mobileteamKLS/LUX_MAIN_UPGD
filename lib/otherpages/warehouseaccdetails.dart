@@ -3979,6 +3979,7 @@ class _WarehouseAcceptanceDetailsState
         // "signitureDataURL": "",
         'imageDataFromCamera': isSignature ? "" : fileInBase64.toString(),
         'signitureDataURL': isSignature ? strImageString.toString() : "",
+        'baseStation' : 'BOG'
       };
 //       print(queryParams);
 // return true;

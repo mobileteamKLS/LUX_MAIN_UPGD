@@ -260,7 +260,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 10),
+                              SizedBox(width: 5),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 1.68,
                                 child: Column(
@@ -3944,7 +3944,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                     width:
                                         MediaQuery.of(context).size.width / 2.5,
                                     child: Text(
-                                        '${localizeLangModel.timeatDock} (${localizeLangModel.mins}.)', //'VT No.',
+                                        '${localizeLangModel.timeatDock}', //'VT No.',
                                         style: TextStyle(
                                             fontSize: MediaQuery.of(context)
                                                     .size
@@ -4212,7 +4212,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('${localizeLangModel.timeatDock} (${localizeLangModel.mins}.)', //'VT No.',
+                                      Text('${localizeLangModel.timeatDock}', //'VT No.',
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
