@@ -24,12 +24,370 @@ class YardCheckIn extends StatefulWidget {
 
 class _YardCheckInState extends State<YardCheckIn> {
   bool useMobileLayout = false, isLoading = false;
+  String selectedBaseStationBranch = "Select";
 
+  List<WarehouseBaseStationBranch> dummyList = [
+  ];
+  String walkIn = "";
+
+  int custodianId = 0;
   @override
   void initState() {
    // getTerminalsList();
-
+    print("####### ${baseStationBranchList.toString()}########");
+    print("####### $selectedBaseStation ########");
+    if (!isTerminalAlreadySelected) {
+      selectedBaseStationID = 0;
+      terminalsListDDL = [];
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        //selectTruckerDialog(context);
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return selectTerminalBox();
+            });
+      });
+    }
     super.initState();
+  }
+
+
+  getBaseStationBranch(cityId) async {
+    baseStationBranchList = [];
+    dummyList = [];
+    selectedBaseStationBranchID = 0;
+    selectedBaseStationBranch = "Select";
+    var queryParams = {"CityId": cityId, "OrganizationId": 0, "UserId": 0};
+    await Global()
+        .postData(
+      Settings.SERVICES['GetBaseStationBranch'],
+      queryParams,
+    )
+        .then((response) {
+      print("data received ");
+      print(json.decode(response.body)['d']);
+
+      var msg = json.decode(response.body)['d'];
+      var resp = json.decode(msg).cast<Map<String, dynamic>>();
+
+      baseStationBranchList = resp
+          .map<WarehouseBaseStationBranch>(
+              (json) => WarehouseBaseStationBranch.fromJson(json))
+          .toList();
+
+      WarehouseBaseStationBranch wt = new WarehouseBaseStationBranch(
+          orgName: "",
+          organizationId: 0,
+          organizationBranchId: 0,
+          orgBranchName: "Select");
+      // baseStationBranchList.add(wt);
+      baseStationBranchList.sort(
+              (a, b) => a.organizationBranchId.compareTo(b.organizationBranchId));
+
+      print("length baseStationList = " +
+          baseStationBranchList.length.toString());
+      print(baseStationBranchList.toString());
+      setState(() {
+        isLoading = false;
+      });
+    }).catchError((onError) {
+      // setState(() {
+      //   isLoading = false;
+      // });
+      print(onError);
+    });
+  }
+
+  walkInEnable() {
+    List<WarehouseTerminals> filteredTerminals = [];
+    for (int i = 0; i < baseStationBranchList.length; i++) {
+      filteredTerminals = terminalsList
+          .where(
+              (terminal) => terminal.custodianName == selectedBaseStationBranch)
+          .toList();
+      setState(() {
+        isWalkInEnable = filteredTerminals[0].iswalkinEnable;
+        custodianId = filteredTerminals[0].custudian;
+      });
+    }
+
+    terminalsListDDL = [];
+    terminalsListDDL.add(filteredTerminals[0]);
+    print(terminalsListDDL.toString());
+    print(isWalkInEnable);
+  }
+
+  changeValue() async {
+    await getBaseStationBranch(selectedBaseStationID);
+    // await getCommodity(selectedBaseStation);
+    print("******* ${baseStationBranchList.toString()} ********");
+    setState(() {
+      dummyList = baseStationBranchList;
+    });
+  }
+  // getCommodity(baseStation) async {
+  //   commodityList = [];
+  //   Commodity wt = new Commodity(
+  //     shcId: 0,
+  //     specialHandlingCode: 'Select',
+  //     description: '',
+  //   );
+  //   commodityList.add(wt);
+  //   selectedBaseForCommId = 0;
+  //   var queryParams = {"BaseStation": baseStation};
+  //   await Global()
+  //       .postData(
+  //     Settings.SERVICES['GetCommodity'],
+  //     queryParams,
+  //   )
+  //       .then((response) {
+  //     print("data received ");
+  //     print(json.decode(response.body)['d']);
+  //
+  //     var msg = json.decode(response.body)['d'];
+  //     var resp = json.decode(msg).cast<Map<String, dynamic>>();
+  //
+  //     commodityList =
+  //         resp.map<Commodity>((json) => Commodity.fromJson(json)).toList();
+  //
+  //     Commodity wt = new Commodity(
+  //       shcId: 0,
+  //       specialHandlingCode: 'Select',
+  //       description: '',
+  //     );
+  //     commodityList.add(wt);
+  //     // commodityList.sort((a, b) => a.cityid.compareTo(b.cityid));
+  //     print("length baseStationList = " + commodityList.length.toString());
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }).catchError((onError) {
+  //     // setState(() {
+  //     //   isLoading = false;
+  //     // });
+  //     print(onError);
+  //   });
+  // }
+  selectTerminalBox() {
+    return Container(
+      height: MediaQuery.of(context).size.height / 5.2, // height: 250,
+      width: MediaQuery.of(context).size.width / 3.8,
+      child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return AlertDialog(
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width:MediaQuery.of(context).size.width / 1.4,
+                    child: Text(
+                      "Select Base Station",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF11249F),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width:MediaQuery.of(context).size.width / 1.4,
+                    child: Wrap(
+                      spacing: 5.0,
+                      children: List<Widget>.generate(
+                        baseStationList.length,
+                            (int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: ChoiceChip(
+                              label: Text(
+                                ' ${baseStationList[index].airportcode}',
+                              ),
+                              labelStyle: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 24.0, vertical: 8.0),
+                              backgroundColor: Color(0xFF1D24CA),
+                              selectedColor: Color(0xfff85927),
+                              showCheckmark: false,
+                              materialTapTargetSize: MaterialTapTargetSize.padded,
+                              selected: selectedBaseStationID ==
+                                  baseStationList[index].cityid,
+                              onSelected: (bool selected) {
+                                setState(() async {
+                                  selectedBaseStationID = (selected
+                                      ? baseStationList[index].cityid
+                                      : null)!;
+                                  selectedBaseStation =
+                                      baseStationList[index].airportcode;
+                                  print(selectedBaseStationID);
+                                  print(selectedBaseStation);
+                                  await changeValue();
+                                  setState(() {});
+                                });
+                              },
+                            ),
+                          );
+                        },
+                      ).toList(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width:MediaQuery.of(context).size.width / 1.4,
+                    child: Text(
+                      dummyList.length != 0 ? "Select Terminal" : "",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF11249F),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width:MediaQuery.of(context).size.width / 1.4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Wrap(
+                        spacing: 5.0,
+                        children: List<Widget>.generate(
+                          dummyList.length,
+                              (int index) {
+                            return ChoiceChip(
+                              label: Text(' ${dummyList[index].orgBranchName}'),
+                              labelStyle: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 24.0, vertical: 8.0),
+                              selected: selectedBaseStationBranchID ==
+                                  dummyList[index].organizationBranchId,
+                              showCheckmark: false,
+                              selectedColor: Color(0xfff85927),
+                              backgroundColor: Color(0xFF1D24CA),
+                              onSelected: (bool selected) {
+                                setState(() {
+                                  selectedBaseStationBranchID = (selected
+                                      ? dummyList[index].organizationBranchId
+                                      : null)!;
+                                  selectedBaseStationBranch = (selected
+                                      ? dummyList[index].orgBranchName
+                                      : null)!;
+                                  walkInEnable();
+                                });
+                              },
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              // },),
+
+              actions: [
+                // Padding(
+                //   padding: const EdgeInsets.only(right: 8.0, bottom: 16.0),
+                //   child: ElevatedButton(
+                //     //textColor: Colors.black,
+                //     onPressed: () {},
+                //     style: ElevatedButton.styleFrom(
+                //       elevation: 4.0,
+                //       shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(10.0)), //
+                //       padding: const EdgeInsets.all(0.0),
+                //     ),
+                //     child: Container(
+                //       height: 50,
+                //       width: 150,
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(10),
+                //         color: Colors.white,
+                //       ),
+                //       child: Padding(
+                //         padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                //         child: Align(
+                //           alignment: Alignment.center,
+                //           child: Text(
+                //             'Clear',
+                //             style: TextStyle(
+                //                 fontSize: 20,
+                //                 fontWeight: FontWeight.normal,
+                //                 color: Color(0xFF11249F)),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0, bottom: 16.0),
+                  child: ElevatedButton(
+                    //textColor: Colors.black,
+                    onPressed: () {
+                      setState(() {
+                        isTerminalAlreadySelected = true;
+                      });
+
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)), //
+                      padding: const EdgeInsets.all(0.0),
+                    ),
+                    child: Container(
+                      height: 50,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0xFF1220BC),
+                            Color(0xFF3540E8),
+                          ],
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'OK',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }),
+    );
   }
 
   @override

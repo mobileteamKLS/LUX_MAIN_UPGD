@@ -397,5 +397,7 @@ class Settings {
         "/GetBookedSlotList", // get list of booked slots export
     "BookedSlotsListImport":
         "/GetImportBookedSlotList", // get list of booked slots import
+    "GetBaseStation":"/GetUserBaseStation", // get list of user base station
+    "GetBaseStationBranch":"/GetBaseStationWiseBranch", // get base wise terminal
   };
 }

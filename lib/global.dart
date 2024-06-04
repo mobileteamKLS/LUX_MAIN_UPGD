@@ -31,10 +31,22 @@ UserDetails loggedinUser = new UserDetails(
     OrganizationBranchIdString: "",
     OrganizationtypeIdString: "");
 String displayName = "un";
+bool isTerminalAlreadySelected = false;
+bool isWalkInEnable = false;
 String selectedTerminal = "";
+String selectedBaseStation = "Select";
+String selectedBaseStationBranch = "";
 int selectedTerminalID = 0;
+int selectedBaseStationID = 0;
+int selectedBaseStationBranchID = 0;
+int selectedBaseForCommId = 0;
+int selectedCommID = 0;
 List suspendedBY = [];
 List<WarehouseTerminals> terminalsList = [];
+List<WarehouseTerminals> terminalsListDDL = [];
+List<WarehouseBaseStation> baseStationList = [];
+List<WarehouseBaseStationTrucker> baseStationList2 = [];
+List<WarehouseBaseStationBranch> baseStationBranchList = [];
 List<Vehicletypes> vehicletypesList = [];
 List<DamageType> damageTypeList = [];
 List<AcceptanceType> rejectionReasonsList = [];

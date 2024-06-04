@@ -135,6 +135,7 @@ class vehicleSMS {
   final String SMSDate;
   final String SMSMessage;
   final String MobileNo;
+
   vehicleSMS({
     required this.SMSDate,
     required this.SMSMessage,
@@ -163,6 +164,7 @@ class VehicleShipmentDetails {
   final String TokenNo;
   final String Status;
   final String Reason;
+
   VehicleShipmentDetails({
     required this.AWBNo,
     required this.TokenNo,
@@ -193,6 +195,7 @@ class VehicleTrackingDetails {
   final String Name;
   final String Status;
   final String VehicleDateTime;
+
   VehicleTrackingDetails({
     required this.Name,
     required this.Status,
@@ -524,19 +527,46 @@ class PODAWB {
   }
 }
 
+// class WarehouseTerminals {
+//   final int custudian;
+//   final String custodianName;
+//
+//   WarehouseTerminals({
+//     required this.custudian,
+//     required this.custodianName,
+//   });
+//
+//   factory WarehouseTerminals.fromJson(Map<String, dynamic> json) {
+//     return WarehouseTerminals(
+//       custodianName: json['CustodianName'] == null ? "" : json['CustodianName'],
+//       custudian: json['CUSTODIAN'] == null ? 0 : json['CUSTODIAN'],
+//     );
+//   }
+//
+//   Map toMap() {
+//     var map = new Map<String, dynamic>();
+//     map["CUSTODIAN"] = custudian;
+//     map["CustodianName"] = custodianName;
+//     return map;
+//   }
+// }
 class WarehouseTerminals {
   final int custudian;
   final String custodianName;
+  final bool iswalkinEnable;
 
   WarehouseTerminals({
     required this.custudian,
     required this.custodianName,
+    required this.iswalkinEnable,
   });
 
   factory WarehouseTerminals.fromJson(Map<String, dynamic> json) {
     return WarehouseTerminals(
       custodianName: json['CustodianName'] == null ? "" : json['CustodianName'],
       custudian: json['CUSTODIAN'] == null ? 0 : json['CUSTODIAN'],
+      iswalkinEnable:
+          json['IswalkinEnable'] == null ? 0 : json['IswalkinEnable'],
     );
   }
 
@@ -544,7 +574,135 @@ class WarehouseTerminals {
     var map = new Map<String, dynamic>();
     map["CUSTODIAN"] = custudian;
     map["CustodianName"] = custodianName;
+    map["IswalkinEnable"] = iswalkinEnable;
     return map;
+  }
+
+  @override
+  String toString() {
+    return "-- $custudian -- $custodianName -- $iswalkinEnable --";
+  }
+}
+
+class WarehouseBaseStation {
+  String organizationId;
+  String orgName;
+  int cityid;
+  String airportcode;
+
+  WarehouseBaseStation({
+    required this.organizationId,
+    required this.orgName,
+    required this.cityid,
+    required this.airportcode,
+  });
+
+  factory WarehouseBaseStation.fromJson(Map<String, dynamic> json) =>
+      WarehouseBaseStation(
+        organizationId:
+            json["OrganizationId"] == null ? "" : json["OrganizationId"],
+        orgName: json["OrgName"] == null ? "" : json["OrgName"],
+        cityid: json["cityid"] == null ? 0 : json["cityid"],
+        airportcode: json["airportcode"] == null ? "" : json["airportcode"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "OrganizationId": organizationId,
+        "OrgName": orgName,
+        "cityid": cityid,
+        "airportcode": airportcode,
+      };
+}
+
+class Commodity {
+  int shcId;
+  String specialHandlingCode;
+  String description;
+
+  Commodity({
+    required this.shcId,
+    required this.specialHandlingCode,
+    required this.description,
+  });
+
+  factory Commodity.fromJson(Map<String, dynamic> json) => Commodity(
+        shcId: json["SHCId"],
+        specialHandlingCode: json["SpecialHandlingCode"],
+        description: json["Description"] == null ? "" : json["Description"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "SHCId": shcId,
+        "SpecialHandlingCode": specialHandlingCode,
+        "Description": description,
+      };
+}
+
+class WarehouseBaseStationTrucker {
+  int organizationId;
+  String orgName;
+  int cityid;
+  String airportcode;
+
+  WarehouseBaseStationTrucker({
+    required this.organizationId,
+    required this.orgName,
+    required this.cityid,
+    required this.airportcode,
+  });
+
+  factory WarehouseBaseStationTrucker.fromJson(Map<String, dynamic> json) =>
+      WarehouseBaseStationTrucker(
+        organizationId:
+            json["OrganizationId"] == null ? 0 : json["OrganizationId"],
+        orgName: json["OrgName"] == null ? "" : json["OrgName"],
+        cityid: json["cityid"] == null ? 0 : json["cityid"],
+        airportcode: json["airportcode"] == null ? "" : json["airportcode"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "OrganizationId": organizationId,
+        "OrgName": orgName,
+        "cityid": cityid,
+        "airportcode": airportcode,
+      };
+}
+
+class WarehouseBaseStationBranch {
+  int organizationId;
+  String orgName;
+  int organizationBranchId;
+  String orgBranchName;
+
+  WarehouseBaseStationBranch({
+    required this.organizationId,
+    required this.orgName,
+    required this.organizationBranchId,
+    required this.orgBranchName,
+  });
+
+  factory WarehouseBaseStationBranch.fromJson(Map<String, dynamic> json) =>
+      WarehouseBaseStationBranch(
+        organizationId:
+            json["OrganizationId"] == null ? 0 : json["OrganizationId"],
+        orgName: json["OrgName"] == null ? "" : json["OrgName"],
+        organizationBranchId: json["OrganizationBranchId"] == null
+            ? 0
+            : json["OrganizationBranchId"],
+        orgBranchName:
+            json["OrgBranchName"] == null ? "" : json["OrgBranchName"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "OrganizationId": organizationId,
+        "OrgName": orgName,
+        "OrganizationBranchId": organizationBranchId,
+        "OrgBranchName": orgBranchName,
+      };
+
+  @override
+  String toString() {
+    return "Data--$organizationId--$orgName--$organizationBranchId--$orgBranchName";
   }
 }
 

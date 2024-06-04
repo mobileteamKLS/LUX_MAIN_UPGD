@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:luxair/otherpages/bookedslotslist.dart';
 import 'package:luxair/otherpages/slotlist.dart';
 import 'package:luxair/otherpages/viewslotbooking.dart';
@@ -26,6 +28,7 @@ import 'package:luxair/otherpages/warehouseacclist.dart';
 import 'package:luxair/widgets/customdialogue.dart';
 import 'package:luxair/widgets/headers.dart';
 import '../constants.dart';
+import '../datastructure/vehicletoken.dart';
 import '../language/appLocalizations.dart';
 import '../language/model/lang_model.dart';
 import '../main.dart';
@@ -46,6 +49,11 @@ class _DashboardsState extends State<Dashboards> {
 
   String _selectedLanguage = 'en';
   Locale _locale = Locale('en');
+  List<WarehouseBaseStationBranch> dummyList = [
+
+  ];
+  // String selectedBaseStation = "Select";
+  String selectedBaseStationBranch = "Select Terminal";
 
   @override
   void initState() {
@@ -53,6 +61,8 @@ class _DashboardsState extends State<Dashboards> {
     // Timer.periodic(Duration(seconds:1), (Timer t)=>getCurrentDateTime());
     _timer = new Timer.periodic(
         Duration(seconds: 1), (Timer timer) => getCurrentDateTime());
+    selectedBaseStationBranchID=0;
+    selectedBaseStationID=0;
     _loadSavedLanguage();
     super.initState();
   }
@@ -93,6 +103,268 @@ class _DashboardsState extends State<Dashboards> {
     setState(() {
       printDate = DateFormat('dd-MMM-yyyy hh:mm').format(DateTime.now());
     });
+  }
+  changeValue() async {
+    await getBaseStationBranch(selectedBaseStationID);
+    print("******* ${baseStationBranchList.toString()} ********");
+    setState(() {
+      dummyList = baseStationBranchList;
+    });
+  }
+
+  getBaseStationBranch(cityId) async {
+    baseStationBranchList = [];
+    dummyList = [];
+    selectedBaseStationBranchID = 0;
+    selectedBaseStationBranch = "Select Terminal";
+    var queryParams = {"CityId": cityId, "OrganizationId": loggedinUser.OrganizationId.toString(), "UserId": loggedinUser.CreatedByUserId.toString()};
+    await Global()
+        .postData(
+      Settings.SERVICES['GetBaseStationBranch'],
+      queryParams,
+    )
+        .then((response) {
+      print("data received ");
+      print(json.decode(response.body)['d']);
+
+      var msg = json.decode(response.body)['d'];
+      var resp = json.decode(msg).cast<Map<String, dynamic>>();
+
+      baseStationBranchList = resp
+          .map<WarehouseBaseStationBranch>(
+              (json) => WarehouseBaseStationBranch.fromJson(json))
+          .toList();
+
+      WarehouseBaseStationBranch wt = new WarehouseBaseStationBranch(
+          orgName: "",
+          organizationId: 0,
+          organizationBranchId: 0,
+          orgBranchName: "Select");
+      // baseStationBranchList.add(wt);
+      baseStationBranchList.sort(
+              (a, b) => a.organizationBranchId.compareTo(b.organizationBranchId));
+
+      print("length baseStationList = " +
+          baseStationBranchList.length.toString());
+      print(baseStationBranchList.toString());
+      setState(() {});
+    }).catchError((onError) {
+      // setState(() {
+      //   isLoading = false;
+      // });
+      print(onError);
+    });
+  }
+  selectTerminalBox() {
+    return Container(
+      height:MediaQuery.of(context).size.height / 5.2, // height: 250,
+      width:MediaQuery.of(context).size.width / 3.2,
+      child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return AlertDialog(
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width:useMobileLayout? MediaQuery.of(context).size.width / 1.2: MediaQuery.of(context).size.width / 1.6,
+                    child: Text(
+                      "Select Base Station",
+                      style: TextStyle(
+                        fontSize: useMobileLayout?20:24,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF11249F),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+
+                    width: useMobileLayout? MediaQuery.of(context).size.width / 1.2: MediaQuery.of(context).size.width / 1.6,
+                    child: Wrap(
+                      spacing: 2.5,
+                      children: List<Widget>.generate(
+                        baseStationList2.length,
+                            (int index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical :3.0,horizontal: 2.0),
+                            child: ChoiceChip(
+                              label: Text(' ${baseStationList2[index].airportcode}',),
+                              labelStyle: TextStyle(
+                                fontSize: useMobileLayout?14:18,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                              ),
+                              padding:const EdgeInsets.symmetric(horizontal: 18.0,vertical: 0.0) ,
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              backgroundColor: Color(0xFF1D24CA),
+                              selectedColor: Color(0xfff85927),
+                              showCheckmark: false,
+                              selected: selectedBaseStationID == baseStationList2[index].cityid,
+                              onSelected: (bool selected) {
+                                setState(() async {
+                                  selectedBaseStationID = (selected ? baseStationList2[index].cityid : null)!;
+                                  selectedBaseStation=baseStationList2[index].airportcode;
+                                  print(selectedBaseStationID);
+                                  await changeValue();
+                                  setState(() {});
+                                });
+                              },
+                            ),
+                          );
+                        },
+                      ).toList(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: useMobileLayout? MediaQuery.of(context).size.width / 1.2: MediaQuery.of(context).size.width / 1.6,
+                    child: Text(
+                      dummyList.length!=0?"Select Terminal":"",
+                      style: TextStyle(
+                        fontSize: useMobileLayout?20:24,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF11249F),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+
+
+                  SizedBox(
+                    width:useMobileLayout? MediaQuery.of(context).size.width / 1.2: MediaQuery.of(context).size.width / 1.6,
+                    child:Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Wrap(
+                        spacing: 5.0,
+                        children: List<Widget>.generate(
+                          dummyList.length,
+                              (int index) {
+                            return ChoiceChip(
+                              label: Text(' ${dummyList[index].orgBranchName}'),
+                              labelStyle: TextStyle(
+                                fontSize: useMobileLayout?14:18,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                              ),
+                              // padding:const EdgeInsets.symmetric(horizontal: 18.0,vertical: 4.0) ,
+                              selected: selectedBaseStationBranchID == dummyList[index].organizationBranchId,
+                              showCheckmark: false,
+                              selectedColor: Color(0xfff85927),
+                              backgroundColor: Color(0xFF1D24CA),
+
+                              onSelected: (bool selected) {
+                                setState(() {
+                                  selectedBaseStationBranchID = (selected ? dummyList[index].organizationBranchId : null)!;
+                                  selectedBaseStationBranch = (selected ? dummyList[index].orgBranchName : null)!;
+
+                                });
+                              },
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              // },),
+
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0, bottom: 16.0),
+                  child: ElevatedButton(
+                    //textColor: Colors.black,
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)), //
+                      padding: const EdgeInsets.all(0.0),
+                    ),
+                    child: Container(
+                      height: 36,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Clear',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xFF11249F)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0, bottom: 16.0),
+                  child: ElevatedButton(
+                    //textColor: Colors.black,
+                    onPressed: () {
+                      // setState(() {});
+                      // if (selectedBaseStationID == 0 || selectedBaseStationBranchID == 0) {
+                      //   print("$selectedBaseStationID ======= $selectedBaseStationBranchID");
+                      //   return;
+                      // }
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)), //
+                      padding: const EdgeInsets.all(0.0),
+                    ),
+                    child: Container(
+                      height: 36,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0xFF1220BC),
+                            Color(0xFF3540E8),
+                          ],
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'OK',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }),
+    );
   }
 
   @override
@@ -362,98 +634,121 @@ class _DashboardsState extends State<Dashboards> {
                                               ? SizedBox(height:5)
                                               : SizedBox(height: 10),
 
-                                          if (isGHA)
+                                          // if (isGHA)
                                             SizedBox(
                                               width: useMobileLayout
                                                   ? MediaQuery.of(context)
                                                   .size
                                                   .width /
                                                   2.7
-                                                  : 100,
+                                                  : MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                                  3.7,
                                               height: useMobileLayout
                                                   ? MediaQuery.of(context)
                                                   .size
                                                   .height /
                                                   18
                                                   : 50,
-                                              child:
-                                              DropdownButtonHideUnderline(
-                                                child: Container(
-                                                  constraints: BoxConstraints(
-                                                      minHeight: 50),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.grey,
-                                                        width: 0.2),
-                                                    borderRadius:
-                                                    BorderRadius.all(
-                                                        Radius.circular(5)),
-                                                    color: Colors.white,
-                                                  ),
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10),
-                                                  child: DropdownButton(
-                                                    value: selectedTerminalID,
-                                                    items: terminalsList
-                                                        .map((terminal) {
-                                                      return DropdownMenuItem(
-                                                        child: Text(
-                                                            terminal
-                                                                .custodianName
-                                                                .toUpperCase(),
-                                                            style: useMobileLayout
-                                                                ? mobileTextFontStyle
-                                                                : iPadYellowTextFontStyleBold),
-                                                        //label of item
-                                                        value: terminal
-                                                            .custudian, //value of item
-                                                      );
-                                                    }).toList(),
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        selectedTerminal =
-                                                            value.toString();
-                                                        selectedTerminalID =
-                                                            int.parse(value
-                                                                .toString());
-                                                      });
-                                                    },
-                                                    // items: [
-                                                    //   "Select",
-                                                    //   "Two",
-                                                    //   "Three"
-                                                    // ]
-                                                    //     .map((String
-                                                    // value) =>
-                                                    //     DropdownMenuItem(
-                                                    //       value:
-                                                    //       value,
-                                                    //       child:
-                                                    //       Column(
-                                                    //         mainAxisAlignment:
-                                                    //         MainAxisAlignment.center,
-                                                    //         crossAxisAlignment:
-                                                    //         CrossAxisAlignment.start,
-                                                    //         children: [
-                                                    //           Text(
-                                                    //             value,
-                                                    //             style: TextStyle(
-                                                    //               fontSize: 14,
-                                                    //               fontWeight: FontWeight.normal,
-                                                    //               color: Colors.black,
-                                                    //             ),
-                                                    //           ),
-                                                    //         ],
-                                                    //       ),
-                                                    //     ))
-                                                    //     .toList(),
-                                                  ),
-                                                ),
-                                              ),
+                                              child:GestureDetector(
+                                                  onTap: () {
+                                                    showDialog(
+                                                        barrierDismissible:
+                                                        false,
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return selectTerminalBox();
+                                                        });
+                                                  },
+                                                  child: Text(
+                                                    selectedBaseStationBranch,
+                                                    style: TextStyle(
+                                                        fontSize: useMobileLayout
+                                                            ? MediaQuery.of(
+                                                            context)
+                                                            .size
+                                                            .width /
+                                                            20
+                                                            : 28,
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        color: Colors.white),
+                                                  ))
+                                              // DropdownButtonHideUnderline(
+                                              //   child: Container(
+                                              //     constraints: BoxConstraints(
+                                              //         minHeight: 50),
+                                              //     decoration: BoxDecoration(
+                                              //       border: Border.all(
+                                              //           color: Colors.grey,
+                                              //           width: 0.2),
+                                              //       borderRadius:
+                                              //       BorderRadius.all(
+                                              //           Radius.circular(5)),
+                                              //       color: Colors.white,
+                                              //     ),
+                                              //     padding: EdgeInsets.symmetric(
+                                              //         horizontal: 10),
+                                              //     child: DropdownButton(
+                                              //       value: selectedTerminalID,
+                                              //       items: terminalsList
+                                              //           .map((terminal) {
+                                              //         return DropdownMenuItem(
+                                              //           child: Text(
+                                              //               terminal
+                                              //                   .custodianName
+                                              //                   .toUpperCase(),
+                                              //               style: useMobileLayout
+                                              //                   ? mobileTextFontStyle
+                                              //                   : iPadYellowTextFontStyleBold),
+                                              //           //label of item
+                                              //           value: terminal
+                                              //               .custudian, //value of item
+                                              //         );
+                                              //       }).toList(),
+                                              //       onChanged: (value) {
+                                              //         setState(() {
+                                              //           selectedTerminal =
+                                              //               value.toString();
+                                              //           selectedTerminalID =
+                                              //               int.parse(value
+                                              //                   .toString());
+                                              //         });
+                                              //       },
+                                              //       // items: [
+                                              //       //   "Select",
+                                              //       //   "Two",
+                                              //       //   "Three"
+                                              //       // ]
+                                              //       //     .map((String
+                                              //       // value) =>
+                                              //       //     DropdownMenuItem(
+                                              //       //       value:
+                                              //       //       value,
+                                              //       //       child:
+                                              //       //       Column(
+                                              //       //         mainAxisAlignment:
+                                              //       //         MainAxisAlignment.center,
+                                              //       //         crossAxisAlignment:
+                                              //       //         CrossAxisAlignment.start,
+                                              //       //         children: [
+                                              //       //           Text(
+                                              //       //             value,
+                                              //       //             style: TextStyle(
+                                              //       //               fontSize: 14,
+                                              //       //               fontWeight: FontWeight.normal,
+                                              //       //               color: Colors.black,
+                                              //       //             ),
+                                              //       //           ),
+                                              //       //         ],
+                                              //       //       ),
+                                              //       //     ))
+                                              //       //     .toList(),
+                                              //     ),
+                                              //   ),
+                                              // ),
                                             ),
-
-
-
                                         ],
                                       ),
                                     ),
