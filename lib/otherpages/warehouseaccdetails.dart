@@ -3968,7 +3968,7 @@ class _WarehouseAcceptanceDetailsState
             txtReceivedGRWT.text == "" ? 0 : double.parse(txtReceivedGRWT.text),
         "_IsDeleted": "false",
         //"_CreatedBy": awbDetails[0].CreatedById.toString(),
-        "_CreatedBy": {loggedinUser.CreatedByUserId},
+        "_CreatedBy": "${loggedinUser.CreatedByUserId}",
         "DamageType": damageTypeSelected,
         "DamagePieces": txtDamagedPKGS.text == "" ? 0 : txtDamagedPKGS.text,
         "Reason": rejectionReasonSelected > 0
@@ -3985,10 +3985,11 @@ class _WarehouseAcceptanceDetailsState
         // "imageDataFromCamera": "",
         // "signitureDataURL": "",
         'imageDataFromCamera': isSignature ? "" : fileInBase64.toString(),
+        'baseStation' : "$selectedBaseStation",
         'signitureDataURL': isSignature ? strImageString.toString() : "",
-        'baseStation' : "$selectedBaseStation"
+
       };
-      print("${selectedBaseStationBranch}+++++++++++++");
+      print("${queryParams} +++++++++++++");
 // return true;
       await Global()
           .postData(
