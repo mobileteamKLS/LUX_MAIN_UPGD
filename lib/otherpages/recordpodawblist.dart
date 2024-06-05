@@ -194,7 +194,7 @@ class _RecordPodAwbListState extends State<RecordPodAwbList> {
       "VTNo": widget.vtNumber,
       "OperationType": "3", //  modeType.toString(), // "",
       "OrganizationBranchId":
-          selectedTerminalID, // loggedinUser.OrganizationBranchId,
+      selectedBaseStationBranchID,//   selectedTerminalID, // loggedinUser.OrganizationBranchId,
     };
     await Global()
         .postData(

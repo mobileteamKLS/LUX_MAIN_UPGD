@@ -1301,8 +1301,8 @@ class _DockOutDetailsState extends State<DockOutDetails> {
       "OperationType": modeType.toString(), // "",
       "VTNo": widget.selectedVtDetails.VTNo,
       "CreatedByUserId": loggedinUser.CreatedByUserId,
-      "OrganizationBranchId": selectedTerminalID
-          .toString(), // loggedinUser.OrganizationBranchId.toString(),
+      "OrganizationBranchId":selectedBaseStationBranchID.toString(),
+     // selectedTerminalID.toString(), // loggedinUser.OrganizationBranchId.toString(),
       "OrganizationId": loggedinUser.OrganizationId.toString(),
     };
     await Global()
@@ -1353,7 +1353,7 @@ class _DockOutDetailsState extends State<DockOutDetails> {
         "pDOCK_OUT": dockout,
         "CreatedByUserId": loggedinUser.CreatedByUserId,
         "OrganizationBranchId":
-            selectedTerminalID.toString(), // loggedinUser.OrganizationBranchId,
+        selectedBaseStationBranchID.toString(),//  selectedTerminalID.toString(), // loggedinUser.OrganizationBranchId,
         "OrganizationId": loggedinUser.OrganizationId,
         "IsGeoFencing": "true",
       };

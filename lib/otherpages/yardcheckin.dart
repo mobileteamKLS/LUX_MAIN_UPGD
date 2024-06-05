@@ -170,6 +170,8 @@ class _YardCheckInState extends State<YardCheckIn> {
   //   });
   // }
   selectTerminalBox() {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     return Container(
       height: MediaQuery.of(context).size.height / 5.2, // height: 250,
       width: MediaQuery.of(context).size.width / 3.8,
@@ -185,7 +187,7 @@ class _YardCheckInState extends State<YardCheckIn> {
                   SizedBox(
                     width:MediaQuery.of(context).size.width / 1.4,
                     child: Text(
-                      "Select Base Station",
+                      "${localizeLangModel!.select} ${localizeLangModel.baseStation}",
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -247,7 +249,7 @@ class _YardCheckInState extends State<YardCheckIn> {
                   SizedBox(
                     width:MediaQuery.of(context).size.width / 1.4,
                     child: Text(
-                      dummyList.length != 0 ? "Select Terminal" : "",
+                      dummyList.length != 0 ? "${localizeLangModel!.selectTerminal}" : "",
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,

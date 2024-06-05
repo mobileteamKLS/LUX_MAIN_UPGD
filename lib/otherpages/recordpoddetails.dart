@@ -4047,7 +4047,7 @@ class _RecordPodDetailsState extends State<RecordPodDetails> {
       "OrganizationId": loggedinUser.OrganizationId.toString(),
       "VehicleTokenNo": widget.vtNumber.toString(),
       "OrganizationBranchId":
-          selectedTerminalID, // loggedinUser.OrganizationBranchId,
+      selectedBaseStationBranchID,//selectedTerminalID, // loggedinUser.OrganizationBranchId,
     };
     await Global()
         .postData(

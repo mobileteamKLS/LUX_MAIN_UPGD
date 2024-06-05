@@ -156,6 +156,8 @@ class _DashboardsState extends State<Dashboards> {
     });
   }
   selectTerminalBox() {
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
     return Container(
       height:MediaQuery.of(context).size.height / 5.2, // height: 250,
       width:MediaQuery.of(context).size.width / 3.2,
@@ -171,7 +173,7 @@ class _DashboardsState extends State<Dashboards> {
                   SizedBox(
                     width:useMobileLayout? MediaQuery.of(context).size.width / 1.2: MediaQuery.of(context).size.width / 1.6,
                     child: Text(
-                      "Select Base Station",
+                      "${localizeLangModel!.select} ${localizeLangModel.baseStation}",
                       style: TextStyle(
                         fontSize: useMobileLayout?20:24,
                         fontWeight: FontWeight.bold,
@@ -226,7 +228,7 @@ class _DashboardsState extends State<Dashboards> {
                   SizedBox(
                     width: useMobileLayout? MediaQuery.of(context).size.width / 1.2: MediaQuery.of(context).size.width / 1.6,
                     child: Text(
-                      dummyList.length!=0?"Select Terminal":"",
+                      dummyList.length!=0?"${localizeLangModel!.selectTerminal}":"",
                       style: TextStyle(
                         fontSize: useMobileLayout?20:24,
                         fontWeight: FontWeight.bold,

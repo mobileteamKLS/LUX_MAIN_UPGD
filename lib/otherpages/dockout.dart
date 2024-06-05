@@ -218,7 +218,7 @@ class _DockOutState extends State<DockOut> {
     var queryParams = {
       "OperationType": modeType.toString(), // "",
       "OrganizationBranchId":
-          selectedTerminalID, // loggedinUser.OrganizationBranchId,
+      selectedBaseStationBranchID, // selectedTerminalID, // loggedinUser.OrganizationBranchId,
     };
     await Global()
         .postData(

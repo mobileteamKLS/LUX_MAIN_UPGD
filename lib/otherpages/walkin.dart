@@ -232,8 +232,8 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
 
                             hint: Text("---- ${localizeLangModel.select} ----",
                                 style: iPadYellowTextFontStyleBold),
-                            value: selectedTerminalID,
-                            items: terminalsList.map((terminal) {
+                            value: terminalsListDDL[0].custudian,
+                            items: terminalsListDDL.map((terminal) {
                               return DropdownMenuItem(
                                 child: Text(terminal.custodianName,
                                     style: iPadTextFontStyle), //label of item
@@ -243,8 +243,8 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                             onChanged: (value) {
                               setState(() {
                                 selectedTerminal = value.toString();
-                                selectedTerminalID =
-                                    int.parse(value.toString());
+                                // selectedTerminalID =
+                                //     int.parse(value.toString());
                               });
                             },
                           ),
@@ -933,7 +933,7 @@ class _WalkInCustomerState extends State<WalkInCustomer> {
                                       lisNo: txtDriverLicNo.text,
                                       mobNo: txtDriverMobNo.text,
                                       mobNoPrefix: "852",
-                                      terminal: selectedTerminal.toString(),
+                                      terminal:  terminalsListDDL[0].custudian.toString(),
                                       truckCompany: txtTruCompanyName.text,
                                       vehNo: txtVehicleNo.text,
                                       vehType: selectedVehicleID.toString());

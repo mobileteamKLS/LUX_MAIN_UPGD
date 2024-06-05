@@ -303,8 +303,8 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                         hint: Text("---- Select ----",
                                             style: iPadYellowTextFontStyleBold),
 
-                                        value: selectedTerminalID,
-                                        items: terminalsList.map((terminal) {
+                                        value: terminalsListDDL[0].custudian,
+                                        items: terminalsListDDL.map((terminal) {
                                           return DropdownMenuItem(
                                             child: Text(
                                                 terminal.custodianName
@@ -319,8 +319,8 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                         onChanged: (value) {
                                           setState(() {
                                             selectedTerminal = value.toString();
-                                            selectedTerminalID =
-                                                int.parse(value.toString());
+                                            // selectedTerminalID =
+                                            //     int.parse(value.toString());
                                           });
                                         },
                                       ),
@@ -373,8 +373,8 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                         hint: Text("---- Select ----",
                                             style: iPadYellowTextFontStyleBold),
                                         dropdownColor: Colors.white,
-                                        value: selectedTerminalID,
-                                        items: terminalsList.map((terminal) {
+                                        value: terminalsListDDL[0].custudian,
+                                        items: terminalsListDDL.map((terminal) {
                                           return DropdownMenuItem(
                                             child: Text(
                                                 terminal.custodianName
@@ -389,8 +389,8 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                         onChanged: (value) {
                                           setState(() {
                                             selectedTerminal = value.toString();
-                                            selectedTerminalID =
-                                                int.parse(value.toString());
+                                            // selectedTerminalID =
+                                            //     int.parse(value.toString());
                                           });
                                         },
                                         // isExpanded: true,
@@ -2728,7 +2728,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
     var queryParams = {
       "OperationType": modeType.toString(), // "",
       "strGHAId":
-          selectedTerminalID.toString(), // loggedinUser.OrganizationBranchId,
+      selectedBaseStationBranchID.toString(),//  selectedTerminalID.toString(), // loggedinUser.OrganizationBranchId,
     };
 
     await Global()
@@ -2778,7 +2778,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
     var queryParams = {
       "OperationType": modeType.toString(), // "",
       "strGHAId":
-          selectedTerminalID.toString(), // loggedinUser.OrganizationBranchId,
+      selectedBaseStationBranchID.toString(),// selectedTerminalID.toString(), // loggedinUser.OrganizationBranchId,
     };
 
     await Global()
@@ -3030,7 +3030,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
     var queryParams = {
       "OperationType": modeType.toString(),
       "strGHAId":
-          selectedTerminalID.toString(), // loggedinUser.OrganizationBranchId,
+      selectedBaseStationBranchID.toString(),//selectedTerminalID.toString(), // loggedinUser.OrganizationBranchId,
     };
     await Global()
         .postData(
