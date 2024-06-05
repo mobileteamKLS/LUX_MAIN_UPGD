@@ -1331,7 +1331,7 @@ class _DockInDetailsState extends State<DockInDetails> {
                                       title: widget.selectedVtDetails.VTNo,
                                       description: "${localizeLangModel.dockIn} ${localizeLangModel.For} VT# " +
                                           widget.selectedVtDetails.VTNo +
-                                          "${localizeLangModel.hasBeenSentSuccessfully}",
+                                          " ${localizeLangModel.hasBeenSentSuccessfully}",
                                       buttonText: "${localizeLangModel.ok}",
                                       imagepath: 'assets/images/successchk.gif',
                                       isMobile: useMobileLayout,

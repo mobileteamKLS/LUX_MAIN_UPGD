@@ -1400,7 +1400,11 @@ class _DockOutDetailsState extends State<DockOutDetails> {
 
         setState(() {
           isSavingData = false;
-          if (responseTextUpdated != "") errMsgText = responseTextUpdated;
+          if (responseTextUpdated != "")
+            print("check_message==== ${responseTextUpdated}");
+          String updatedText = responseTextUpdated.replaceAll('<br/>', '');
+          print("check_message==== ${updatedText}");
+          errMsgText = updatedText;
         });
       }).catchError((onError) {
         setState(() {

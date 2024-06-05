@@ -4169,10 +4169,20 @@ class _RecordPodDetailsState extends State<RecordPodDetails> {
           }
         }
 
-        setState(() {
+       /* setState(() {
           isSavingData = false;
           if (responseTextUpdated != "") errMsgText = responseTextUpdated;
+        });*/
+        setState(() {
+          isSavingData = false;
+          if (responseTextUpdated != "")
+            print("check_message==== ${responseTextUpdated}");
+          String updatedText = responseTextUpdated.replaceAll('<br/>', '');
+          print("check_message==== ${updatedText}");
+          errMsgText = updatedText;
         });
+
+
       }).catchError((onError) {
         showSavingDialog(context, false);
         setState(() {

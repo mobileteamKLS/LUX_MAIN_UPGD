@@ -417,7 +417,7 @@
     "NumberValidation": "Please Enter a valid number",
     "OrgAdmin": "Organization Admin",
     "PhoneNumber": "Please Enter a valid phone Number",
-    "Remarks": "Remarks(Optional)",
+    "Remarks": "Remarks",
     "SelectAll": "Select All",
     "SlotConfiguration": "Slot Configuration ",
     "SlotDuration": "Slot Duration(HH:MM)",

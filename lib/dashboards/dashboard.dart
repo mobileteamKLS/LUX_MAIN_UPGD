@@ -32,6 +32,7 @@ import '../datastructure/vehicletoken.dart';
 import '../language/appLocalizations.dart';
 import '../language/model/lang_model.dart';
 import '../main.dart';
+import '../widgets/common.dart';
 import 'homescreen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -53,7 +54,8 @@ class _DashboardsState extends State<Dashboards> {
 
   ];
   // String selectedBaseStation = "Select";
-  String selectedBaseStationBranch = "Select Terminal";
+  //String selectedBaseStationBranch = "Select Terminal";
+  int custodianId = 0;
 
   @override
   void initState() {
@@ -65,6 +67,13 @@ class _DashboardsState extends State<Dashboards> {
     selectedBaseStationID=0;
     _loadSavedLanguage();
     super.initState();
+  }
+
+  bool isTerminalSelected() {
+    if (selectedBaseStationID == 0 || selectedBaseStationBranchID == 0) {
+      return false;
+    }
+    return true;
   }
 
   Future<void> _loadSavedLanguage() async {
@@ -97,6 +106,25 @@ class _DashboardsState extends State<Dashboards> {
   void dispose() {
     _timer.cancel();
     super.dispose();
+  }
+
+  walkInEnable() {
+    List<WarehouseTerminals> filteredTerminals = [];
+    for (int i = 0; i < baseStationBranchList.length; i++) {
+      filteredTerminals = terminalsList
+          .where(
+              (terminal) => terminal.custodianName == selectedBaseStationBranch)
+          .toList();
+      setState(() {
+        isWalkInEnable = filteredTerminals[0].iswalkinEnable;
+        custodianId = filteredTerminals[0].custudian;
+      });
+    }
+
+    terminalsListDDL = [];
+    terminalsListDDL.add(filteredTerminals[0]);
+    print(terminalsListDDL.toString());
+    print(isWalkInEnable);
   }
 
   void getCurrentDateTime() {
@@ -267,7 +295,7 @@ class _DashboardsState extends State<Dashboards> {
                                 setState(() {
                                   selectedBaseStationBranchID = (selected ? dummyList[index].organizationBranchId : null)!;
                                   selectedBaseStationBranch = (selected ? dummyList[index].orgBranchName : null)!;
-
+                                  walkInEnable();
                                 });
                               },
                             );
@@ -281,7 +309,7 @@ class _DashboardsState extends State<Dashboards> {
               // },),
 
               actions: [
-                Padding(
+               /* Padding(
                   padding: const EdgeInsets.only(right: 8.0, bottom: 16.0),
                   child: ElevatedButton(
                     //textColor: Colors.black,
@@ -314,7 +342,7 @@ class _DashboardsState extends State<Dashboards> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0, bottom: 16.0),
                   child: ElevatedButton(
@@ -449,7 +477,7 @@ class _DashboardsState extends State<Dashboards> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
-                                  top: 8.0, bottom: 18.0, left: 8, right: 8),
+                                  top: 8.0, bottom: 8.0, left: 8, right: 8),
                               child: Row(
                                   mainAxisAlignment: kIsWeb
                                       ? MainAxisAlignment.center
@@ -1043,7 +1071,7 @@ class _DashboardsState extends State<Dashboards> {
                             DropdownButtonHideUnderline(
                               child: Container(
                                 constraints: BoxConstraints(
-                                    minHeight: 50),
+                                    minHeight: 40),
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                       color: Colors.grey,
@@ -1220,7 +1248,9 @@ class _DashboardsState extends State<Dashboards> {
                       "",
                       "${localizeLangModel!.dockIn}",
                       DockIn(),
-                      useMobileLayout),
+                      useMobileLayout,
+                    isTerminalSelected()
+                  ),
                 if (isGHA)
                   DashboardBlocks(
                       Color(0xFFa8c0ff),
@@ -1229,7 +1259,8 @@ class _DashboardsState extends State<Dashboards> {
                       "",
                       "${localizeLangModel!.whAccept}",
                       WarehouseAcceptanceList(),
-                      useMobileLayout),
+                      useMobileLayout,
+                      isTerminalSelected()),
                 if (isGHA)
                   DashboardBlocks(
                       Color(0xFFa8c0ff),
@@ -1238,7 +1269,8 @@ class _DashboardsState extends State<Dashboards> {
                       "${localizeLangModel!.record}",
                       "POD",
                       RecordPodList(),
-                      useMobileLayout),
+                      useMobileLayout,
+                      isTerminalSelected()),
                 if (isGHA)
                   DashboardBlocks(
                       Color(0xFFff9472),
@@ -1247,7 +1279,8 @@ class _DashboardsState extends State<Dashboards> {
                       "",
                       "${localizeLangModel!.dockOut}",
                       DockOut(),
-                      useMobileLayout),
+                      useMobileLayout,
+                      isTerminalSelected()),
                 if (isGHA)
                   DashboardBlocks(
                       Color(0xFFa8c0ff),
@@ -1256,7 +1289,8 @@ class _DashboardsState extends State<Dashboards> {
                       "${localizeLangModel!.viewLive}",
                       "${localizeLangModel.dockStatus}",
                       LiveDockStatus(),
-                      useMobileLayout),
+                      useMobileLayout,
+                      isTerminalSelected()),
                 if (isTrucker || isTruckerFF)
                   DashboardBlocks(
                       Color(0xFFff9472),
@@ -1265,7 +1299,8 @@ class _DashboardsState extends State<Dashboards> {
                       "${localizeLangModel!.yard}",
                       "${localizeLangModel!.checkIn}",
                       TruckYardCheckInList(),
-                      useMobileLayout),
+                      useMobileLayout,
+                      isTerminalSelected()),
                 if (isTrucker || isTruckerFF)
                   DashboardBlocks(
                       Color(0xFFa8c0ff),
@@ -1274,7 +1309,8 @@ class _DashboardsState extends State<Dashboards> {
                       "${localizeLangModel!.vehicleToken}",
                       "${localizeLangModel.list}",
                       VehicleTokenList(),
-                      useMobileLayout),
+                      useMobileLayout,
+                      isTerminalSelected()),
 
                 if (isTrucker || isTruckerFF)
                   DashboardBlocks(
@@ -1284,7 +1320,8 @@ class _DashboardsState extends State<Dashboards> {
                       "${localizeLangModel!.vehicle}",
                       "${localizeLangModel.movementTracking}",
                       VehicleMovementTrackingList(),
-                      useMobileLayout),
+                      useMobileLayout,
+                      isTerminalSelected()),
 
                 if (isTrucker || isTruckerFF)
                   /*DashboardBlocks(
@@ -1314,7 +1351,8 @@ class _DashboardsState extends State<Dashboards> {
                       "${localizeLangModel!.cargo}",
                       "${localizeLangModel.pickUp}",
                       CArgoPickUp(),
-                      useMobileLayout),
+                      useMobileLayout,
+                      isTerminalSelected()),
 
                 if (isTPS)
                   DashboardBlocks(
@@ -1324,7 +1362,8 @@ class _DashboardsState extends State<Dashboards> {
                       "${localizeLangModel!.cargo}",
                       "${localizeLangModel.drop}",
                       CargoDrop(),
-                      useMobileLayout),
+                      useMobileLayout,
+                      isTerminalSelected()),
                 // DashboardBlocks(
                 //     Color(0xFF9CECFB),
                 //     Color(0xFF0052D4),
@@ -1340,7 +1379,8 @@ class _DashboardsState extends State<Dashboards> {
                     "",
                     "${localizeLangModel!.feedback}",
                     AppFeedback(),
-                    useMobileLayout),
+                    useMobileLayout,
+                    isTerminalSelected()),
                 // Padding(
                 //   padding: const EdgeInsets.only(
                 //       left: 40.0, right: 10.0, top: 32),
@@ -1509,6 +1549,402 @@ class _DashboardsState extends State<Dashboards> {
 }
 
 class DashboardBlocks extends StatelessWidget {
+  DashboardBlocks(this.color1, this.color2, this.lblicon, this.btnText1,
+      this.btnText2, this.pageroute, this.isMobile, this.isEnabled);
+
+  final Color color1;
+  final Color color2;
+  final IconData lblicon;
+  final String btnText1;
+  final String btnText2;
+  final pageroute;
+  final bool isMobile;
+  final bool isEnabled;
+
+  void _showAlertDialog(BuildContext context, String msg) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Alert Dialog Title'),
+          content: Text(msg),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Confirm'),
+              onPressed: () {
+                // Handle the confirm action
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return kIsWeb
+        ? Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 300,
+        width: 300,
+        color: Colors.transparent,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (isEnabled) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => pageroute),
+                    );
+                  }
+                },
+                //padding: const EdgeInsets.all(0.0),
+                style: ElevatedButton.styleFrom(
+                  elevation: 1.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(180),
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                  ), //
+                  padding: const EdgeInsets.all(0.0),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  // height: MediaQuery.of(context).size.height / 4.2,
+                  // width: MediaQuery.of(context).size.width / 3, //180,
+                  height: 250,
+                  width: 250,
+                  //180,
+                  decoration: BoxDecoration(
+                    //borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(180),
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topCenter,
+                      colors: [color1, color2],
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        btnText1, // 'Scan',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white),
+                      ),
+                      Text(
+                        btnText2, // 'Scan',
+                        style: TextStyle(
+                            fontSize:
+                            30, //MediaQuery.of(context).size.width / 25, //30,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                height: 96.0,
+                width: 96.0,
+                decoration: BoxDecoration(
+                    color: Colors.white, shape: BoxShape.circle),
+                child: Icon(lblicon, size: 64, color: color1),
+              ),
+            )
+          ],
+        ),
+      ),
+    )
+        : !isMobile
+        ? Container(
+      height: MediaQuery.of(context).size.width / 3.5,
+      width: MediaQuery.of(context).size.width / 3.5, //180,
+      color: Colors.transparent,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: ElevatedButton(
+              onPressed: () {
+                if (isEnabled) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => pageroute),
+                  );
+                }
+                if (selectedBaseStationID == 0) {
+                  showAlertDialog(
+                      context, "Ok", "Alert", "Select Base Station");
+                  print("base");
+                  return;
+                }
+                if (selectedBaseStationBranchID == 0) {
+                  showAlertDialog(
+                      context, "Ok", "Alert", "Select Terminal");
+                  print("terminal");
+                }
+              },
+              //padding: const EdgeInsets.all(0.0),
+              style: ElevatedButton.styleFrom(
+                elevation: 1.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(120),
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                ), //
+                padding: const EdgeInsets.all(0.0),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                height: MediaQuery.of(context).size.width / 4,
+                width: MediaQuery.of(context).size.width / 4,
+                //180,
+                decoration: BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(120),
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomLeft,
+                    colors: [color1, color2],
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      btnText1, // 'Scan',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white),
+                    ),
+                    Text(
+                      btnText2, // 'QR code',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+              //Text('CONTAINED BUTTON'),
+            ),
+          ),
+          // Positi
+
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              height: 80.0,
+              width: 80.0,
+              decoration: BoxDecoration(
+                  color: Colors.white, shape: BoxShape.circle),
+              child: Icon(lblicon, size: 48, color: color2),
+            ),
+          )
+        ],
+      ),
+    )
+        : Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: MediaQuery.of(context).size.height / 4,
+        width: MediaQuery.of(context).size.width / 2.5, //180,
+        color: Colors.transparent,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (isEnabled) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => pageroute),
+                    );
+                  }
+                  if (selectedBaseStationID == 0) {
+                    showAlertDialog(context, "Ok", "Alert",
+                        "Select Base Station");
+                    print("base");
+                    return;
+                  }
+                  if (selectedBaseStationBranchID == 0) {
+                    showAlertDialog(
+                        context, "Ok", "Alert", "Select Terminal");
+                    print("terminal");
+                  }
+                },
+                //padding: const EdgeInsets.all(0.0),
+                style: ElevatedButton.styleFrom(
+                  elevation: 1.0,
+                  // side: BorderSide(
+                  //     color: Colors.yellow,
+                  //     width: 2.0,
+                  //     style: BorderStyle.solid), //set border for the button
+                  shape: RoundedRectangleBorder(
+                    //borderRadius: BorderRadius.circular(10.0)
+
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(180),
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                  ),
+                  //
+                  padding: const EdgeInsets.all(0.0),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  // height: MediaQuery.of(context).size.height / 4.2,
+                  // width: MediaQuery.of(context).size.width / 3, //180,
+                  height: MediaQuery.of(context).size.height / 5,
+                  width: MediaQuery.of(context).size.width / 2.5,
+                  //180,
+                  decoration: BoxDecoration(
+                    //borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(180),
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topCenter,
+                      colors: [
+                        // Color(0xFFdd5e89),
+                        // Color(0xFFF7BB97),
+                        color2, color1
+                        // Colors.blue.shade700,
+                        // Colors.blue,
+                        //Color(0xFF0AA1FA),
+                        //Color(0xFF0A92DF),
+                      ],
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        btnText1, // 'Scan',
+                        style: TextStyle(
+                            fontSize: isMobile
+                                ? MediaQuery.of(context).size.width /
+                                20
+                                : MediaQuery.of(context).size.width /
+                                25, //30,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white),
+                      ),
+                      Text(
+                        btnText2, // 'Scan',
+                        style: TextStyle(
+                            fontSize: isMobile
+                                ? MediaQuery.of(context).size.width /
+                                20
+                                : MediaQuery.of(context).size.width /
+                                25,
+                            //30, MediaQuery.of(context).size.width / 25, //30,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                //Text('CONTAINED BUTTON'),
+              ),
+            ),
+            // Positioned(
+            //   // top: -30,
+            //   right: 30,
+            //   child: CircleAvatar(
+            //     radius: 36.0,
+            //   ),
+            // ),
+
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                height:
+                MediaQuery.of(context).size.height / 8, // 108.0,
+                width:
+                MediaQuery.of(context).size.width / 8, // 108.0,
+                decoration: BoxDecoration(
+                  // border: Border.all(
+                  //   width: 2,
+                  //   color: Colors.white,
+                  // ),
+                  // color: Color(0xFF008000),
+                    color: Colors.white,
+                    //Colors.blue.withOpacity(0.5),
+                    shape: BoxShape.circle),
+                child:
+
+                // Image(
+                //   // height: 50.0,
+                //   // width: 50.0,
+                //   // fit: BoxFit.scaleDown,
+                //   image: AssetImage(
+                //       'assets/icons/qr-code-3.png'),
+                // )
+
+                Icon(lblicon, // Icons.qr_code,
+                    size: MediaQuery.of(context).size.width /
+                        11, //72,
+                    color: color2
+                  //  Color(0xFFdd5e89), //Colors.blue.shade700, //Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/*class DashboardBlocks extends StatelessWidget {
   DashboardBlocks(this.color1, this.color2, this.lblicon, this.btnText1,
       this.btnText2, this.pageroute, this.isMobile);
 
@@ -1846,4 +2282,4 @@ class DashboardBlocks extends StatelessWidget {
                 ),
               );
   }
-}
+}*/

@@ -1801,7 +1801,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             for (QueueStatusLive qsl in liveQueueStatusList)
-                              buildQueueListWidget(qsl),
+                              buildQueueListWidget(qsl,localizeLangModel),
                             // QueueListWeidget(
                             //     Colors.grey.shade200,
                             //     qsl.TOKENNO, //"D",
@@ -1824,113 +1824,112 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
     );
   }
 
-  buildQueueListWidget(QueueStatusLive qsl) {
+  buildQueueListWidget(QueueStatusLive qsl, LangModel localizeLangModel) {
     return Container(
       width: MediaQuery.of(context).size.width / 1.02,
       child: useMobileLayout
           ? Card(
-              color: Colors.grey.shade200,
-              clipBehavior: Clip.antiAlias,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: Column(
+        color: Colors.grey.shade200,
+        clipBehavior: Clip.antiAlias,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+          child: Column(
+            children: [
+              ListTile(
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ListTile(
-                      title: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  //Text('Dock No.'),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: Text('VT No.',
-                                        style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                26, //20,
-                                            fontWeight: FontWeight.normal,
-                                            color: Color(0xFF11249F))),
-                                  ),
-                                  Text(
-                                    qsl.TOKENNO,
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                26, //20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 5),
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.start,
-                              //   crossAxisAlignment: CrossAxisAlignment.start,
-                              //   children: [
-                              //     //Text('Dock No.'),
-                              //     SizedBox(
-                              //       width:
-                              //           MediaQuery.of(context).size.width / 2.5,
-                              //       child: Text('Dock No.',
-                              //           style: TextStyle(
-                              //               fontSize: MediaQuery.of(context)
-                              //                       .size
-                              //                       .width /
-                              //                   26, //20,
-                              //               fontWeight: FontWeight.normal,
-                              //               color: Color(0xFF11249F))),
-                              //     ),
-                              //     Text(
-                              //       qsl.DockStatus,
-                              //       style: TextStyle(
-                              //           fontSize:
-                              //               MediaQuery.of(context).size.width /
-                              //                   26, //20,
-                              //           fontWeight: FontWeight.bold,
-                              //           color: Colors.black),
-                              //     ),
-                              //   ],
-                              // ),
-                              // SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: Text('Slot Timing',
-                                        style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                26, //20,
-                                            fontWeight: FontWeight.normal,
-                                            color: Color(0xFF11249F))),
-                                  ),
-                                  Text(
-                                    qsl.SLOTTIME,
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                26, //20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 5),
-                              Row(
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //Text('Dock No.'),
+                            SizedBox(
+                              width:
+                              MediaQuery.of(context).size.width / 2.5,
+                              child: Text('${localizeLangModel.vTno}',
+                                  style: TextStyle(
+                                      fontSize: MediaQuery.of(context)
+                                          .size
+                                          .width /
+                                          26, //20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xFF11249F))),
+                            ),
+                            Text(
+                              qsl.TOKENNO,
+                              style: TextStyle(
+                                  fontSize:
+                                  MediaQuery.of(context).size.width /
+                                      26, //20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     //Text('Dock No.'),
+                        //     SizedBox(
+                        //       width:
+                        //           MediaQuery.of(context).size.width / 2.5,
+                        //       child: Text('Dock No.',
+                        //           style: TextStyle(
+                        //               fontSize: MediaQuery.of(context)
+                        //                       .size
+                        //                       .width /
+                        //                   26, //20,
+                        //               fontWeight: FontWeight.normal,
+                        //               color: Color(0xFF11249F))),
+                        //     ),
+                        //     Text(
+                        //       qsl.DockStatus,
+                        //       style: TextStyle(
+                        //           fontSize:
+                        //               MediaQuery.of(context).size.width /
+                        //                   26, //20,
+                        //           fontWeight: FontWeight.bold,
+                        //           color: Colors.black),
+                        //     ),
+                        //   ],
+                        // ),
+                        // SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width:
+                              MediaQuery.of(context).size.width / 2.5,
+                              child: Text('${localizeLangModel.slotTime}',
+                                  style: TextStyle(
+                                      fontSize: MediaQuery.of(context)
+                                          .size
+                                          .width /
+                                          26, //20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xFF11249F))),
+                            ),
+                            Text(
+                              qsl.SLOTTIME,
+                              style: TextStyle(
+                                  fontSize:
+                                  MediaQuery.of(context).size.width /
+                                      26, //20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        /*   Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -1957,274 +1956,302 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                         color: Colors.black),
                                   ),
                                 ],
+                              ),*/
+                        SizedBox(height: 5),
+                        Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 1,
+                                width: MediaQuery.of(context).size.width /
+                                    1.9,
+                                color: Color(0xFF0461AA),
                               ),
-                              SizedBox(height: 5),
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      height: 1,
-                                      width: MediaQuery.of(context).size.width /
-                                          1.9,
-                                      color: Color(0xFF0461AA),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        print("avlDockList.length === " +
-                                            avlDockList.length.toString());
+                              GestureDetector(
+                                onTap: () async {
+                                  print("avlDockList.length === " +
+                                      avlDockList.length.toString());
 
-                                        if (avlDockList.isNotEmpty) {
-                                          await getDocksToUpdate(
-                                              modeSelected == 1 ? "2" : "1");
+                                  if (avlDockList.isNotEmpty) {
+                                    await getDocksToUpdate(
+                                        modeSelected == 1 ? "2" : "1");
 
-                                          if (!isSavingData) {
-                                            if (vehicleAndDocksList.isEmpty) {
-                                            } else {
-                                              var newDockSelected =
-                                                  await showDialog(
-                                                context: context,
-                                                barrierDismissible: false,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return UpdateDockDialog(
-                                                    isMobile: useMobileLayout,
-                                                    dockname: "",
-                                                    vtnum: qsl.TOKENNO,
-                                                    vehicleAndDocksList:
-                                                        vehicleAndDocksList,
-                                                    isAssign: true,
-                                                  );
-                                                },
-                                              );
-                                              print("newDockSelected");
-                                              print(newDockSelected);
-                                              if (newDockSelected != null) {
-                                                var submitCheckin =
-                                                    await submitForDockUpdate(
-                                                  "Update",
-                                                  qsl.TOKENNO,
-                                                  modeSelected == 1 ? "2" : "1",
-                                                  newDockSelected.toString(),
-                                                  "",
-                                                );
-                                                print(submitCheckin);
-                                                if (submitCheckin == true) {
-                                                  var dlgstatus =
-                                                      await showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        CustomDialog(
-                                                      title: qsl.TOKENNO,
-                                                      description: "Dock " +
-                                                          newDockSelected +
-                                                          " has been assigned to VT# " +
-                                                          qsl.TOKENNO +
-                                                          " successfully",
-                                                      buttonText: "Okay",
-                                                      imagepath:
-                                                          'assets/images/successchk.gif',
-                                                      isMobile: useMobileLayout,
-                                                    ),
-                                                  );
-                                                  if (dlgstatus == true) {
-                                                    setState(() {
-                                                      refreshList();
-                                                    }); // To close the form
-                                                  }
-                                                } else {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        customAlertMessageDialog(
-                                                            title: errMsgText ==
-                                                                    ""
-                                                                ? "Error Occured"
-                                                                : "Dock Assign Failed",
-                                                            description:
-                                                                errMsgText == ""
-                                                                    ? "Error occured while Assigning Dock, Please try again after some time"
-                                                                    : errMsgText,
-                                                            buttonText: "Okay",
-                                                            imagepath:
-                                                                'assets/images/warn.gif',
-                                                            isMobile:
-                                                                useMobileLayout),
-                                                  );
-                                                }
-                                              }
-                                            }
-                                          }
-                                        } else {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                customAlertMessageDialog(
-                                                    title: "Assign Failed",
-                                                    description:
-                                                        "No Docks Available at the moment to Assign",
-                                                    buttonText: "Okay",
-                                                    imagepath:
-                                                        'assets/images/warn.gif',
-                                                    isMobile: useMobileLayout),
+                                    if (!isSavingData) {
+                                      if (vehicleAndDocksList.isEmpty) {
+                                      } else {
+                                        var newDockSelected =
+                                        await showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder:
+                                              (BuildContext context) {
+                                            return UpdateDockDialog(
+                                              isMobile: useMobileLayout,
+                                              dockname: "",
+                                              vtnum: qsl.TOKENNO,
+                                              vehicleAndDocksList:
+                                              vehicleAndDocksList,
+                                              isAssign: true,
+                                            );
+                                          },
+                                        );
+                                        print("newDockSelected");
+                                        print(newDockSelected);
+                                        if (newDockSelected != null) {
+                                          var submitCheckin =
+                                          await submitForDockUpdate(
+                                            "Update",
+                                            qsl.TOKENNO,
+                                            modeSelected == 1 ? "2" : "1",
+                                            newDockSelected.toString(),
+                                            "",
                                           );
+                                          print(submitCheckin);
+                                          if (submitCheckin == true) {
+                                            var dlgstatus =
+                                            await showDialog(
+                                              context: context,
+                                              builder: (BuildContext
+                                              context) =>
+                                                  CustomDialog(
+                                                    title: qsl.TOKENNO,
+                                                    description: "Dock " +
+                                                        newDockSelected +
+                                                        " has been assigned to VT# " +
+                                                        qsl.TOKENNO +
+                                                        " successfully",
+                                                    buttonText: "${localizeLangModel.ok}",
+                                                    imagepath:
+                                                    'assets/images/successchk.gif',
+                                                    isMobile: useMobileLayout,
+                                                  ),
+                                            );
+                                            if (dlgstatus == true) {
+                                              setState(() {
+                                                refreshList();
+                                              }); // To close the form
+                                            }
+                                          } else {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext
+                                              context) =>
+                                                  customAlertMessageDialog(
+                                                      title: errMsgText ==
+                                                          ""
+                                                          ? "${localizeLangModel.errorOccured}"
+                                                          : "${localizeLangModel.docks} ${localizeLangModel.assign} ${localizeLangModel.failed}",
+                                                      description:
+                                                      errMsgText == ""
+                                                          ? "${localizeLangModel.errorOccured} ${localizeLangModel.whiles} ${localizeLangModel.assign} ${localizeLangModel.docks}, ${localizeLangModel.tryAfterSometimeValidation}"
+                                                          : errMsgText,
+                                                      buttonText: "${localizeLangModel.ok}",
+                                                      imagepath:
+                                                      'assets/images/warn.gif',
+                                                      isMobile:
+                                                      useMobileLayout),
+                                            );
+                                          }
                                         }
-                                      },
-                                      child: Container(
-                                        height: useMobileLayout ? 48 : 60, //60,
-                                        width: useMobileLayout ? 48 : 60, //60,
-                                        decoration: BoxDecoration(
-                                            color: Color(0xFF11249F),
-                                            shape: BoxShape.circle),
-                                        child: Center(
-                                            child: Icon(
-                                          Icons.assignment,
-                                          color: Colors.white,
-                                          size: 32,
-                                        )),
-                                      ),
-                                    ),
-                                  ]),
-                              SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: Text('Vehicle No.', //'VT No.',
-                                        style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                26, //20,
-                                            fontWeight: FontWeight.normal,
-                                            color: Color(0xFF11249F))),
-                                  ),
-                                  //SizedBox(width: 10),
-                                  Text(
-                                    qsl.VEHICLENO,
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                26, //22,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                ],
+                                      }
+                                    }
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          customAlertMessageDialog(
+                                              title: "${localizeLangModel.assign} ${localizeLangModel.failed}",
+                                              description:
+                                              "No Docks Available at the moment to Assign",
+                                              buttonText: "${localizeLangModel.ok}",
+                                              imagepath:
+                                              'assets/images/warn.gif',
+                                              isMobile: useMobileLayout),
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                  height: useMobileLayout ? 48 : 60, //60,
+                                  width: useMobileLayout ? 48 : 60, //60,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFF11249F),
+                                      shape: BoxShape.circle),
+                                  child: Center(
+                                      child: Icon(
+                                        Icons.assignment,
+                                        color: Colors.white,
+                                        size: 32,
+                                      )),
+                                ),
                               ),
-                              SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: Text('Vehicle Type',
-                                        style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                26, //20,
-                                            fontWeight: FontWeight.normal,
-                                            color: Color(0xFF11249F))),
-                                  ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.3,
-                                    child: Text(
-                                      qsl.VEHICLETYPE,
-                                      style: TextStyle(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              26, //22,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
-                                    ),
-                                  ),
-                                ],
+                            ]),
+                        SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width:
+                              MediaQuery.of(context).size.width / 2.5,
+                              child: Text('${localizeLangModel.vehicleNo}', //'VT No.',
+                                  style: TextStyle(
+                                      fontSize: MediaQuery.of(context)
+                                          .size
+                                          .width /
+                                          26, //20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xFF11249F))),
+                            ),
+                            //SizedBox(width: 10),
+                            Text(
+                              qsl.VEHICLENO,
+                              style: TextStyle(
+                                  fontSize:
+                                  MediaQuery.of(context).size.width /
+                                      26, //22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width:
+                              MediaQuery.of(context).size.width / 2.5,
+                              child: Text('${localizeLangModel.vehicleType}',
+                                  style: TextStyle(
+                                      fontSize: MediaQuery.of(context)
+                                          .size
+                                          .width /
+                                          26, //20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xFF11249F))),
+                            ),
+                            SizedBox(
+                              width:
+                              MediaQuery.of(context).size.width / 2.3,
+                              child: Text(
+                                qsl.VEHICLETYPE,
+                                style: TextStyle(
+                                    fontSize: MediaQuery.of(context)
+                                        .size
+                                        .width /
+                                        26, //22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
                               ),
-                              SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: Text('Driver Name',
-                                        style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                26, //20,
-                                            fontWeight: FontWeight.normal,
-                                            color: Color(0xFF11249F))),
-                                  ),
-                                  Text(
-                                    qsl.DRIVERNAME,
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                26, //22,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: Text('Driver' 's Mobile No.',
-                                        style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                26, //20,
-                                            fontWeight: FontWeight.normal,
-                                            color: Color(0xFF11249F))),
-                                  ),
-                                  Text(
-                                    qsl.DRIVERMOBILENO,
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                26, //22,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width:
+                              MediaQuery.of(context).size.width / 2.5,
+                              child: Text('${localizeLangModel.driverName}',
+                                  style: TextStyle(
+                                      fontSize: MediaQuery.of(context)
+                                          .size
+                                          .width /
+                                          26, //20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xFF11249F))),
+                            ),
+                            Text(
+                              qsl.DRIVERNAME,
+                              style: TextStyle(
+                                  fontSize:
+                                  MediaQuery.of(context).size.width /
+                                      26, //22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width:
+                              MediaQuery.of(context).size.width / 2.5,
+                              child: Text('${localizeLangModel.driverMobileNo}',
+                                  style: TextStyle(
+                                      fontSize: MediaQuery.of(context)
+                                          .size
+                                          .width /
+                                          26, //20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xFF11249F))),
+                            ),
+                            Text(
+                              qsl.DRIVERMOBILENO,
+                              style: TextStyle(
+                                  fontSize:
+                                  MediaQuery.of(context).size.width /
+                                      26, //22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width:
+                              MediaQuery.of(context).size.width / 2.5,
+                              child: Text('${localizeLangModel.yardCheckIn}',
+                                  style: TextStyle(
+                                      fontSize: MediaQuery.of(context)
+                                          .size
+                                          .width /
+                                          26, //20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xFF11249F))),
+                            ),
+                            Text(
+                              qsl.YardCheckin,
+                              style: TextStyle(
+                                  fontSize:
+                                  MediaQuery.of(context).size.width /
+                                      26, //22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-            )
+            ],
+          ),
+        ),
+      )
           : Card(
-              color: Colors.grey.shade200,
-              clipBehavior: Clip.antiAlias,
-              child: Column(
+        color: Colors.grey.shade200,
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            ListTile(
+              title: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ListTile(
-                    title: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Wrap(
+                  /*Wrap(
                           alignment: WrapAlignment.start,
                           crossAxisAlignment: WrapCrossAlignment.start,
                           children: [
@@ -2311,133 +2338,214 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                               ],
                             ),
                           ],
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 8.0, bottom: 8.0),
-                                child: Container(
-                                  height: 1,
-                                  width:
-                                      MediaQuery.of(context).size.width / 1.2,
-                                  color: Color(0xFF0461AA),
-                                ),
+                        ),*/
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //Text('Dock No.'),
+                          Text('${localizeLangModel.vTno}',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF11249F))),
+                          Text(
+                            qsl.TOKENNO,
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${localizeLangModel.slotTime}',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF11249F))),
+                          Text(
+                            qsl.SLOTTIME,
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                      /*  SizedBox(
+                              width: MediaQuery.of(context).size.width / 3.25,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Service Time Est.(Mins.)', //'VT No.',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF11249F))),
+                                  Text(
+                                    qsl.ServiceTime, //'EVT2206020018',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                ],
                               ),
-                              GestureDetector(
-                                onTap: () async {
-                                  print("avlDockList.length === " +
-                                      avlDockList.length.toString());
-
-                                  if (avlDockList.isNotEmpty) {
-                                    await getDocksToUpdate(
-                                        modeSelected == 1 ? "2" : "1");
-
-                                    if (!isSavingData) {
-                                      if (vehicleAndDocksList.isEmpty) {
-                                      } else {
-                                        var newDockSelected = await showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (BuildContext context) {
-                                            return UpdateDockDialog(
-                                              isMobile: useMobileLayout,
-                                              dockname: "",
-                                              vtnum: qsl.TOKENNO,
-                                              vehicleAndDocksList:
-                                                  vehicleAndDocksList,
-                                              isAssign: true,
-                                            );
-                                          },
-                                        );
-                                        print("newDockSelected");
-                                        print(newDockSelected);
-                                        if (newDockSelected != null) {
-                                          var submitCheckin =
-                                              await submitForDockUpdate(
-                                            "Update",
-                                            qsl.TOKENNO,
-                                            modeSelected == 1 ? "2" : "1",
-                                            newDockSelected.toString(),
-                                            "",
-                                          );
-                                          print(submitCheckin);
-                                          if (submitCheckin == true) {
-                                            var dlgstatus = await showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  CustomDialog(
-                                                title: qsl.TOKENNO,
-                                                description: "Dock " +
-                                                    newDockSelected +
-                                                    " has been assigned to VT# " +
-                                                    qsl.TOKENNO +
-                                                    " successfully",
-                                                buttonText: "Okay",
-                                                imagepath:
-                                                    'assets/images/successchk.gif',
-                                                isMobile: useMobileLayout,
-                                              ),
-                                            );
-                                            if (dlgstatus == true) {
-                                              setState(() {
-                                                refreshList();
-                                              }); // To close the form
-                                            }
-                                          } else {
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  customAlertMessageDialog(
-                                                      title: errMsgText == ""
-                                                          ? "Error Occured"
-                                                          : "Dock Assign Failed",
-                                                      description: errMsgText ==
-                                                              ""
-                                                          ? "Error occured while Assigning Dock, Please try again after some time"
-                                                          : errMsgText,
-                                                      buttonText: "Okay",
-                                                      imagepath:
-                                                          'assets/images/warn.gif',
-                                                      isMobile:
-                                                          useMobileLayout),
-                                            );
-                                          }
-                                        }
-                                      }
-                                    }
-                                  } else {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          customAlertMessageDialog(
-                                              title: "Assign Failed",
-                                              description:
-                                                  "No Docks Available at the moment to Assign",
-                                              buttonText: "Okay",
-                                              imagepath:
-                                                  'assets/images/warn.gif',
-                                              isMobile: useMobileLayout),
-                                    );
-                                  }
-                                },
-                                child: Container(
-                                  height: useMobileLayout ? 48 : 60, //60,
-                                  width: useMobileLayout ? 48 : 60, //60,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xFF11249F),
-                                      shape: BoxShape.circle),
-                                  child: Center(
-                                      child: Icon(
-                                    Icons.assignment,
-                                    color: Colors.white,
-                                    size: 32,
-                                  )),
-                                ),
-                              ),
-                            ]),
+                            ),*/
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${localizeLangModel.vehicleNo}', //'VT No.',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF11249F))),
+                          Text(
+                            qsl.VEHICLENO, //'EVT2206020018',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8.0, bottom: 8.0),
+                          child: Container(
+                            height: 1,
+                            width:
+                            MediaQuery.of(context).size.width / 1.27,
+                            color: Color(0xFF0461AA),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            print("avlDockList.length === " +
+                                avlDockList.length.toString());
+
+                            if (avlDockList.isNotEmpty) {
+                              await getDocksToUpdate(
+                                  modeSelected == 1 ? "2" : "1");
+
+                              if (!isSavingData) {
+                                if (vehicleAndDocksList.isEmpty) {
+                                } else {
+                                  var newDockSelected = await showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return UpdateDockDialog(
+                                        isMobile: useMobileLayout,
+                                        dockname: "",
+                                        vtnum: qsl.TOKENNO,
+                                        vehicleAndDocksList:
+                                        vehicleAndDocksList,
+                                        isAssign: true,
+                                      );
+                                    },
+                                  );
+                                  print("newDockSelected");
+                                  print(newDockSelected);
+                                  if (newDockSelected != null) {
+                                    var submitCheckin =
+                                    await submitForDockUpdate(
+                                      "Update",
+                                      qsl.TOKENNO,
+                                      modeSelected == 1 ? "2" : "1",
+                                      newDockSelected.toString(),
+                                      "",
+                                    );
+                                    print(submitCheckin);
+                                    if (submitCheckin == true) {
+                                      var dlgstatus = await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            CustomDialog(
+                                              title: qsl.TOKENNO,
+                                              description: "Dock " +
+                                                  newDockSelected +
+                                                  " has been assigned to VT# " +
+                                                  qsl.TOKENNO +
+                                                  " successfully",
+                                              buttonText: "${localizeLangModel.ok}",
+                                              imagepath:
+                                              'assets/images/successchk.gif',
+                                              isMobile: useMobileLayout,
+                                            ),
+                                      );
+                                      if (dlgstatus == true) {
+                                        setState(() {
+                                          refreshList();
+                                        }); // To close the form
+                                      }
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            customAlertMessageDialog(
+                                                title: errMsgText == ""
+                                                    ? "${localizeLangModel.errorOccured}"
+                                                    : "Dock Assign Failed",
+                                                description: errMsgText ==
+                                                    ""
+                                                    ? "${localizeLangModel.errorOccured} ${localizeLangModel.whiles} ${localizeLangModel.assign} ${localizeLangModel.docks}, ${localizeLangModel.tryAfterSometimeValidation}"
+                                                    : errMsgText,
+                                                buttonText: "${localizeLangModel.ok}",
+                                                imagepath:
+                                                'assets/images/warn.gif',
+                                                isMobile:
+                                                useMobileLayout),
+                                      );
+                                    }
+                                  }
+                                }
+                              }
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    customAlertMessageDialog(
+                                        title: "${localizeLangModel.assign} ${localizeLangModel.failed}",
+                                        description:
+                                        "No Docks Available at the moment to Assign",
+                                        buttonText: "${localizeLangModel.ok}",
+                                        imagepath:
+                                        'assets/images/warn.gif',
+                                        isMobile: useMobileLayout),
+                              );
+                            }
+                          },
+                          child: Container(
+                            height: useMobileLayout ? 48 : 60, //60,
+                            width: useMobileLayout ? 48 : 60, //60,
+                            decoration: BoxDecoration(
+                                color: Color(0xFF11249F),
+                                shape: BoxShape.circle),
+                            child: Center(
+                                child: Icon(
+                                  Icons.assignment,
+                                  color: Colors.white,
+                                  size: 32,
+                                )),
+                          ),
+                        ),
+                      ]),
+                  /* Padding(
                           padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
                           child: Wrap(
                             alignment: WrapAlignment.start,
@@ -2509,13 +2617,96 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                               ),
                             ],
                           ),
+                        ),*/
+
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //Text('Dock No.'),
+                            Text('${localizeLangModel.vehicleType}',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF11249F))),
+                            Text(
+                              qsl.VEHICLETYPE,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('${localizeLangModel.driverName}',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF11249F))),
+                            Text(
+                              qsl.DRIVERNAME,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('${localizeLangModel.driverMobileNo}', //'VT No.',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF11249F))),
+                            Text(
+                              qsl.DRIVERMOBILENO, //'EVT2206020018',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('${localizeLangModel.yardCheckIn}', //'VT No.',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF11249F))),
+                            Text(
+                              qsl.YardCheckin, //'EVT2206020018',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
+
                 ],
               ),
             ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -3646,7 +3837,7 @@ class DockTileContainer extends StatelessWidget {
                     lblText2, //Pick-up from Airport",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: isMobile ? 12 : 16,
+                      fontSize: isMobile ? 11 : 16,
                       fontWeight: FontWeight.normal,
                       color: Color(0xFF11249F),
                     ),
@@ -3655,7 +3846,7 @@ class DockTileContainer extends StatelessWidget {
               ])
             : (lblText2.toLowerCase().contains("unavailable"))
                 ? Padding(
-                    padding: const EdgeInsets.only(top: 18.0, bottom: 18.0),
+                    padding: const EdgeInsets.only(top: 14.0, bottom: 14.0),
                     child: Stack(
                       children: [
                         Align(
@@ -3676,7 +3867,7 @@ class DockTileContainer extends StatelessWidget {
                     ),
                   )
                 : Padding(
-                    padding: const EdgeInsets.only(top: 18.0, bottom: 18.0),
+                    padding: const EdgeInsets.only(top: 14.0, bottom: 14.0),
                     child: Stack(
                       children: [
                         Align(
@@ -3769,7 +3960,7 @@ class DockstatusListWeidget extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
-                      trailing: Container(
+                      leading: Container(
                         height: isMobile ? 48 : 56, //60,
                         width: isMobile ? 48 : 56, //60,
                         decoration: BoxDecoration(
@@ -4150,6 +4341,7 @@ class DockstatusListWeidget extends StatelessWidget {
                               ),
                             ),
                           ),
+                          SizedBox(width: 10,),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
