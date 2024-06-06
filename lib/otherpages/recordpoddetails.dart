@@ -3734,7 +3734,7 @@ class _RecordPodDetailsState extends State<RecordPodDetails> {
                                                     widget.awbNumber +
                                                     " in VT# " +
                                                     widget.vtNumber +
-                                                    "${localizeLangModel.hasBeenRejectedSuccessfully}",
+                                                    " ${localizeLangModel.hasBeenRejectedSuccessfully}",
                                                 buttonText: "${localizeLangModel.ok}",
                                                 imagepath:
                                                     'assets/images/successlines.gif',
@@ -4102,7 +4102,8 @@ class _RecordPodDetailsState extends State<RecordPodDetails> {
             txtDriverName.text, //  awbPodDetails[0].DRIVERNAME.toString(),
         "DelivaryStatus": null,
         "IsDeleted": "false",
-        "CreatedBy": awbPodDetails[0].CreatedById.toString(),
+      //  "CreatedBy": awbPodDetails[0].CreatedById.toString(),
+        "CreatedBy": "${loggedinUser.CreatedByUserId}",
         // "_imageDataFromCamera": "",
         // "signitureDataURL": "",
         "TOKENNO": awbPodDetails[0].TOKENNO.toString(),
@@ -4122,6 +4123,7 @@ class _RecordPodDetailsState extends State<RecordPodDetails> {
         "AcceptanceReason": acceptanceReasonSelected,
         '_imageDataFromCamera': isSignature ? "" : fileInBase64.toString(),
         'signitureDataURL': isSignature ? strImageString.toString() : "",
+        'baseStation' : "$selectedBaseStation",
       };
       // print(queryParams);
       // return true;
@@ -4139,7 +4141,7 @@ class _RecordPodDetailsState extends State<RecordPodDetails> {
         if (json.decode(response.body)['d'] == null) {
           isValid = true;
         } else {
-          if (json.decode(response.body)['d'] == "null") {
+          if (json.decode(response.body)['d'] == "[]") {
             isValid = true;
           } else {
             if (json.decode(response.body)['d'] == "") {

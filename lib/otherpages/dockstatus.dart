@@ -241,7 +241,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                     inactiveChild: Text('${localizeLangModel.exports}',
                                         style: mobileToggleTextFontStyleWhite),
                                     width:
-                                        MediaQuery.of(context).size.width / 3,
+                                        MediaQuery.of(context).size.width / 2.3,
                                     height: 35,
                                     controller: _controller01,
                                   ), //['At Dock ', ' Queue'],
@@ -254,15 +254,15 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                     inactiveChild: Text('At ${localizeLangModel.docks}',
                                         style: mobileToggleTextFontStyleWhite),
                                     width:
-                                        MediaQuery.of(context).size.width / 3,
+                                        MediaQuery.of(context).size.width / 2.3,
                                     height: 35,
                                     controller: _controller02,
                                   ),
                                 ],
                               ),
                               SizedBox(width: 5),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 1.68,
+                              Expanded(
+                                flex:2,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,6 +330,9 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                               ),
                             ],
                           )
+
+
+
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1085,8 +1088,8 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                                   colorBackground:
                                                       Color(0xFFB41212),
                                                   colorText: Colors.white,
-                                                  lblText1: "Dock",
-                                                  lblText2: "Occupied"),
+                                                  lblText1: "${localizeLangModel.docks}",
+                                                  lblText2: "${localizeLangModel.occupied}"),
                                             ),
                                             dockOccupied
                                                 ? Align(
@@ -1145,7 +1148,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                                   colorBackground:
                                                       Color(0xFFFCC900),
                                                   colorText: Colors.white,
-                                                  lblText1: "Vehicle",
+                                                  lblText1: "${localizeLangModel.vehicle}",
                                                   lblText2: "Enroute"),
                                             ),
                                             vehicleEnroute
@@ -1206,8 +1209,8 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                                   colorBackground:
                                                       Color(0xFF008000),
                                                   colorText: Colors.white,
-                                                  lblText1: "Dock",
-                                                  lblText2: "Available"),
+                                                  lblText1: "${localizeLangModel.docks}",
+                                                  lblText2: "${localizeLangModel.available}"),
                                             ),
                                             dockAvailable
                                                 ? Align(
@@ -1264,8 +1267,8 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                                   colorBorder: Colors.grey,
                                                   colorBackground: Colors.grey,
                                                   colorText: Colors.white,
-                                                  lblText1: "Dock",
-                                                  lblText2: "Unavailable"),
+                                                  lblText1: "${localizeLangModel.docks}",
+                                                  lblText2: "${localizeLangModel.unavailable}"),
                                             ),
                                             dockUnavailable
                                                 ? Align(
@@ -1323,8 +1326,8 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                                   colorBackground:
                                                       Color(0xFF72B6ED),
                                                   colorText: Colors.white,
-                                                  lblText1: "Walk-in",
-                                                  lblText2: "Dock"),
+                                                  lblText1: "${localizeLangModel.walkIn}",
+                                                  lblText2: "${localizeLangModel.docks}"),
                                             ),
                                             walkIn
                                                 ? Align(
@@ -1380,7 +1383,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                                               colorBackground: Colors.white,
                                               colorText: Color(0xFF11249F),
                                               lblText1: "P",
-                                              lblText2: "Pick-up from Airport"),
+                                              lblText2: "${localizeLangModel.pickUp} From Airport"),
                                         ),
                                         // pickup
                                         //     ? Align(
@@ -2340,7 +2343,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                           ],
                         ),*/
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -2622,7 +2625,7 @@ class _LiveDockStatusState extends State<LiveDockStatus> {
                   Padding(
                     padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,

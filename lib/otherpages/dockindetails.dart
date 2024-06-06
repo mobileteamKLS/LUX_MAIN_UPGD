@@ -1546,10 +1546,20 @@ class _DockInDetailsState extends State<DockInDetails> {
           }
         }
 
-        setState(() {
+        /*setState(() {
           isSavingData = false;
           if (responseTextUpdated != "") errMsgText = responseTextUpdated;
+        });*/
+        setState(() {
+          isSavingData = false;
+          if (responseTextUpdated != "")
+            print("check_message==== ${responseTextUpdated}");
+          String updatedText = responseTextUpdated.replaceAll('<br/>', '');
+          print("check_message==== ${updatedText}");
+          errMsgText = updatedText;
         });
+
+
       }).catchError((onError) {
         setState(() {
           isSavingData = false;

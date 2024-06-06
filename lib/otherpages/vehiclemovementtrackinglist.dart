@@ -486,18 +486,18 @@ class _VehicleMovementTrackingListState
                               children: [
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width / 4,
-                                  child: Text("${localizeLangModel!.mode}",
+                                  child: Text("${localizeLangModel.mode}",
                                       style: mobileHeaderFontStyle),
                                 ),
                                 AdvancedSwitch(
                                   activeColor: Color(0xFF11249F),
                                   inactiveColor: Color(0xFF11249F),
-                                  activeChild: Text('${localizeLangModel!.imports}',
+                                  activeChild: Text('${localizeLangModel.imports}',
                                       style: mobileTextFontStyleWhite),
-                                  inactiveChild: Text('${localizeLangModel!.exports}',
+                                  inactiveChild: Text('${localizeLangModel.exports}',
                                       style: mobileTextFontStyleWhite),
                                   width:
-                                      MediaQuery.of(context).size.width / 2.5,
+                                      MediaQuery.of(context).size.width / 2.3,
                                   height: 35,
                                   controller: _controllerModeType,
                                 ),
@@ -507,7 +507,7 @@ class _VehicleMovementTrackingListState
                             Row(children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4.2,
-                                child: Text("${localizeLangModel!.vTno}",
+                                child: Text("${localizeLangModel.vTno}",
                                     style: mobileHeaderFontStyle),
                               ),
                               Padding(
@@ -534,7 +534,7 @@ class _VehicleMovementTrackingListState
                                             TextCapitalization.characters,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "${localizeLangModel!.search} ${localizeLangModel!.vTno}",
+                                          hintText: "${localizeLangModel.search} ${localizeLangModel.vTno}",
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
                                           contentPadding: EdgeInsets.symmetric(

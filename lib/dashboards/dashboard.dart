@@ -225,7 +225,7 @@ class _DashboardsState extends State<Dashboards> {
                             child: ChoiceChip(
                               label: Text(' ${baseStationList2[index].airportcode}',),
                               labelStyle: TextStyle(
-                                fontSize: useMobileLayout?14:18,
+                                fontSize: useMobileLayout ? 14:18,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.white,
                               ),
@@ -477,7 +477,7 @@ class _DashboardsState extends State<Dashboards> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
-                                  top: 8.0, bottom: 8.0, left: 8, right: 8),
+                                  top: 8.0, bottom: 8.0, left: 0, right: 8),
                               child: Row(
                                   mainAxisAlignment: kIsWeb
                                       ? MainAxisAlignment.center
@@ -1068,80 +1068,83 @@ class _DashboardsState extends State<Dashboards> {
                             ),
 
 
-                            DropdownButtonHideUnderline(
-                              child: Container(
-                                constraints: BoxConstraints(
-                                    minHeight: 40),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.grey,
-                                      width: 0.2),
-                                  borderRadius:
-                                  BorderRadius.all(
-                                      Radius.circular(5)),
-                                  color: Colors.white,
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10),
-                                child: DropdownButton<String>(
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: DropdownButtonHideUnderline(
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                      minHeight: 40),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.grey,
+                                        width: 0.2),
+                                    borderRadius:
+                                    BorderRadius.all(
+                                        Radius.circular(5)),
+                                    color: Colors.white,
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: DropdownButton<String>(
 
-                                  focusColor: Colors.black,
-                                  iconEnabledColor: Colors.black,
-                                  style: TextStyle(color: Colors.black),
-                                  value: _selectedLanguage,
-                                  dropdownColor: Colors.white,
-                                  onChanged: (newValue) {
-                                    _onLanguageChanged(
-                                        newValue!);
-                                  },
-                                  selectedItemBuilder:
-                                      (BuildContext
-                                  context) {
-                                    return [
-                                      'en',
-                                      'es'
-                                    ].map<Widget>(
-                                            (String value) {
-                                          return Center(
-                                            child: Text(
-                                              value == 'en'
-                                                  ? 'En'
-                                                  : 'Sp',
-                                              /*style: TextStyle(
+                                    focusColor: Colors.black,
+                                    iconEnabledColor: Colors.black,
+                                    style: TextStyle(color: Colors.black),
+                                    value: _selectedLanguage,
+                                    dropdownColor: Colors.white,
+                                    onChanged: (newValue) {
+                                      _onLanguageChanged(
+                                          newValue!);
+                                    },
+                                    selectedItemBuilder:
+                                        (BuildContext
+                                    context) {
+                                      return [
+                                        'en',
+                                        'es'
+                                      ].map<Widget>(
+                                              (String value) {
+                                            return Center(
+                                              child: Text(
+                                                value == 'en'
+                                                    ? 'En'
+                                                    : 'Sp',
+                                                /*style: TextStyle(
 
-                                                  color: Colors
-                                                      .black,
-                                                  fontSize:
-                                                  14,
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .w500)*/
+                                                    color: Colors
+                                                        .black,
+                                                    fontSize:
+                                                    14,
+                                                    fontWeight:
+                                                    FontWeight
+                                                        .w500)*/
 
-                                                style: useMobileLayout
-                                                    ? mobileTextFontStyle
-                                                    : iPadYellowTextFontStyleBold                                             , // Change this to your desired color
-                                            ),
-                                          );
-                                        }).toList();
-                                  },
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: 'en',
-                                      child: Text(
-                                          'En',
-                                          style: TextStyle(
-                                              color: Colors
-                                                  .black)),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 'es',
-                                      child: Text(
-                                          'Sp',
-                                          style: TextStyle(
-                                              color: Colors
-                                                  .black)),
-                                    ),
-                                  ],
+                                                  style: useMobileLayout
+                                                      ? mobileTextFontStyle
+                                                      : iPadYellowTextFontStyleBold                                             , // Change this to your desired color
+                                              ),
+                                            );
+                                          }).toList();
+                                    },
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: 'en',
+                                        child: Text(
+                                            'En',
+                                            style: TextStyle(
+                                                color: Colors
+                                                    .black)),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'es',
+                                        child: Text(
+                                            'Sp',
+                                            style: TextStyle(
+                                                color: Colors
+                                                    .black)),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -1589,6 +1592,10 @@ class DashboardBlocks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    LangModel? localizeLangModel = localizations!.localizeLangModel;
+
     return kIsWeb
         ? Padding(
       padding: const EdgeInsets.all(8.0),
@@ -1701,13 +1708,13 @@ class DashboardBlocks extends StatelessWidget {
                 }
                 if (selectedBaseStationID == 0) {
                   showAlertDialog(
-                      context, "Ok", "Alert", "Select Base Station");
+                      context, "${localizeLangModel!.ok}", "${localizeLangModel.alert}", "${localizeLangModel.select} ${localizeLangModel.baseStation}");
                   print("base");
                   return;
                 }
                 if (selectedBaseStationBranchID == 0) {
                   showAlertDialog(
-                      context, "Ok", "Alert", "Select Terminal");
+                      context, "${localizeLangModel!.ok}", "${localizeLangModel.alert}", "${localizeLangModel.select} ${localizeLangModel.terminal}");
                   print("terminal");
                 }
               },
@@ -1802,14 +1809,14 @@ class DashboardBlocks extends StatelessWidget {
                     );
                   }
                   if (selectedBaseStationID == 0) {
-                    showAlertDialog(context, "Ok", "Alert",
-                        "Select Base Station");
+                    showAlertDialog(context, "${localizeLangModel!.ok}", "${localizeLangModel.alert}",
+                        "${localizeLangModel.select} ${localizeLangModel.baseStation}");
                     print("base");
                     return;
                   }
                   if (selectedBaseStationBranchID == 0) {
                     showAlertDialog(
-                        context, "Ok", "Alert", "Select Terminal");
+                        context, "${localizeLangModel!.ok}", "${localizeLangModel.alert}", "${localizeLangModel.select} ${localizeLangModel.terminal}");
                     print("terminal");
                   }
                 },

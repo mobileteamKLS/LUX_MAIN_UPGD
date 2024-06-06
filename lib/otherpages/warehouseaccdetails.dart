@@ -1646,7 +1646,7 @@ class _WarehouseAcceptanceDetailsState
                                               description:
                                                     "${localizeLangModel.whAccept} ${localizeLangModel.For} for AWB# " + widget.prefix + "-"+ widget.awbNumber + " in VT# " +
                                                   widget.vtNumber +
-                                                      "${localizeLangModel.hasBeenRejectedSuccessfully}",
+                                                      " ${localizeLangModel.hasBeenRejectedSuccessfully}",
                                               buttonText: "${localizeLangModel.ok}",
                                               imagepath:
                                                   'assets/images/successlines.gif',
@@ -3544,7 +3544,7 @@ class _WarehouseAcceptanceDetailsState
                                                 description:
                                                     " ${localizeLangModel.whAccept}  ${localizeLangModel.For} AWB# " + widget.prefix + "-"+ widget.awbNumber + " in VT# " +
                                                   widget.vtNumber +
-                                                        "  ${localizeLangModel.hasBeenRejectedSuccessfully} ",
+                                                        " ${localizeLangModel.hasBeenRejectedSuccessfully} ",
                                                 buttonText: "${localizeLangModel.ok}",
                                                 imagepath:
                                                     'assets/images/successlines.gif',
@@ -4005,7 +4005,7 @@ class _WarehouseAcceptanceDetailsState
         if (json.decode(response.body)['d'] == null) {
           isValid = true;
         } else {
-          if (json.decode(response.body)['d'] == "null") {
+          if (json.decode(response.body)['d'] == "[]") {
             isValid = true;
           } else {
             if (json.decode(response.body)['d'] == "") {
@@ -4013,22 +4013,22 @@ class _WarehouseAcceptanceDetailsState
             } else {
               var responseText = json.decode(response.body)['d'].toString();
 
-              if (responseText.toLowerCase().contains("errormsg")) {
-                responseTextUpdated =
-                    responseText.toString().replaceAll("ErrorMSG", "");
-                responseTextUpdated =
-                    responseTextUpdated.toString().replaceAll(":", "");
-                responseTextUpdated =
-                    responseTextUpdated.toString().replaceAll("\"", "");
-                responseTextUpdated =
-                    responseTextUpdated.toString().replaceAll("{", "");
-                responseTextUpdated =
-                    responseTextUpdated.toString().replaceAll("}", "");
-                print(responseTextUpdated.toString());
-              }
-              // print(responseText.toString().replaceAll("ErrorMSG", ""));
-              // print(responseText.toString().replaceAll(":", ""));
-              // print(responseText.toString().replaceAll("\"", ""));
+                if (responseText.toLowerCase().contains("errormsg")) {
+                  responseTextUpdated =
+                      responseText.toString().replaceAll("ErrorMSG", "");
+                  responseTextUpdated =
+                      responseTextUpdated.toString().replaceAll(":", "");
+                  responseTextUpdated =
+                      responseTextUpdated.toString().replaceAll("\"", "");
+                  responseTextUpdated =
+                      responseTextUpdated.toString().replaceAll("{", "");
+                  responseTextUpdated =
+                      responseTextUpdated.toString().replaceAll("}", "");
+                  print(responseTextUpdated.toString());
+                }
+                // print(responseText.toString().replaceAll("ErrorMSG", ""));
+                // print(responseText.toString().replaceAll(":", ""));
+                // print(responseText.toString().replaceAll("\"", ""));
 
               isValid = false;
             }
@@ -4037,7 +4037,11 @@ class _WarehouseAcceptanceDetailsState
 
         setState(() {
           isSavingData = false;
-          if (responseTextUpdated != "") errMsgText = responseTextUpdated;
+          if (responseTextUpdated != "")
+            print("check_message==== ${responseTextUpdated}");
+          String updatedText = responseTextUpdated.replaceAll('<br/>', '');
+          print("check_message==== ${updatedText}");
+          errMsgText = updatedText;
         });
       }).catchError((onError) {
         showSavingDialog(context, false);

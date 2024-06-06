@@ -388,7 +388,7 @@ class _DockOutState extends State<DockOut> {
                                   inactiveChild: Text('${localizeLangModel.exports}',
                                       style: mobileTextFontStyleWhite),
                                   width:
-                                      MediaQuery.of(context).size.width / 2.5,
+                                      MediaQuery.of(context).size.width / 2.3,
                                   height: 35,
                                   controller: _controllerModeType,
                                 ),
