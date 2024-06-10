@@ -37,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   String _selectedLanguage = 'en';
+  String _fabLabel = 'Lang';
   Locale _locale = Locale('en');
 
   @override
@@ -53,12 +54,14 @@ class _HomeScreenState extends State<HomeScreen> {
     controller.addListener(onScroll);
   }
 
+
   Future<void> _loadSavedLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? languageCode = prefs.getString('language_code');
     if (languageCode != null) {
       setState(() {
         _selectedLanguage = languageCode;
+        _fabLabel = languageCode == 'en' ? 'English' : 'Spanish';
         _locale = Locale(languageCode);
       });
     }
@@ -68,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Locale locale = Locale(languageCode);
     setState(() {
       _selectedLanguage = languageCode;
+      _fabLabel = languageCode == 'en' ? 'English' : 'Spanish';
       _locale = locale;
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -146,7 +150,54 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: Color(0xFF11249F), //Colors.green,
                   child: const Icon(Icons.leaderboard),
                 )
-              : Container(),
+              : FloatingActionButton.extended(
+            backgroundColor: Color(0xFF11249F),
+            onPressed: () {
+              showMenu(
+
+                context: context,
+                position: RelativeRect.fromLTRB(
+                    MediaQuery.of(context).size.width - 200,
+                    MediaQuery.of(context).size.height - 190,
+                    16.0,
+                    20.0
+                ),
+                items: [
+                  PopupMenuItem<String>(
+                    value: 'en',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('English'),
+                        if (_selectedLanguage == 'en') Icon(Icons.done, color: Colors.black),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'es',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Spanish'),
+                        if (_selectedLanguage == 'es') Icon(Icons.done, color: Colors.black),
+                      ],
+                    ),
+                  ),
+                ],
+                elevation: 8.0, // Add elevation for modern look
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ), // Add rounded corners
+                color: Colors.white, // Set background color
+              ).then((value) {
+                if (value != null) {
+                  _onLanguageChanged(value);
+                }
+              });
+            },
+            label: Text(_fabLabel, style: TextStyle(color: Colors.white)),
+            icon: Icon(Icons.language, color: Colors.white),
+          ),
       body: SingleChildScrollView(
         controller: controller,
         child: Column(
@@ -221,7 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 20,
                           ),
 
-                          DropdownButtonHideUnderline(
+                         /* DropdownButtonHideUnderline(
                             child: Container(
                               constraints: BoxConstraints(
                                   minHeight: 50),
@@ -260,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             value == 'en'
                                                 ? 'En'
                                                 : 'Sp',
-                                            /*style: TextStyle(
+                                            *//*style: TextStyle(
 
                                                   color: Colors
                                                       .black,
@@ -268,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   14,
                                                   fontWeight:
                                                   FontWeight
-                                                      .w500)*/
+                                                      .w500)*//*
 
                                             style: useMobileLayout
                                                 ? mobileTextFontStyle
@@ -297,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             ),
-                          ),
+                          ),*/
                           /*Padding(
                             padding:
                             const EdgeInsets.symmetric(

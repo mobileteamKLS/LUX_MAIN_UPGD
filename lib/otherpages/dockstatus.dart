@@ -4022,7 +4022,7 @@ class DockstatusListWeidget extends StatelessWidget {
                                   SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width / 5,
-                                    child: Text('${localizeLangModel.checkIn}',
+                                    child: Text('${localizeLangModel.dockIn}',
                                         style: TextStyle(
                                             fontSize: MediaQuery.of(context)
                                                     .size
