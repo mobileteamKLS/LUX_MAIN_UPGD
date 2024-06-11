@@ -206,16 +206,13 @@ class _DashboardsState extends State<Dashboards> {
       width: MediaQuery.of(context).size.width / 3.2,
       child: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-           /* selectedBaseStationBranchID = (dummyList.isNotEmpty
+            selectedBaseStationBranchID = (dummyList.isNotEmpty
                 ? dummyList[0].organizationBranchId
                 : null)!;
             selectedBaseStationBranch = (dummyList.isNotEmpty
                 ? dummyList[0].orgBranchName
                 : null)!;
-            setState(() {
-              walkInEnable();
-            });
-*/
+
 
         return AlertDialog(
           content: Column(
@@ -404,6 +401,9 @@ class _DashboardsState extends State<Dashboards> {
                   //   print("$selectedBaseStationID ======= $selectedBaseStationBranchID");
                   //   return;
                   // }
+
+                  walkInEnable();
+
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
