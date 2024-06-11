@@ -4141,7 +4141,7 @@ class _RecordPodDetailsState extends State<RecordPodDetails> {
         if (json.decode(response.body)['d'] == null) {
           isValid = true;
         } else {
-          if (json.decode(response.body)['d'] == "[]") {
+          if (json.decode(response.body)['d'] == "[]" || json.decode(response.body)['d'] == "null") {
             isValid = true;
           } else {
             if (json.decode(response.body)['d'] == "") {
