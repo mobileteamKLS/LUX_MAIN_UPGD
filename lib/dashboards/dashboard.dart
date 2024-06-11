@@ -569,15 +569,15 @@ class _DashboardsState extends State<Dashboards> {
                             color: Colors.white),
                         child: Padding(
                           padding: useMobileLayout
-                              ? const EdgeInsets.only(left: 16.0, right: 16.0)
-                              : const EdgeInsets.only(left: 16.0, right: 16.0),
+                              ? const EdgeInsets.only(left: 8.0, right: 16.0)
+                              : const EdgeInsets.only(left: 8.0, right: 16.0),
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 8.0, bottom: 8.0, left: 0, right: 8),
+                                      top: 2.0, bottom: 8.0, left: 0, right: 8),
                                   child: Row(
                                       mainAxisAlignment: kIsWeb
                                           ? MainAxisAlignment.center
@@ -593,7 +593,16 @@ class _DashboardsState extends State<Dashboards> {
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                               child: Image.asset(
+
                                                   "assets/images/kls.jpg",
+                                                  height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                      7.5,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                      3.5,
                                                   //YVR.png", //WFS_logo.png",
                                                   fit: kIsWeb
                                                       ? BoxFit.fill
@@ -611,13 +620,13 @@ class _DashboardsState extends State<Dashboards> {
                                                 : MediaQuery.of(context)
                                                         .size
                                                         .height /
-                                                    6.5,
+                                                    7.5,
                                             width: kIsWeb
                                                 ? 300
                                                 : MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    3,
+                                                    3.5,
                                             child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(5),
@@ -634,14 +643,14 @@ class _DashboardsState extends State<Dashboards> {
                                             width: kIsWeb
                                                 ? 24
                                                 : useMobileLayout
-                                                    ? 16
+                                                    ? 24
                                                     : 20),
                                         Padding(
                                           padding: kIsWeb
                                               ? const EdgeInsets.only(top: 8.0)
                                               : useMobileLayout
                                                   ? const EdgeInsets.only(
-                                                      top: 8.0)
+                                                      top: 5.0)
                                                   : const EdgeInsets.only(
                                                       top: 2.0),
                                           child: Column(
