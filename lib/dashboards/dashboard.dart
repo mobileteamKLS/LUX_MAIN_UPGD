@@ -206,12 +206,12 @@ class _DashboardsState extends State<Dashboards> {
       width: MediaQuery.of(context).size.width / 3.2,
       child: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            selectedBaseStationBranchID = (dummyList.isNotEmpty
+          /*  selectedBaseStationBranchID = (dummyList.isNotEmpty
                 ? dummyList[0].organizationBranchId
                 : null)!;
             selectedBaseStationBranch = (dummyList.isNotEmpty
                 ? dummyList[0].orgBranchName
-                : null)!;
+                : null)!;*/
 
 
         return AlertDialog(
@@ -402,7 +402,7 @@ class _DashboardsState extends State<Dashboards> {
                   //   return;
                   // }
 
-                  walkInEnable();
+                 // walkInEnable();
 
                   Navigator.of(context).pop();
                 },
