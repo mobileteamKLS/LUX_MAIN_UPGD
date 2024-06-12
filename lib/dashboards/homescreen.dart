@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   String _selectedLanguage = 'en';
-  String _fabLabel = 'Lang';
+  String _fabLabel = 'Language';
   Locale _locale = Locale('en');
 
   @override

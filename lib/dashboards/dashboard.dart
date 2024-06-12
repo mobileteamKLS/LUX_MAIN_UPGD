@@ -49,7 +49,7 @@ class _DashboardsState extends State<Dashboards> {
   late Timer _timer;
 
   String _selectedLanguage = 'en';
-  String _fabLabel = 'Lang';
+  String _fabLabel = 'Language';
   Locale _locale = Locale('en');
   List<WarehouseBaseStationBranch> dummyList = [];
 
